@@ -51,8 +51,12 @@ export default function Login() {
             <Button type="submit" className="w-full" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</Button>
           </form>
         )}
+        <p className="mt-6 text-center text-[14px]">
+          Need an account?{' '}
+          <Link to="/signup" className="font-semibold text-brand-red hover:underline">Create one</Link>
+        </p>
         {demoModeEnabled && (
-          <p className="mt-6 text-center text-[14px]">
+          <p className="mt-3 text-center text-[14px]">
             <Link to="/" className="font-semibold text-brand-red hover:underline">Use demo mode instead</Link>
           </p>
         )}

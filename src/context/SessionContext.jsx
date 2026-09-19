@@ -63,6 +63,12 @@ export function SessionProvider({ children }) {
     if (error) throw error;
   }, []);
 
+  const signUp = useCallback(async (email, password) => {
+    if (!supabase) throw new Error('Supabase is not configured.');
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) throw error;
+  }, []);
+
   const signOut = useCallback(async () => {
     if (supabase) await supabase.auth.signOut();
   }, []);
@@ -80,9 +86,10 @@ export function SessionProvider({ children }) {
       loading: authLoading || (isAuthenticated && !profile),
       setDemoRole,
       signIn,
+      signUp,
       signOut,
     };
-  }, [session, profile, demoRole, authLoading, setDemoRole, signIn, signOut]);
+  }, [session, profile, demoRole, authLoading, setDemoRole, signIn, signUp, signOut]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
