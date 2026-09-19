@@ -1,11 +1,13 @@
 import { AlertCircle, Inbox, Loader2 } from 'lucide-react';
 import Button from './Button.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
-export function LoadingState({ label = 'Loading' }) {
+export function LoadingState({ label }) {
+  const { t } = useI18n();
   return (
     <div className="flex items-center gap-3 py-10 text-brand-grey" role="status">
       <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-      <span>{label}…</span>
+      <span>{label || t('common.loading')}…</span>
     </div>
   );
 }
@@ -22,15 +24,16 @@ export function EmptyState({ icon: Icon = Inbox, title, message, action }) {
 }
 
 export function ErrorState({ error, onRetry }) {
+  const { t } = useI18n();
   return (
     <div className="flex flex-col items-start gap-2 rounded-md border border-brand-red/30 bg-brand-red-tint px-5 py-6" role="alert">
       <div className="flex items-center gap-2 font-semibold text-brand-red">
-        <AlertCircle size={18} aria-hidden="true" /> This section didn't load
+        <AlertCircle size={18} aria-hidden="true" /> {t('state.didntLoad')}
       </div>
-      <p className="text-sm text-text-secondary">{String(error?.message || error || 'Unknown error')}. Check your connection or Supabase settings, then try again.</p>
+      <p className="text-sm text-text-secondary">{String(error?.message || error || t('state.unknownError'))}. {t('state.errorHint')}</p>
       {onRetry && (
         <Button size="sm" variant="secondary" onClick={onRetry}>
-          Try again
+          {t('common.tryAgain')}
         </Button>
       )}
     </div>

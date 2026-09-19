@@ -7,6 +7,7 @@ import { Loader2, MapPin, Mic, Phone, Plus, Square, Trash2 } from 'lucide-react'
 import Button from '../../common/Button.jsx';
 import PhotoCapture from './PhotoCapture.jsx';
 import { getCurrentPosition, startVoiceRecording, stopVoiceRecording } from '../../../services/deviceService.js';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 function Choice({ label, selected, onClick }) {
   return (
@@ -17,10 +18,11 @@ function Choice({ label, selected, onClick }) {
 }
 
 function Field({ id, label, optional, ...props }) {
+  const { t } = useI18n();
   return (
     <div>
       <label htmlFor={id} className="field-label">
-        {label} {optional && <span className="font-normal text-brand-grey">(optional)</span>}
+        {label} {optional && <span className="font-normal text-brand-grey">{t('common.optional')}</span>}
       </label>
       <input id={id} className="field" {...props} />
     </div>
@@ -28,37 +30,39 @@ function Field({ id, label, optional, ...props }) {
 }
 
 export function SafetyStep({ report, update }) {
+  const { t } = useI18n();
   const s = report.safety;
   return (
     <div className="space-y-5">
-      <p className="text-[16px]">First, is everyone safe?</p>
+      <p className="text-[16px]">{t('accident.safe.question')}</p>
       <div className="grid gap-2 sm:grid-cols-2">
-        <Choice label="Yes, everyone is safe" selected={s.injuries === false} onClick={() => update('safety', { ...s, injuries: false, safe: true })} />
-        <Choice label="Someone is hurt" selected={s.injuries === true} onClick={() => update('safety', { ...s, injuries: true })} />
+        <Choice label={t('accident.safe.yes')} selected={s.injuries === false} onClick={() => update('safety', { ...s, injuries: false, safe: true })} />
+        <Choice label={t('accident.safe.hurt')} selected={s.injuries === true} onClick={() => update('safety', { ...s, injuries: true })} />
       </div>
       {s.injuries === true && (
         <div className="rounded-md bg-action p-4 text-white" role="alert">
-          <p className="font-semibold">Call for help now</p>
-          <p className="text-[14.5px]">Emergency from a mobile: 112. SAPS: 10111. Continue here only once help is on the way.</p>
+          <p className="font-semibold">{t('accident.safe.callTitle')}</p>
+          <p className="text-[14.5px]">{t('accident.safe.callText')}</p>
           <a href="tel:112" className="mt-3 inline-flex items-center gap-2 rounded bg-surface px-4 py-2 font-semibold text-brand-red">
-            <Phone size={16} aria-hidden="true" /> Call 112
+            <Phone size={16} aria-hidden="true" /> {t('accident.safe.call112')}
           </a>
         </div>
       )}
       <ul className="list-disc space-y-1 pl-5 text-[14.5px] text-text-secondary">
-        <li>Switch on your hazard lights and move out of traffic if you can.</li>
-        <li>Don't admit fault or sign anything at the scene.</li>
-        <li>You may need to report the accident at a police station within 24 hours.</li>
+        <li>{t('accident.safe.tip1')}</li>
+        <li>{t('accident.safe.tip2')}</li>
+        <li>{t('accident.safe.tip3')}</li>
       </ul>
       <label className="flex items-center gap-2 text-[15px]">
         <input type="checkbox" className="h-4 w-4 accent-[#9A1C20]" checked={s.policeNotified} onChange={(e) => update('safety', { ...s, policeNotified: e.target.checked })} />
-        Police have been notified
+        {t('accident.safe.police')}
       </label>
     </div>
   );
 }
 
 export function LocationStep({ report, update }) {
+  const { t } = useI18n();
   const [busy, setBusy] = useState(false);
   async function locate() {
     setBusy(true);
@@ -68,22 +72,22 @@ export function LocationStep({ report, update }) {
   return (
     <div className="space-y-4">
       <Button onClick={locate} disabled={busy} size="lg" icon={busy ? undefined : MapPin}>
-        {busy ? <><Loader2 size={18} className="animate-spin" aria-hidden="true" /> Finding you…</> : 'Use my current location'}
+        {busy ? <><Loader2 size={18} className="animate-spin" aria-hidden="true" /> {t('accident.location.finding')}</> : t('accident.location.use')}
       </Button>
-      <p className="text-[12.5px] text-brand-grey">GPS is simulated in the web prototype.</p>
+      <p className="text-[12.5px] text-brand-grey">{t('accident.location.simulated')}</p>
       <div>
-        <label htmlFor="address" className="field-label">Or describe where it happened</label>
+        <label htmlFor="address" className="field-label">{t('accident.location.describe')}</label>
         <input
           id="address"
           className="field"
           value={report.location?.address || ''}
           onChange={(e) => update('location', e.target.value ? { ...(report.location || {}), address: e.target.value } : null)}
-          placeholder="e.g. Corner of Main Road and Belmont Road, Rondebosch"
+          placeholder={t('accident.location.placeholder')}
         />
       </div>
       {report.location?.lat && (
         <p className="text-[14px] text-brand-grey">
-          Captured at {report.location.lat.toFixed(4)}, {report.location.lng.toFixed(4)} (accurate to about {report.location.accuracyMetres} m)
+          {t('accident.location.captured', { lat: report.location.lat.toFixed(4), lng: report.location.lng.toFixed(4), accuracy: report.location.accuracyMetres })}
         </p>
       )}
     </div>
@@ -91,60 +95,66 @@ export function LocationStep({ report, update }) {
 }
 
 export function SceneStep({ report, update }) {
+  const { t } = useI18n();
   return (
     <PhotoCapture
       kind="scene"
       photos={report.scenePhotos}
       onChange={(p) => update('scenePhotos', p)}
-      tips={['Take wide shots showing both vehicles and the road.', 'Include traffic lights, road signs and skid marks.', 'Photograph from several angles.']}
+      tips={[t('accident.scene.tip1'), t('accident.scene.tip2'), t('accident.scene.tip3')]}
     />
   );
 }
 
 export function VehicleStep({ report, update }) {
+  const { t } = useI18n();
   return (
     <PhotoCapture
       kind="vehicle"
       photos={report.vehiclePhotos}
       onChange={(p) => update('vehiclePhotos', p)}
-      tips={['Close-ups of all damage to your vehicle.', "The other vehicle's damage and number plate.", 'Your odometer, if it is safe to do so.']}
+      tips={[t('accident.vehicle.tip1'), t('accident.vehicle.tip2'), t('accident.vehicle.tip3')]}
     />
   );
 }
 
 export function OtherDriverStep({ report, update }) {
+  const { t } = useI18n();
   const d = report.otherDriver;
   const set = (key) => (e) => update('otherDriver', { ...d, [key]: e.target.value });
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field id="od-name" label="Full name" value={d.name} onChange={set('name')} autoComplete="off" />
-      <Field id="od-phone" label="Phone number" type="tel" value={d.phone} onChange={set('phone')} autoComplete="off" />
-      <Field id="od-id" label="ID number" optional value={d.idNumber} onChange={set('idNumber')} autoComplete="off" />
+      <Field id="od-name" label={t('accident.driver.name')} value={d.name} onChange={set('name')} autoComplete="off" />
+      <Field id="od-phone" label={t('accident.driver.phone')} type="tel" value={d.phone} onChange={set('phone')} autoComplete="off" />
+      <Field id="od-id" label={t('accident.driver.id')} optional value={d.idNumber} onChange={set('idNumber')} autoComplete="off" />
     </div>
   );
 }
 
 export function RegistrationStep({ report, update, defaultOwnRegistration }) {
+  const { t } = useI18n();
   const r = report.registration;
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field id="own-reg" label="Your vehicle" value={r.own || defaultOwnRegistration || ''} onChange={(e) => update('registration', { ...r, own: e.target.value })} />
-      <Field id="other-reg" label="Other vehicle registration" value={r.other} onChange={(e) => update('registration', { ...r, other: e.target.value.toUpperCase() })} placeholder="e.g. CA 987-654" />
+      <Field id="own-reg" label={t('accident.reg.own')} value={r.own || defaultOwnRegistration || ''} onChange={(e) => update('registration', { ...r, own: e.target.value })} />
+      <Field id="other-reg" label={t('accident.reg.other')} value={r.other} onChange={(e) => update('registration', { ...r, other: e.target.value.toUpperCase() })} placeholder={t('accident.reg.placeholder')} />
     </div>
   );
 }
 
 export function InsuranceStep({ report, update }) {
+  const { t } = useI18n();
   const i = report.insurance;
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field id="other-insurer" label="Other driver's insurer" value={i.otherInsurer} onChange={(e) => update('insurance', { ...i, otherInsurer: e.target.value })} placeholder="If they know it" />
-      <Field id="other-policy" label="Their policy number" optional value={i.otherPolicyNumber} onChange={(e) => update('insurance', { ...i, otherPolicyNumber: e.target.value })} />
+      <Field id="other-insurer" label={t('accident.ins.other')} value={i.otherInsurer} onChange={(e) => update('insurance', { ...i, otherInsurer: e.target.value })} placeholder={t('accident.ins.placeholder')} />
+      <Field id="other-policy" label={t('accident.ins.policy')} optional value={i.otherPolicyNumber} onChange={(e) => update('insurance', { ...i, otherPolicyNumber: e.target.value })} />
     </div>
   );
 }
 
 export function WitnessesStep({ report, update }) {
+  const { t } = useI18n();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const add = () => {
@@ -156,29 +166,30 @@ export function WitnessesStep({ report, update }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
-        <Field id="w-name" label="Witness name" value={name} onChange={(e) => setName(e.target.value)} />
-        <Field id="w-phone" label="Phone number" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        <Button variant="secondary" onClick={add} icon={Plus}>Add</Button>
+        <Field id="w-name" label={t('accident.witness.name')} value={name} onChange={(e) => setName(e.target.value)} />
+        <Field id="w-phone" label={t('accident.driver.phone')} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <Button variant="secondary" onClick={add} icon={Plus}>{t('accident.witness.add')}</Button>
       </div>
       {report.witnesses.length > 0 ? (
         <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
           {report.witnesses.map((w, i) => (
             <li key={`${w.name}-${i}`} className="flex items-center justify-between p-3">
               <span><span className="font-semibold">{w.name}</span> <span className="text-brand-grey">{w.phone}</span></span>
-              <button type="button" onClick={() => update('witnesses', report.witnesses.filter((_, j) => j !== i))} className="rounded p-1 text-brand-grey hover:text-brand-red" aria-label={`Remove ${w.name}`}>
+              <button type="button" onClick={() => update('witnesses', report.witnesses.filter((_, j) => j !== i))} className="rounded p-1 text-brand-grey hover:text-brand-red" aria-label={t('accident.witness.remove', { name: w.name })}>
                 <Trash2 size={16} />
               </button>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-[14px] text-brand-grey">No witnesses added. Skip this step if nobody saw it.</p>
+        <p className="text-[14px] text-brand-grey">{t('accident.witness.none')}</p>
       )}
     </div>
   );
 }
 
 export function DescriptionStep({ report, update }) {
+  const { t } = useI18n();
   const [recording, setRecording] = useState(false);
   async function toggle() {
     if (recording) {
@@ -192,32 +203,34 @@ export function DescriptionStep({ report, update }) {
   return (
     <div className="space-y-4">
       <div>
-        <label htmlFor="desc" className="field-label">What happened?</label>
-        <textarea id="desc" rows={5} className="field" value={report.description} onChange={(e) => update('description', e.target.value)} placeholder="Where were you going, what did the other vehicle do, what was damaged?" />
+        <label htmlFor="desc" className="field-label">{t('accident.desc.label')}</label>
+        <textarea id="desc" rows={5} className="field" value={report.description} onChange={(e) => update('description', e.target.value)} placeholder={t('accident.desc.placeholder')} />
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <Button variant={recording ? 'dark' : 'secondary'} onClick={toggle} icon={recording ? Square : Mic}>
-          {recording ? 'Stop recording' : report.voiceNote ? 'Record again' : 'Record a voice description'}
+          {recording ? t('accident.desc.stop') : report.voiceNote ? t('accident.desc.again') : t('accident.desc.record')}
         </Button>
-        {recording && <span className="flex items-center gap-2 text-[14px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-action" aria-hidden="true" />Recording</span>}
-        {!recording && report.voiceNote && <span className="text-[14px] text-ok">Voice note saved ({report.voiceNote.durationSeconds}s)</span>}
+        {recording && <span className="flex items-center gap-2 text-[14px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-action" aria-hidden="true" />{t('accident.desc.recording')}</span>}
+        {!recording && report.voiceNote && <span className="text-[14px] text-ok">{t('accident.desc.saved', { seconds: report.voiceNote.durationSeconds })}</span>}
       </div>
-      <p className="text-[12.5px] text-brand-grey">Voice recording is simulated in the web prototype.</p>
+      <p className="text-[12.5px] text-brand-grey">{t('accident.desc.simulated')}</p>
     </div>
   );
 }
 
 export function ReviewStep({ report, goTo }) {
+  const { t } = useI18n();
+  const notCaptured = t('accident.review.notCaptured');
   const rows = [
-    ['Safety', report.safety.injuries === true ? 'Someone was hurt' : report.safety.injuries === false ? 'Everyone safe' : 'Not answered', 0],
-    ['Location', report.location?.address || 'Not captured', 1],
-    ['Scene photos', `${report.scenePhotos.length} photo(s)`, 2],
-    ['Vehicle photos', `${report.vehiclePhotos.length} photo(s)`, 3],
-    ['Other driver', report.otherDriver.name || 'Not captured', 4],
-    ['Other vehicle', report.registration.other || 'Not captured', 5],
-    ['Other insurer', report.insurance.otherInsurer || 'Not captured', 6],
-    ['Witnesses', report.witnesses.length ? report.witnesses.map((w) => w.name).join(', ') : 'None', 7],
-    ['Description', report.description || (report.voiceNote ? 'Voice note only' : 'Not captured'), 8],
+    [t('accident.review.safety'), report.safety.injuries === true ? t('accident.review.hurt') : report.safety.injuries === false ? t('accident.review.safe') : t('accident.review.notAnswered'), 0],
+    [t('accident.review.location'), report.location?.address || notCaptured, 1],
+    [t('accident.review.scene'), t('accident.review.photos', { count: report.scenePhotos.length }), 2],
+    [t('accident.review.vehicle'), t('accident.review.photos', { count: report.vehiclePhotos.length }), 3],
+    [t('accident.review.driver'), report.otherDriver.name || notCaptured, 4],
+    [t('accident.review.otherVehicle'), report.registration.other || notCaptured, 5],
+    [t('accident.review.insurer'), report.insurance.otherInsurer || notCaptured, 6],
+    [t('accident.review.witnesses'), report.witnesses.length ? report.witnesses.map((w) => w.name).join(', ') : t('accident.review.none'), 7],
+    [t('accident.review.description'), report.description || (report.voiceNote ? t('accident.review.voiceOnly') : notCaptured), 8],
   ];
   return (
     <dl className="divide-y divide-brand-border rounded-md border border-brand-border">
@@ -225,7 +238,7 @@ export function ReviewStep({ report, goTo }) {
         <div key={label} className="grid grid-cols-[120px_1fr_auto] items-start gap-3 p-3 text-[14.5px] sm:grid-cols-[160px_1fr_auto]">
           <dt className="text-brand-grey">{label}</dt>
           <dd className="min-w-0 break-words">{value}</dd>
-          <button type="button" onClick={() => goTo(index)} className="text-[13.5px] font-semibold text-brand-red hover:underline">Edit</button>
+          <button type="button" onClick={() => goTo(index)} className="text-[13.5px] font-semibold text-brand-red hover:underline">{t('accident.review.edit')}</button>
         </div>
       ))}
     </dl>

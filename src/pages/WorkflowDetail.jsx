@@ -16,45 +16,49 @@ import { advance, getWorkflow, listActivity, recordEvents } from '../services/wo
 import { assignClaimNumberIfNeeded, getClaimByWorkflow } from '../services/claimService.js';
 import { createActivityEvent, describeWorkflowStatus, getCurrentStep, getOwnerLabel, getWorkflowProgress, isWorkflowOverdue } from '../utils/workflow.js';
 import { describeDue } from '../utils/format.js';
+import { useI18n } from '../i18n/I18nContext.jsx';
 
 const DOCUMENT_STEPS = ['proof_of_address', 'client_documents'];
 
 function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAdvance, onRemind, busy }) {
+  const { t, tx } = useI18n();
   const step = getCurrentStep(workflow);
   if (workflow.status !== 'active' || !step) {
     return (
       <div className="rounded-md border border-ok/30 bg-ok-tint p-5 text-ok">
-        <p className="font-semibold">This process is complete</p>
-        <p className="text-[14px]">Nothing else is needed from anyone.</p>
+        <p className="font-semibold">{t('workflow.complete')}</p>
+        <p className="text-[14px]">{t('workflow.completeHint')}</p>
       </div>
     );
   }
   const owner = workflow.currentOwner;
   const ownerName = getOwnerLabel(owner, { providerName, viewerRole, clientName });
   const overdue = isWorkflowOverdue(workflow);
+  // Stored notes stay in English (tx() translates them on display), so don't bake a translated label into them.
+  const sourceName = owner === 'repairer' ? 'Repairer' : owner === 'provider' ? providerName || 'Provider' : ownerName;
 
   let action = null;
   if (viewerRole === 'client' && owner === 'client') {
     action = DOCUMENT_STEPS.includes(step.key) ? (
-      <Button as={Link} to="/client/documents">Upload document</Button>
+      <Button as={Link} to="/client/documents">{t('workflow.uploadDocument')}</Button>
     ) : (
-      <Button onClick={() => onAdvance({ actorType: 'client', actorName: 'Client' })} disabled={busy}>I've done this</Button>
+      <Button onClick={() => onAdvance({ actorType: 'client', actorName: 'Client' })} disabled={busy}>{t('workflow.iveDoneThis')}</Button>
     );
   }
   if (viewerRole !== 'client') {
     if (owner === 'adviser' || owner === 'system') {
-      action = <Button onClick={() => onAdvance({ actorType: 'adviser', actorName: 'Royal Square' })} disabled={busy}>Mark step complete</Button>;
+      action = <Button onClick={() => onAdvance({ actorType: 'adviser', actorName: 'Royal Square' })} disabled={busy}>{t('workflow.markComplete')}</Button>;
     } else if (owner === 'provider' || owner === 'repairer') {
       action = (
         <div className="flex flex-col items-start gap-1">
-          <Button variant="dark" onClick={() => onAdvance({ actorType: owner, actorName: ownerName, note: `${ownerName}: ${step.label.toLowerCase()} confirmed` })} disabled={busy}>
-            Record update from {ownerName}
+          <Button variant="dark" onClick={() => onAdvance({ actorType: owner, actorName: sourceName, note: `${sourceName}: ${step.label.toLowerCase()} confirmed` })} disabled={busy}>
+            {t('workflow.recordUpdate', { name: ownerName })}
           </Button>
-          <span className="text-[12.5px] text-brand-grey">Provider updates are simulated in this prototype.</span>
+          <span className="text-[12.5px] text-brand-grey">{t('workflow.simulated')}</span>
         </div>
       );
     } else if (owner === 'client') {
-      action = <Button variant="secondary" onClick={onRemind} disabled={busy}>Send reminder to client</Button>;
+      action = <Button variant="secondary" onClick={onRemind} disabled={busy}>{t('workflow.sendReminder')}</Button>;
     }
   }
 
@@ -62,16 +66,16 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
     <div className={`rounded-md border p-5 ${owner === viewerRole ? 'border-brand-red' : 'border-brand-border'}`}>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <p className="text-[13px] text-brand-grey">Current step</p>
-          <p className="font-semibold">{step.label}</p>
+          <p className="text-[13px] text-brand-grey">{t('workflow.currentStep')}</p>
+          <p className="font-semibold">{tx(step.label)}</p>
         </div>
         <div>
-          <p className="text-[13px] text-brand-grey">Next action</p>
-          <p className="font-semibold">{workflow.nextAction}</p>
-          <p className="text-[13.5px] text-brand-grey">by {ownerName}</p>
+          <p className="text-[13px] text-brand-grey">{t('workflow.nextAction')}</p>
+          <p className="font-semibold">{tx(workflow.nextAction)}</p>
+          <p className="text-[13.5px] text-brand-grey">{t('workflow.byOwner', { name: ownerName })}</p>
         </div>
         <div>
-          <p className="text-[13px] text-brand-grey">Due</p>
+          <p className="text-[13px] text-brand-grey">{t('workflow.due')}</p>
           <p className={`font-semibold ${overdue ? 'text-brand-red' : ''}`}>{describeDue(workflow.dueDate)}</p>
         </div>
       </div>
@@ -81,6 +85,7 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
 }
 
 export default function WorkflowDetail() {
+  const { t, tx } = useI18n();
   const { id } = useParams();
   const navigate = useNavigate();
   const { role } = useSession();
@@ -108,11 +113,11 @@ export default function WorkflowDetail() {
   return (
     <>
       <button type="button" onClick={() => navigate(-1)} className="mb-5 inline-flex items-center gap-1.5 text-[14px] text-brand-grey hover:text-brand-black">
-        <ArrowLeft size={16} aria-hidden="true" /> Back
+        <ArrowLeft size={16} aria-hidden="true" /> {t('common.back')}
       </button>
-      <QueryState query={workflow} loadingLabel="Loading process">
+      <QueryState query={workflow} loadingLabel={t('workflow.loading')}>
         {(w) => {
-          if (!w) return <EmptyState title="Process not found" message="It may have been removed, or you may not have access to it." />;
+          if (!w) return <EmptyState title={t('workflow.notFound')} message={t('workflow.notFoundHint')} />;
           const pName = providerName(w.providerId);
           const cName = clientName(w.clientId);
           const progress = getWorkflowProgress(w);
@@ -120,7 +125,7 @@ export default function WorkflowDetail() {
             <>
               <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <h1 className="text-[28px] font-normal leading-tight sm:text-[32px]">{w.title}</h1>
+                  <h1 className="text-[28px] font-normal leading-tight sm:text-[32px]">{tx(w.title)}</h1>
                   <p className="text-brand-grey">{[viewerRole !== 'client' && cName, pName].filter(Boolean).join(', ') || 'Royal Square Financial'}</p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -129,10 +134,10 @@ export default function WorkflowDetail() {
                 </div>
               </header>
 
-              <section aria-label="Who is holding the ball" className="mb-6">
+              <section aria-label={t('workflow.holdingBall')} className="mb-6">
                 <WorkflowOwner workflow={w} providerName={pName} viewerRole={viewerRole} clientName={cName} />
                 <div className="mt-3 flex items-center gap-3">
-                  <ProgressBar value={progress} className="flex-1" label="Overall progress" tone={w.status === 'completed' ? 'green' : 'red'} />
+                  <ProgressBar value={progress} className="flex-1" label={t('workflow.overallProgress')} tone={w.status === 'completed' ? 'green' : 'red'} />
                   <span className="text-[13px] tabular-nums text-brand-grey">{progress}%</span>
                 </div>
               </section>
@@ -149,11 +154,11 @@ export default function WorkflowDetail() {
 
               <div className="grid gap-10 lg:grid-cols-2">
                 <section>
-                  <h2 className="mb-4 border-b border-brand-border pb-2 text-lg font-medium">Steps</h2>
+                  <h2 className="mb-4 border-b border-brand-border pb-2 text-lg font-medium">{t('workflow.steps')}</h2>
                   <WorkflowTimeline workflow={w} providerName={pName} viewerRole={viewerRole} clientName={cName} />
                 </section>
                 <section>
-                  <h2 className="mb-4 border-b border-brand-border pb-2 text-lg font-medium">Activity</h2>
+                  <h2 className="mb-4 border-b border-brand-border pb-2 text-lg font-medium">{t('workflow.activity')}</h2>
                   <QueryState query={activity}>{(events) => <ActivityTimeline events={events} />}</QueryState>
                 </section>
               </div>

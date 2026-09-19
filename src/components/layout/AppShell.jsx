@@ -8,16 +8,18 @@ import ChatWidget from '../chat/ChatWidget.jsx';
 import { navFor } from '../../config/navigation.js';
 import { useSession } from '../../context/SessionContext.jsx';
 import { useConnectivity } from '../../context/ConnectivityContext.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 function AccountFooter() {
+  const { t } = useI18n();
   const { role, isDemo, isAuthenticated, profile, signOut } = useSession();
   return (
     <div className="text-[13px]">
-      <p className="font-semibold">{isDemo ? (role === 'adviser' ? 'Sipho Ndlovu' : 'Lerato Molefe') : profile?.full_name || 'Signed in'}</p>
-      <p className="text-brand-grey">{role === 'adviser' ? 'Adviser' : role === 'admin' ? 'Administrator' : 'Client'}{isDemo ? ' (demo)' : ''}</p>
+      <p className="font-semibold">{isDemo ? (role === 'adviser' ? 'Sipho Ndlovu' : 'Lerato Molefe') : profile?.full_name || t('shell.signedIn')}</p>
+      <p className="text-brand-grey">{t(`shell.role.${role === 'adviser' || role === 'admin' ? role : 'client'}`)}{isDemo ? ` ${t('shell.demoSuffix')}` : ''}</p>
       {isAuthenticated && (
         <button type="button" onClick={signOut} className="mt-2 inline-flex items-center gap-1.5 text-brand-grey hover:text-brand-red">
-          <LogOut size={14} aria-hidden="true" /> Sign out
+          <LogOut size={14} aria-hidden="true" /> {t('shell.signOut')}
         </button>
       )}
     </div>
@@ -27,6 +29,7 @@ function AccountFooter() {
 export default function AppShell() {
   const { role, demoModeEnabled } = useSession();
   const { online } = useConnectivity();
+  const { t } = useI18n();
   const location = useLocation();
   const items = navFor(role);
   const onChatPage = location.pathname.endsWith('/chat');
@@ -40,9 +43,9 @@ export default function AppShell() {
         {!online && (
           <div className="border-b border-warn/20 bg-warn-tint px-4 py-2.5 text-[14px] text-warn lg:px-8" role="status">
             <span className="inline-flex items-center gap-2 font-semibold">
-              <WifiOff size={16} aria-hidden="true" /> Offline mode
+              <WifiOff size={16} aria-hidden="true" /> {t('shell.offline')}
             </span>{' '}
-            Anything you capture is saved on this device and synced when connectivity returns.
+            {t('shell.offlineBanner')}
           </div>
         )}
         <SyncNotice />

@@ -7,8 +7,10 @@ import { useAdviserWorkflows } from '../../hooks/useAdviserData.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
 import { listClaims } from '../../services/claimService.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function AdviserClaims() {
+  const { t, tx } = useI18n();
   const { adviser, adviserId, workflows } = useAdviserWorkflows();
   const claims = useServiceQuery(() => (adviserId ? listClaims({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { clientName, providerName } = useLookups();
@@ -16,9 +18,9 @@ export default function AdviserClaims() {
 
   return (
     <>
-      <PageHeader title="Claims" description="Motor claims from Accident Assist, from first report to closure." />
-      <Section title="Claims" count={(workflows.data || []).filter((w) => w.type === 'motor_claim').length}>
-        <QueryState query={workflows} loadingLabel="Loading claims">
+      <PageHeader title={t('claims.title')} description={t('claims.adviserDescription')} />
+      <Section title={t('claims.title')} count={(workflows.data || []).filter((w) => w.type === 'motor_claim').length}>
+        <QueryState query={workflows} loadingLabel={t('claims.loading')}>
           {(list) => {
             const motor = list.filter((w) => w.type === 'motor_claim');
             return motor.length ? (
@@ -29,9 +31,9 @@ export default function AdviserClaims() {
                     <div key={w.id}>
                       {claim && (
                         <p className="mb-1.5 flex flex-wrap items-center gap-2 text-[13.5px] text-brand-grey">
-                          <span className="tabular-nums">{claim.claimNumber || 'Claim number pending'}</span>
-                          <span>{claim.location}</span>
-                          {claim.capturedOffline && <StatusBadge tone="warning">Captured offline</StatusBadge>}
+                          <span className="tabular-nums">{claim.claimNumber || t('claims.numberPending')}</span>
+                          <span>{tx(claim.location)}</span>
+                          {claim.capturedOffline && <StatusBadge tone="warning">{t('claims.capturedOffline')}</StatusBadge>}
                         </p>
                       )}
                       <WorkflowCard workflow={w} clientName={clientName(w.clientId)} providerName={providerName(w.providerId)} viewerRole="adviser" />
@@ -40,7 +42,7 @@ export default function AdviserClaims() {
                 })}
               </div>
             ) : (
-              <EmptyState title="No claims" message="Claims appear here when a client uses Accident Assist." />
+              <EmptyState title={t('claims.none')} message={t('claims.noneAdviserHint')} />
             );
           }}
         </QueryState>

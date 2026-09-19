@@ -10,8 +10,10 @@ import { useLookups } from '../../hooks/useLookups.js';
 import { listClients } from '../../services/clientService.js';
 import { formatZAR } from '../../utils/format.js';
 import { isWorkflowOverdue } from '../../utils/workflow.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function AdviserClients() {
+  const { t, tx } = useI18n();
   const { adviser, adviserId, workflows } = useAdviserWorkflows({ includeCompleted: false });
   const clients = useServiceQuery(() => (adviserId ? listClients({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { providerName } = useLookups();
@@ -23,13 +25,13 @@ export default function AdviserClients() {
 
   return (
     <>
-      <PageHeader title="Clients" description="Your assigned clients and what's open for each." />
+      <PageHeader title={t('clients.title')} description={t('clients.description')} />
       <div className="relative mb-5 max-w-sm">
         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-grey" aria-hidden="true" />
-        <label htmlFor="client-search" className="sr-only">Search clients</label>
-        <input id="client-search" className="field pl-9" placeholder="Search clients" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <label htmlFor="client-search" className="sr-only">{t('clients.search')}</label>
+        <input id="client-search" className="field pl-9" placeholder={t('clients.search')} value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
-      <QueryState query={clients} loadingLabel="Loading clients">
+      <QueryState query={clients} loadingLabel={t('clients.loading')}>
         {(list) =>
           filter(list).length ? (
             <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
@@ -42,18 +44,18 @@ export default function AdviserClients() {
                     <button type="button" onClick={() => setOpenId(open ? null : c.id)} aria-expanded={open} className="grid w-full gap-2 p-4 text-left hover:bg-brand-light-grey sm:grid-cols-[1.2fr_1fr_auto] sm:items-center">
                       <span>
                         <span className="block font-semibold">{c.name}</span>
-                        <span className="text-[13.5px] text-brand-grey">{c.occupation}. {c.city}</span>
+                        <span className="text-[13.5px] text-brand-grey">{tx(c.occupation)}. {c.city}</span>
                       </span>
-                      <span className="text-[14px] tabular-nums text-brand-grey">Net worth {formatZAR(c.totalAssets - c.totalLiabilities)}</span>
+                      <span className="text-[14px] tabular-nums text-brand-grey">{t('clients.netWorth', { amount: formatZAR(c.totalAssets - c.totalLiabilities) })}</span>
                       <span className="flex gap-2">
-                        {overdue > 0 && <StatusBadge status="overdue">{overdue} overdue</StatusBadge>}
-                        <StatusBadge tone="neutral">{mine.length} open</StatusBadge>
+                        {overdue > 0 && <StatusBadge status="overdue">{t('clients.overdue', { count: overdue })}</StatusBadge>}
+                        <StatusBadge tone="neutral">{t('clients.open', { count: mine.length })}</StatusBadge>
                       </span>
                     </button>
                     {open && (
                       <div className="space-y-3 border-t border-brand-border bg-brand-light-grey p-4">
                         <p className="text-[14px] text-brand-grey">{c.email}. {c.phone}. {c.address}</p>
-                        {mine.length ? mine.map((w) => <WorkflowCard key={w.id} workflow={w} providerName={providerName(w.providerId)} viewerRole="adviser" showOwner={false} />) : <p className="text-[14px]">No open processes.</p>}
+                        {mine.length ? mine.map((w) => <WorkflowCard key={w.id} workflow={w} providerName={providerName(w.providerId)} viewerRole="adviser" showOwner={false} />) : <p className="text-[14px]">{t('clients.noOpen')}</p>}
                       </div>
                     )}
                   </li>
@@ -61,7 +63,7 @@ export default function AdviserClients() {
               })}
             </ul>
           ) : (
-            <EmptyState title="No clients found" />
+            <EmptyState title={t('clients.none')} />
           )
         }
       </QueryState>

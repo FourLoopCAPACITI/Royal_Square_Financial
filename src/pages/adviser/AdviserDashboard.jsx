@@ -9,6 +9,7 @@ import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
 import { completeTask, listTasks } from '../../services/taskService.js';
 import { groupWorkflowsForInbox } from '../../utils/workflow.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 function Count({ label, value, tone }) {
   return (
@@ -21,6 +22,7 @@ function Count({ label, value, tone }) {
 
 /** Adviser home: the inbox first, a short task list second. Deliberately not an analytics dashboard. */
 export default function AdviserDashboard() {
+  const { t } = useI18n();
   const { adviser, adviserId, workflows } = useAdviserWorkflows({ includeCompleted: false });
   const tasks = useServiceQuery(() => (adviserId ? listTasks({ adviserId, assignee: 'adviser' }) : []), [adviserId], { dependsOn: adviser });
   const { clientName } = useLookups();
@@ -29,26 +31,26 @@ export default function AdviserDashboard() {
   return (
     <>
       <PageHeader
-        title={adviser.data ? `Hello, ${adviser.data.name.split(' ')[0]}` : 'Dashboard'}
-        description="Who's holding the ball on every client process."
-        actions={<Link to="/adviser/actions" className="text-[14px] font-semibold text-brand-red hover:underline">Open full inbox</Link>}
+        title={adviser.data ? t('adviser.dashboard.hello', { name: adviser.data.name.split(' ')[0] }) : t('nav.dashboard')}
+        description={t('adviser.dashboard.description')}
+        actions={<Link to="/adviser/actions" className="text-[14px] font-semibold text-brand-red hover:underline">{t('adviser.dashboard.openInbox')}</Link>}
       />
       <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Count label="Overdue" value={groups.overdue.length} tone="red" />
-        <Count label="Needs me" value={groups.needsMe.length} />
-        <Count label="Waiting on client" value={groups.waitingOnClient.length} />
-        <Count label="Waiting on provider" value={groups.waitingOnProvider.length} />
+        <Count label={t('inbox.group.overdue')} value={groups.overdue.length} tone="red" />
+        <Count label={t('inbox.group.needsMe')} value={groups.needsMe.length} />
+        <Count label={t('inbox.group.waitingOnClient')} value={groups.waitingOnClient.length} />
+        <Count label={t('inbox.group.waitingOnProvider')} value={groups.waitingOnProvider.length} />
       </div>
       <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div>
-          <QueryState query={workflows} loadingLabel="Loading your inbox">
+          <QueryState query={workflows} loadingLabel={t('inbox.loading')}>
             {(list) => <InboxGroups workflows={list} only={['overdue', 'needsMe']} />}
           </QueryState>
         </div>
         <aside>
-          <Section title="My tasks" count={tasks.data?.length}>
+          <Section title={t('adviser.dashboard.myTasks')} count={tasks.data?.length}>
             <QueryState query={tasks}>
-              {(list) => <ActionList tasks={list.slice(0, 6)} clientName={clientName} onComplete={completeTask} emptyTitle="No open tasks" />}
+              {(list) => <ActionList tasks={list.slice(0, 6)} clientName={clientName} onComplete={completeTask} emptyTitle={t('adviser.dashboard.noTasks')} />}
             </QueryState>
           </Section>
         </aside>

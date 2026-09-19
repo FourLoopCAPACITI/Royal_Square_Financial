@@ -72,6 +72,8 @@ On Vercel: Project → Settings → Environment Variables, add the same names.
 5. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env.local`, restart `npm run dev`, and sign in at `/login`.
 6. To create an admin: `update public.profiles set role = 'admin' where email = '...';` in the SQL Editor.
 
+**Existing project?** If you created the database before language support was added, run **`supabase/add_profile_language.sql`** once. It adds `profiles.language` (`en` / `af` / `zu`, default `en`). Until then the app still works; the language is just remembered per device instead of per user.
+
 Data mode: **Supabase configured and a user signed in → Supabase. Otherwise → mock data.** See `src/services/dataSource.js`.
 
 Both SQL files were executed against PostgreSQL 16 with a Supabase-style `auth`/`storage` shim, including RLS tests for a client, two advisers and an unassigned user.
@@ -141,6 +143,17 @@ React (ChatPanel) → POST /api/chat → api/chat.js (Vercel Function, reads GRO
 The browser never sees the key: it only calls `/api/chat`. During `npm run dev`, a small plugin in `vite.config.js` serves `/api/chat` from the same file on the Node side. Change the model in **one place**: `api/_lib/groqConfig.js` (or `GROQ_MODEL`).
 
 "Royal Square Assistant" explains portal navigation and the client's current statuses (passed as context by `chatService.buildStatusContext`). Its system prompt (`api/_lib/assistantPrompt.js`) forbids recommending investments or insurance products, regulated financial advice, predicting claim outcomes, legal determinations and inventing account data, and redirects with: *"For financial advice or product recommendations, please speak to your Royal Square Financial adviser."*
+
+### Languages (English, Afrikaans, isiZulu)
+
+Everything user-facing goes through `src/i18n`:
+
+- `t('nav.dashboard', { count })` for UI copy (semantic keys, `key_one` / `key_other` for plurals). Use `const { t } = useI18n()` in components; utils and services can import `t` directly.
+- `tx('Motor claim')` for text that is stored or generated as English (workflow templates, activity messages, mock data). It is looked up by its English text; entries with `{0}` placeholders match dynamic sentences.
+- Copy lives in `src/i18n/locales/{en,af,zu}.js`. English is the default and the fallback for anything missing. To add a page, add its keys to `en.js` (and `af.js` / `zu.js`) and call `t()`; nothing else to wire up. A new language is one more locale file plus an entry in `LANGUAGES` (`src/i18n/index.js`) and `api/_lib/assistantPrompt.js`.
+- `<LanguageSelect />` is the dropdown. It is on the Client and Adviser profile pages, and on the start and sign-in pages.
+- Persistence: signed in → `profiles.language` (shared by clients and advisers, loaded with the session); signed out or demo → this device's localStorage.
+- Chatbot: the browser sends `language` in the `/api/chat` body, and the server builds the system prompt for that language (fixed safety sentences are pre-translated). Unknown values fall back to English.
 
 ### Offline SOS and Capacitor
 

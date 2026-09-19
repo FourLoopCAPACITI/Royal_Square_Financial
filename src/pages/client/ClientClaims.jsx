@@ -6,8 +6,10 @@ import { useCurrentClient } from '../../hooks/useCurrentUser.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
 import { listWorkflows } from '../../services/workflowService.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function ClientClaims() {
+  const { t } = useI18n();
   const client = useCurrentClient();
   const clientId = client.data?.id;
   const claims = useServiceQuery(
@@ -18,9 +20,9 @@ export default function ClientClaims() {
 
   return (
     <>
-      <PageHeader title="Claims" description="Report an incident and follow every step until your claim is closed." />
-      <Section title="Your claims" count={claims.data?.length}>
-        <QueryState query={claims} loadingLabel="Loading claims">
+      <PageHeader title={t('claims.title')} description={t('claims.clientDescription')} />
+      <Section title={t('claims.yours')} count={claims.data?.length}>
+        <QueryState query={claims} loadingLabel={t('claims.loading')}>
           {(list) =>
             list.length ? (
               <div className="space-y-3">
@@ -29,7 +31,7 @@ export default function ClientClaims() {
                 ))}
               </div>
             ) : (
-              <EmptyState title="No claims" message="If you're in an accident, Accident Assist walks you through what to capture." />
+              <EmptyState title={t('claims.none')} message={t('claims.noneHint')} />
             )
           }
         </QueryState>

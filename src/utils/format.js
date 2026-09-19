@@ -1,4 +1,6 @@
-/** Formatting helpers (South African locale). Pure functions, no React. */
+/** Formatting helpers (South African locale, in the active language). Pure functions, no React. */
+import { getLocale, getMonthNames, t } from '../i18n/index.js';
+
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 /** 1240000 → "R1,240,000" */
@@ -11,17 +13,23 @@ export function formatZAR(value) {
 
 export function formatDate(value) {
   if (!value) return '—';
-  return new Date(value).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' });
+  const d = new Date(value);
+  const months = getMonthNames();
+  if (months) return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  return d.toLocaleDateString(getLocale(), { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 export function formatShortDate(value) {
   if (!value) return '—';
-  return new Date(value).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' });
+  const d = new Date(value);
+  const months = getMonthNames();
+  if (months) return `${d.getDate()} ${months[d.getMonth()].slice(0, 3)}`;
+  return d.toLocaleDateString(getLocale(), { day: 'numeric', month: 'short' });
 }
 
 export function formatTime(value) {
   if (!value) return '';
-  return new Date(value).toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return new Date(value).toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
 export function startOfDay(value = new Date()) {
@@ -43,25 +51,24 @@ export function daysSince(value, now = new Date()) {
 
 export function describeDue(value, now = new Date()) {
   const d = daysUntil(value, now);
-  if (d === null) return 'No due date';
-  if (d === 0) return 'Due today';
-  if (d === 1) return 'Due tomorrow';
-  if (d > 1) return `Due in ${d} days`;
-  if (d === -1) return '1 day overdue';
-  return `${Math.abs(d)} days overdue`;
+  if (d === null) return t('due.none');
+  if (d === 0) return t('due.today');
+  if (d === 1) return t('due.tomorrow');
+  if (d > 1) return t('due.inDays', { count: d });
+  return t('due.overdue', { count: Math.abs(d) });
 }
 
 export function describeWaiting(value, now = new Date()) {
   const d = daysSince(value, now);
-  if (d === null || d <= 0) return 'Waiting since today';
-  return d === 1 ? 'Waiting 1 day' : `Waiting ${d} days`;
+  if (d === null || d <= 0) return t('due.waitingToday');
+  return t('due.waiting', { count: d });
 }
 
 /** "Today", "Yesterday" or a full date — used on activity timelines. */
 export function describeDay(value, now = new Date()) {
   const d = daysUntil(value, now);
-  if (d === 0) return 'Today';
-  if (d === -1) return 'Yesterday';
+  if (d === 0) return t('day.today');
+  if (d === -1) return t('day.yesterday');
   return formatDate(value);
 }
 

@@ -3,12 +3,14 @@ import { ChevronRight } from 'lucide-react';
 import StatusBadge from '../common/StatusBadge.jsx';
 import { describeWorkflowStatus, getCurrentStepStartedAt, getOwnerLabel, isWorkflowOverdue } from '../../utils/workflow.js';
 import { describeDue, describeWaiting } from '../../utils/format.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /**
  * One row in the adviser Action Inbox:
  * client · process · current owner · next action · due / waiting.
  */
 export default function InboxItem({ workflow, clientName, providerName }) {
+  const { t, tx } = useI18n();
   const overdue = isWorkflowOverdue(workflow);
   const owner = getOwnerLabel(workflow.currentOwner, { providerName, viewerRole: 'adviser', clientName });
   const waitingOnOthers = !['adviser', 'system'].includes(workflow.currentOwner);
@@ -16,21 +18,21 @@ export default function InboxItem({ workflow, clientName, providerName }) {
     <li>
       <Link to={`/workflow/${workflow.id}`} className="group grid gap-2 p-4 hover:bg-brand-light-grey sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)_auto] sm:items-center sm:gap-6">
         <div className="min-w-0">
-          <p className="font-semibold">{clientName || 'Client'}</p>
-          <p className="text-[14px] text-brand-grey">{workflow.title}</p>
+          <p className="font-semibold">{clientName || t('owner.client')}</p>
+          <p className="text-[14px] text-brand-grey">{tx(workflow.title)}</p>
         </div>
         <dl className="grid grid-cols-[110px_1fr] gap-x-3 text-[14px]">
-          <dt className="text-brand-grey">Current owner</dt>
+          <dt className="text-brand-grey">{t('workflow.currentOwner')}</dt>
           <dd className="font-semibold">{owner}</dd>
-          <dt className="text-brand-grey">Next action</dt>
-          <dd>{workflow.nextAction}</dd>
-          <dt className="text-brand-grey">{waitingOnOthers ? 'Waiting' : 'Due'}</dt>
+          <dt className="text-brand-grey">{t('workflow.nextAction')}</dt>
+          <dd>{tx(workflow.nextAction)}</dd>
+          <dt className="text-brand-grey">{waitingOnOthers ? t('workflow.waiting') : t('workflow.due')}</dt>
           <dd className={overdue ? 'font-semibold text-brand-red' : ''}>
             {waitingOnOthers ? describeWaiting(getCurrentStepStartedAt(workflow)) : describeDue(workflow.dueDate)}
           </dd>
         </dl>
         <div className="flex items-center gap-2 sm:justify-end">
-          {overdue ? <StatusBadge status="overdue" /> : <StatusBadge tone={waitingOnOthers ? 'neutral' : 'action'}>{waitingOnOthers ? describeWorkflowStatus(workflow, { providerName, clientName }) : 'Needs you'}</StatusBadge>}
+          {overdue ? <StatusBadge status="overdue" /> : <StatusBadge tone={waitingOnOthers ? 'neutral' : 'action'}>{waitingOnOthers ? describeWorkflowStatus(workflow, { providerName, clientName }) : t('status.needsYou')}</StatusBadge>}
           {workflow.priority === 'high' && <StatusBadge status="high" />}
           <ChevronRight size={18} className="text-brand-grey" aria-hidden="true" />
         </div>
