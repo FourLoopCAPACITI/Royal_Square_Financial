@@ -21,16 +21,16 @@ export default function ActivityTimeline({ events = [], emptyMessage }) {
     <div className="space-y-5">
       {groups.map((group) => (
         <div key={group.day}>
-          <p className="mb-2 text-[13px] font-semibold text-brand-grey">{group.day}</p>
+          <p className="mb-2 text-[14.5px] font-semibold text-brand-grey">{group.day}</p>
           <ol className="space-y-0">
             {group.items.map((event) => (
               <li key={event.id} className="grid grid-cols-[52px_1fr] gap-3 border-l border-brand-border py-1.5 pl-3">
-                <time dateTime={event.at} className="pt-px text-[13px] tabular-nums text-brand-grey">
+                <time dateTime={event.at} className="pt-px text-[14.5px] tabular-nums text-brand-grey">
                   {formatTime(event.at)}
                 </time>
                 <div>
                   <p className="leading-snug">{tx(event.message)}</p>
-                  <p className="text-[12.5px] text-brand-grey">{tx(event.actorName)}</p>
+                  <p className="text-[14px] text-brand-grey">{tx(event.actorName)}</p>
                 </div>
               </li>
             ))}

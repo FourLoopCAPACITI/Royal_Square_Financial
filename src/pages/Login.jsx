@@ -37,7 +37,7 @@ export default function Login() {
         <Logo className="mx-auto mb-7 max-w-[160px]" />
         <h1 className="mb-1 text-2xl font-normal">{t('login.title')}</h1>
         {!IS_SUPABASE_CONFIGURED ? (
-          <p className="text-[14px] text-brand-grey">
+          <p className="text-[15.5px] text-brand-grey">
             {t('login.notConfigured')}
           </p>
         ) : (
@@ -50,16 +50,16 @@ export default function Login() {
               <label htmlFor="password" className="field-label">{t('login.password')}</label>
               <input id="password" type="password" className="field" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" {...validationProps()} />
             </div>
-            {error && <p className="text-[14px] text-brand-red" role="alert">{error}</p>}
+            {error && <p className="text-[15.5px] text-brand-red" role="alert">{error}</p>}
             <Button type="submit" className="w-full" disabled={busy}>{busy ? t('login.submitting') : t('login.submit')}</Button>
           </form>
         )}
-        <p className="mt-6 text-center text-[14px]">
+        <p className="mt-6 text-center text-[15.5px]">
           Need an account?{' '}
           <Link to="/signup" className="font-semibold text-brand-red hover:underline">Create one</Link>
         </p>
         {demoModeEnabled && (
-          <p className="mt-6 text-center text-[14px]">
+          <p className="mt-6 text-center text-[15.5px]">
             <Link to="/" className="font-semibold text-brand-red hover:underline">{t('login.useDemo')}</Link>
           </p>
         )}

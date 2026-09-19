@@ -28,8 +28,8 @@ export default function WorkflowOwner({ workflow, providerName, viewerRole, clie
             className={`relative flex-1 border ${tone} ${base} first:rounded-l-md last:rounded-r-md`}
             aria-current={isCurrent ? 'step' : undefined}
           >
-            <span className={`block truncate font-display ${compact ? 'text-[11px]' : 'text-[13px]'} font-medium uppercase tracking-[0.2em]`}>{name}</span>
-            <span className={`mt-1 flex items-center gap-1.5 ${compact ? 'text-[12px]' : 'text-[13px]'} ${isCurrent ? 'text-white/90' : ''}`}>
+            <span className={`block truncate font-display ${compact ? 'text-[12.5px]' : 'text-[14.5px]'} font-medium uppercase tracking-[0.2em]`}>{name}</span>
+            <span className={`mt-1 flex items-center gap-1.5 ${compact ? 'text-[13.5px]' : 'text-[14.5px]'} ${isCurrent ? 'text-white/90' : ''}`}>
               {isCurrent && <span className="rsf-ball inline-block h-2 w-2 rounded-full bg-white" aria-hidden="true" />}
               {(state === 'complete' || state === 'paused') && <Check size={13} aria-hidden="true" />}
               {t(`owner.state.${state}`)}

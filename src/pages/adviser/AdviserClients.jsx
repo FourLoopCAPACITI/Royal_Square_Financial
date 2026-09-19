@@ -44,9 +44,9 @@ export default function AdviserClients() {
                     <button type="button" onClick={() => setOpenId(open ? null : c.id)} aria-expanded={open} className="grid w-full gap-2 p-4 text-left hover:bg-brand-light-grey sm:grid-cols-[1.2fr_1fr_auto] sm:items-center">
                       <span>
                         <span className="block font-semibold">{c.name}</span>
-                        <span className="text-[13.5px] text-brand-grey">{tx(c.occupation)}. {c.city}</span>
+                        <span className="text-[15px] text-brand-grey">{tx(c.occupation)}. {c.city}</span>
                       </span>
-                      <span className="text-[14px] tabular-nums text-brand-grey">{t('clients.netWorth', { amount: formatZAR(c.totalAssets - c.totalLiabilities) })}</span>
+                      <span className="text-[15.5px] tabular-nums text-brand-grey">{t('clients.netWorth', { amount: formatZAR(c.totalAssets - c.totalLiabilities) })}</span>
                       <span className="flex gap-2">
                         {overdue > 0 && <StatusBadge status="overdue">{t('clients.overdue', { count: overdue })}</StatusBadge>}
                         <StatusBadge tone="neutral">{t('clients.open', { count: mine.length })}</StatusBadge>
@@ -54,8 +54,8 @@ export default function AdviserClients() {
                     </button>
                     {open && (
                       <div className="space-y-3 border-t border-brand-border bg-brand-light-grey p-4">
-                        <p className="text-[14px] text-brand-grey">{c.email}. {c.phone}. {c.address}</p>
-                        {mine.length ? mine.map((w) => <WorkflowCard key={w.id} workflow={w} providerName={providerName(w.providerId)} viewerRole="adviser" showOwner={false} />) : <p className="text-[14px]">{t('clients.noOpen')}</p>}
+                        <p className="text-[15.5px] text-brand-grey">{c.email}. {c.phone}. {c.address}</p>
+                        {mine.length ? mine.map((w) => <WorkflowCard key={w.id} workflow={w} providerName={providerName(w.providerId)} viewerRole="adviser" showOwner={false} />) : <p className="text-[15.5px]">{t('clients.noOpen')}</p>}
                       </div>
                     )}
                   </li>

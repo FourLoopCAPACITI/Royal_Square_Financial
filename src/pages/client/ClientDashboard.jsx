@@ -39,7 +39,7 @@ export default function ClientDashboard() {
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div>
-          <Section title={t('client.dashboard.actionRequired')} count={tasks.data?.length} action={<Link to="/client/actions" className="text-[14px] font-semibold text-brand-red hover:underline">{t('client.dashboard.allActions')}</Link>}>
+          <Section title={t('client.dashboard.actionRequired')} count={tasks.data?.length} action={<Link to="/client/actions" className="text-[15.5px] font-semibold text-brand-red hover:underline">{t('client.dashboard.allActions')}</Link>}>
             <QueryState query={tasks} loadingLabel={t('client.dashboard.loadingActions')}>
               {(list) => <ActionList tasks={list.slice(0, 4)} emptyTitle={t('client.dashboard.upToDate')} />}
             </QueryState>
@@ -67,7 +67,7 @@ export default function ClientDashboard() {
           <div>
             <div className="mb-3 flex items-baseline justify-between">
               <h2 className="text-lg font-medium">{t('client.dashboard.goals')}</h2>
-              <Link to="/client/goals" className="text-[14px] font-semibold text-brand-red hover:underline">{t('client.dashboard.viewGoals')}</Link>
+              <Link to="/client/goals" className="text-[15.5px] font-semibold text-brand-red hover:underline">{t('client.dashboard.viewGoals')}</Link>
             </div>
             <QueryState query={goals} loadingLabel={t('client.dashboard.loadingGoals')}>
               {(list) => (

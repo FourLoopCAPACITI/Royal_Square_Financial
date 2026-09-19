@@ -32,9 +32,9 @@ export default function AdviserRequests() {
                     <Link to={r.workflowId ? `/workflow/${r.workflowId}` : '#'} className="grid gap-2 p-4 hover:bg-brand-light-grey sm:grid-cols-[1fr_1fr_auto] sm:items-center">
                       <span>
                         <span className="block font-semibold">{tx(getServiceRequestType(r.type)?.label || r.type)}</span>
-                        <span className="text-[13.5px] text-brand-grey">{t('requests.received', { client: clientName(r.clientId), date: formatDate(r.createdAt) })}</span>
+                        <span className="text-[15px] text-brand-grey">{t('requests.received', { client: clientName(r.clientId), date: formatDate(r.createdAt) })}</span>
                       </span>
-                      <span className="text-[14px]">{w ? tx(w.nextAction) : ''}</span>
+                      <span className="text-[15.5px]">{w ? tx(w.nextAction) : ''}</span>
                       <StatusBadge tone={w?.status === 'completed' ? 'success' : w && ['adviser', 'system'].includes(w.currentOwner) ? 'action' : 'neutral'}>
                         {w ? describeWorkflowStatus(w, { providerName: providerName(w.providerId), clientName: clientName(w.clientId) }) : tx(r.status)}
                       </StatusBadge>

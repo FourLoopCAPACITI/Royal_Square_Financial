@@ -41,7 +41,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-surface font-sans text-[15px] leading-relaxed text-brand-black antialiased;
+    @apply bg-surface font-sans text-[16.5px] leading-relaxed text-brand-black antialiased;
   }
   h1, h2, h3 {
     @apply font-display text-brand-black;
@@ -54,10 +54,10 @@
 
 @layer components {
   .label-muted {
-    @apply text-[13px] text-brand-grey;
+    @apply text-[14.5px] text-brand-grey;
   }
   .field {
-    @apply w-full rounded border border-brand-border bg-surface px-3 py-2.5 text-[15px] text-brand-black placeholder:text-brand-grey focus:border-brand-red focus:outline-none;
+    @apply w-full rounded border border-brand-border bg-surface px-3 py-2.5 text-[16.5px] text-brand-black placeholder:text-brand-grey focus:border-brand-red focus:outline-none;
   }
   .field-label {
     @apply mb-1.5 block text-sm font-semibold text-brand-black;
@@ -74,8 +74,8 @@
     @apply mb-1.5 mt-3 font-semibold leading-snug;
   }
   .chat-markdown h1 { @apply text-base; }
-  .chat-markdown h2 { @apply text-[15px]; }
-  .chat-markdown h3 { @apply text-[14.5px]; }
+  .chat-markdown h2 { @apply text-[16.5px]; }
+  .chat-markdown h3 { @apply text-[16px]; }
   .chat-markdown p { @apply my-2; }
   .chat-markdown ul { @apply my-2 list-disc pl-5; }
   .chat-markdown ol { @apply my-2 list-decimal pl-5; }
@@ -83,8 +83,8 @@
   .chat-markdown li + li { @apply mt-1; }
   .chat-markdown strong { @apply font-semibold; }
   .chat-markdown a { @apply break-words font-medium text-brand-red underline underline-offset-2; }
-  .chat-markdown code { @apply break-words rounded bg-surface/70 px-1 py-0.5 text-[13px]; }
-  .chat-markdown pre { @apply my-2 max-w-full overflow-x-auto rounded bg-surface/70 p-2 text-[13px]; }
+  .chat-markdown code { @apply break-words rounded bg-surface/70 px-1 py-0.5 text-[14.5px]; }
+  .chat-markdown pre { @apply my-2 max-w-full overflow-x-auto rounded bg-surface/70 p-2 text-[14.5px]; }
   .chat-markdown pre code { @apply bg-transparent p-0; }
   .chat-markdown blockquote { @apply my-2 border-l-2 border-brand-red pl-3 text-brand-grey; }
 }

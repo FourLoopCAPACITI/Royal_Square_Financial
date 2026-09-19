@@ -14,7 +14,7 @@ function AccountFooter() {
   const { t } = useI18n();
   const { role, isDemo, isAuthenticated, profile, signOut } = useSession();
   return (
-    <div className="text-[13px]">
+    <div className="text-[14.5px]">
       <p className="font-semibold">{isDemo ? (role === 'adviser' ? 'Sipho Ndlovu' : 'Lerato Molefe') : profile?.full_name || t('shell.signedIn')}</p>
       <p className="text-brand-grey">{t(`shell.role.${role === 'adviser' || role === 'admin' ? role : 'client'}`)}{isDemo ? ` ${t('shell.demoSuffix')}` : ''}</p>
       {isAuthenticated && (
@@ -41,7 +41,7 @@ export default function AppShell() {
         {demoModeEnabled && <DemoBar />}
         <MobileNav items={items} footer={<AccountFooter />} />
         {!online && (
-          <div className="border-b border-warn/20 bg-warn-tint px-4 py-2.5 text-[14px] text-warn lg:px-8" role="status">
+          <div className="border-b border-warn/20 bg-warn-tint px-4 py-2.5 text-[15.5px] text-warn lg:px-8" role="status">
             <span className="inline-flex items-center gap-2 font-semibold">
               <WifiOff size={16} aria-hidden="true" /> {t('shell.offline')}
             </span>{' '}

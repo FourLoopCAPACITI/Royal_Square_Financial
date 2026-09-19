@@ -20,7 +20,7 @@ export default function ClientDocuments() {
       <PageHeader title={t('documents.title')} description={t('documents.clientDescription')} />
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
         <Section title={t('documents.yours')} count={documents.data?.length}>
-          {attention > 0 && <p className="mb-3 text-[14px] text-warn">{t('documents.needAttention', { count: attention })}</p>}
+          {attention > 0 && <p className="mb-3 text-[15.5px] text-warn">{t('documents.needAttention', { count: attention })}</p>}
           <QueryState query={documents} loadingLabel={t('documents.loading')}>
             {(list) => <DocumentList documents={list} />}
           </QueryState>

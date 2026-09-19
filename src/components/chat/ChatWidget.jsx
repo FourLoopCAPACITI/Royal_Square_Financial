@@ -18,7 +18,7 @@ export default function ChatWidget() {
           <div className="flex items-center justify-between border-b border-brand-border px-4 py-3">
             <div>
               <p className="font-display font-medium">{t('chat.title')}</p>
-              <p className="text-[12.5px] text-brand-grey">{t('chat.subtitle')}</p>
+              <p className="text-[14px] text-brand-grey">{t('chat.subtitle')}</p>
             </div>
             <button type="button" onClick={() => setOpen(false)} className="rounded p-1.5 hover:bg-brand-light-grey" aria-label={t('chat.closeAssistant')}>
               <X size={18} />
@@ -30,7 +30,7 @@ export default function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="ml-auto flex items-center gap-2 rounded-full border border-brand-border bg-surface px-4 py-3 text-[14px] font-semibold shadow-[0_4px_14px_rgba(10,10,10,0.10)] hover:border-brand-red"
+        className="ml-auto flex items-center gap-2 rounded-full border border-brand-border bg-surface px-4 py-3 text-[15.5px] font-semibold shadow-[0_4px_14px_rgba(10,10,10,0.10)] hover:border-brand-red"
         aria-expanded={open}
       >
         <MessageCircle size={18} className="text-brand-red" aria-hidden="true" />

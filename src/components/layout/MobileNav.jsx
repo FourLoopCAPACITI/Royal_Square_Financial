@@ -18,7 +18,7 @@ export default function MobileNav({ items, footer }) {
       <div className="sticky top-14 z-30 flex items-center justify-between border-b border-brand-border bg-surface px-4 py-2.5 lg:hidden">
         <div className="flex items-center gap-2.5">
           <Logo variant="mark" />
-          <span className="font-display text-[13px] uppercase tracking-[0.28em]">
+          <span className="font-display text-[14.5px] uppercase tracking-[0.28em]">
             Royal<span className="text-brand-grey">Square</span>
           </span>
         </div>
@@ -32,7 +32,7 @@ export default function MobileNav({ items, footer }) {
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `flex flex-col items-center gap-0.5 px-1 py-2 text-[11px] ${isActive ? 'font-semibold text-brand-red' : 'text-text-secondary'}`
+                  `flex flex-col items-center gap-0.5 px-1 py-2 text-[12.5px] ${isActive ? 'font-semibold text-brand-red' : 'text-text-secondary'}`
                 }
               >
                 <Icon size={20} aria-hidden="true" />
@@ -41,7 +41,7 @@ export default function MobileNav({ items, footer }) {
             </li>
           ))}
           <li>
-            <button type="button" onClick={() => setOpen(true)} className="flex w-full flex-col items-center gap-0.5 px-1 py-2 text-[11px] text-text-secondary" aria-expanded={open}>
+            <button type="button" onClick={() => setOpen(true)} className="flex w-full flex-col items-center gap-0.5 px-1 py-2 text-[12.5px] text-text-secondary" aria-expanded={open}>
               <Menu size={20} aria-hidden="true" />
               {t('nav.more')}
             </button>

@@ -28,7 +28,7 @@ export default function StatusBadge({ status, tone, children, className = '' }) 
   const mapped = STATUS_MAP[status] || {};
   const finalTone = tone || mapped.tone || 'neutral';
   return (
-    <span className={`inline-flex items-center whitespace-nowrap rounded px-2 py-0.5 text-[12.5px] font-semibold ${TONES[finalTone]} ${className}`}>
+    <span className={`inline-flex items-center whitespace-nowrap rounded px-2 py-0.5 text-[14px] font-semibold ${TONES[finalTone]} ${className}`}>
       {children || (STATUS_MAP[status] ? t(`status.${status}`) : status)}
     </span>
   );

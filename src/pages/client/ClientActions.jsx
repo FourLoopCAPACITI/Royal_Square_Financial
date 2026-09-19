@@ -55,7 +55,7 @@ export default function ClientActions() {
             list.length ? (
               <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
                 {list.map((r) => (
-                  <li key={r.id} className="flex justify-between gap-4 p-4 text-[15px]">
+                  <li key={r.id} className="flex justify-between gap-4 p-4 text-[16.5px]">
                     <span>{tx(r.title)}</span>
                     <span className="text-brand-grey">{t('client.actions.reminderLine', { date: formatDate(r.remindAt), channel: t(`channel.${r.channel}`) })}</span>
                   </li>

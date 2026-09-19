@@ -42,7 +42,7 @@ export default function SmartUpload({ clientId, defaultType = 'drivers_licence',
   return (
     <div className="rounded-md border border-brand-border p-5">
       <h2 className="text-lg font-medium">{t('upload.title')}</h2>
-      <p className="mb-4 text-[14px] text-brand-grey">{t('upload.description')}</p>
+      <p className="mb-4 text-[15.5px] text-brand-grey">{t('upload.description')}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
@@ -72,21 +72,21 @@ export default function SmartUpload({ clientId, defaultType = 'drivers_licence',
           t('upload.submit')
         )}
       </Button>
-      {error && <p className="mt-3 text-[14px] text-brand-red" role="alert">{error}</p>}
+      {error && <p className="mt-3 text-[15.5px] text-brand-red" role="alert">{error}</p>}
 
       {result && (
         <div className="mt-5 rounded-md bg-brand-light-grey p-4" role="status">
           <p className="font-semibold">{tx(result.headline)}</p>
-          <p className="text-[14px] text-brand-grey">{t('upload.processed')}</p>
+          <p className="text-[15.5px] text-brand-grey">{t('upload.processed')}</p>
           {result.detected.map((d) => (
-            <p key={d.label} className="mt-3 text-[14px]">
+            <p key={d.label} className="mt-3 text-[15.5px]">
               {tx(d.label)}
               <span className="block font-display text-[20px] font-normal">{d.value}</span>
             </p>
           ))}
           <ul className="mt-3 space-y-1.5">
             {result.actions.map((a) => (
-              <li key={a} className="flex items-center gap-2 text-[14.5px] text-ok">
+              <li key={a} className="flex items-center gap-2 text-[16px] text-ok">
                 <CheckCircle2 size={16} aria-hidden="true" /> {tx(a)}
               </li>
             ))}

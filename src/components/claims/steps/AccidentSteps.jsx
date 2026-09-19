@@ -34,7 +34,7 @@ export function SafetyStep({ report, update }) {
   const s = report.safety;
   return (
     <div className="space-y-5">
-      <p className="text-[16px]">{t('accident.safe.question')}</p>
+      <p className="text-[17px]">{t('accident.safe.question')}</p>
       <div className="grid gap-2 sm:grid-cols-2">
         <Choice label={t('accident.safe.yes')} selected={s.injuries === false} onClick={() => update('safety', { ...s, injuries: false, safe: true })} />
         <Choice label={t('accident.safe.hurt')} selected={s.injuries === true} onClick={() => update('safety', { ...s, injuries: true })} />
@@ -42,18 +42,18 @@ export function SafetyStep({ report, update }) {
       {s.injuries === true && (
         <div className="rounded-md bg-action p-4 text-white" role="alert">
           <p className="font-semibold">{t('accident.safe.callTitle')}</p>
-          <p className="text-[14.5px]">{t('accident.safe.callText')}</p>
+          <p className="text-[16px]">{t('accident.safe.callText')}</p>
           <a href="tel:112" className="mt-3 inline-flex items-center gap-2 rounded bg-surface px-4 py-2 font-semibold text-brand-red">
             <Phone size={16} aria-hidden="true" /> {t('accident.safe.call112')}
           </a>
         </div>
       )}
-      <ul className="list-disc space-y-1 pl-5 text-[14.5px] text-text-secondary">
+      <ul className="list-disc space-y-1 pl-5 text-[16px] text-text-secondary">
         <li>{t('accident.safe.tip1')}</li>
         <li>{t('accident.safe.tip2')}</li>
         <li>{t('accident.safe.tip3')}</li>
       </ul>
-      <label className="flex items-center gap-2 text-[15px]">
+      <label className="flex items-center gap-2 text-[16.5px]">
         <input type="checkbox" className="h-4 w-4 accent-[#9A1C20]" checked={s.policeNotified} onChange={(e) => update('safety', { ...s, policeNotified: e.target.checked })} />
         {t('accident.safe.police')}
       </label>
@@ -74,7 +74,7 @@ export function LocationStep({ report, update }) {
       <Button onClick={locate} disabled={busy} size="lg" icon={busy ? undefined : MapPin}>
         {busy ? <><Loader2 size={18} className="animate-spin" aria-hidden="true" /> {t('accident.location.finding')}</> : t('accident.location.use')}
       </Button>
-      <p className="text-[12.5px] text-brand-grey">{t('accident.location.simulated')}</p>
+      <p className="text-[14px] text-brand-grey">{t('accident.location.simulated')}</p>
       <div>
         <label htmlFor="address" className="field-label">{t('accident.location.describe')}</label>
         <input
@@ -86,7 +86,7 @@ export function LocationStep({ report, update }) {
         />
       </div>
       {report.location?.lat && (
-        <p className="text-[14px] text-brand-grey">
+        <p className="text-[15.5px] text-brand-grey">
           {t('accident.location.captured', { lat: report.location.lat.toFixed(4), lng: report.location.lng.toFixed(4), accuracy: report.location.accuracyMetres })}
         </p>
       )}
@@ -182,7 +182,7 @@ export function WitnessesStep({ report, update }) {
           ))}
         </ul>
       ) : (
-        <p className="text-[14px] text-brand-grey">{t('accident.witness.none')}</p>
+        <p className="text-[15.5px] text-brand-grey">{t('accident.witness.none')}</p>
       )}
     </div>
   );
@@ -210,10 +210,10 @@ export function DescriptionStep({ report, update }) {
         <Button variant={recording ? 'dark' : 'secondary'} onClick={toggle} icon={recording ? Square : Mic}>
           {recording ? t('accident.desc.stop') : report.voiceNote ? t('accident.desc.again') : t('accident.desc.record')}
         </Button>
-        {recording && <span className="flex items-center gap-2 text-[14px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-action" aria-hidden="true" />{t('accident.desc.recording')}</span>}
-        {!recording && report.voiceNote && <span className="text-[14px] text-ok">{t('accident.desc.saved', { seconds: report.voiceNote.durationSeconds })}</span>}
+        {recording && <span className="flex items-center gap-2 text-[15.5px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-action" aria-hidden="true" />{t('accident.desc.recording')}</span>}
+        {!recording && report.voiceNote && <span className="text-[15.5px] text-ok">{t('accident.desc.saved', { seconds: report.voiceNote.durationSeconds })}</span>}
       </div>
-      <p className="text-[12.5px] text-brand-grey">{t('accident.desc.simulated')}</p>
+      <p className="text-[14px] text-brand-grey">{t('accident.desc.simulated')}</p>
     </div>
   );
 }
@@ -235,10 +235,10 @@ export function ReviewStep({ report, goTo }) {
   return (
     <dl className="divide-y divide-brand-border rounded-md border border-brand-border">
       {rows.map(([label, value, index]) => (
-        <div key={label} className="grid grid-cols-[120px_1fr_auto] items-start gap-3 p-3 text-[14.5px] sm:grid-cols-[160px_1fr_auto]">
+        <div key={label} className="grid grid-cols-[120px_1fr_auto] items-start gap-3 p-3 text-[16px] sm:grid-cols-[160px_1fr_auto]">
           <dt className="text-brand-grey">{label}</dt>
           <dd className="min-w-0 break-words">{value}</dd>
-          <button type="button" onClick={() => goTo(index)} className="text-[13.5px] font-semibold text-brand-red hover:underline">{t('accident.review.edit')}</button>
+          <button type="button" onClick={() => goTo(index)} className="text-[15px] font-semibold text-brand-red hover:underline">{t('accident.review.edit')}</button>
         </div>
       ))}
     </dl>

@@ -9,7 +9,7 @@ export default function ClaimDetails({ claim }) {
   return (
     <div className="rounded-md border border-brand-border p-5">
       <h2 className="mb-3 text-lg font-medium">{t('claim.details')}</h2>
-      <dl className="grid gap-x-6 gap-y-3 text-[14.5px] sm:grid-cols-2">
+      <dl className="grid gap-x-6 gap-y-3 text-[16px] sm:grid-cols-2">
         <div>
           <dt className="text-brand-grey">{t('claim.number')}</dt>
           <dd className="font-semibold tabular-nums">{claim.claimNumber || t('claim.waitingInsurer')}</dd>
@@ -41,10 +41,10 @@ export default function ClaimDetails({ claim }) {
       </dl>
       {claim.evidence?.length > 0 && (
         <div className="mt-4 border-t border-brand-border pt-4">
-          <p className="mb-2 text-[14px] font-semibold">{t('claim.evidence')} {captured} / {claim.evidence.length}</p>
+          <p className="mb-2 text-[15.5px] font-semibold">{t('claim.evidence')} {captured} / {claim.evidence.length}</p>
           <ul className="grid gap-1.5 sm:grid-cols-2">
             {claim.evidence.map((e) => (
-              <li key={e.id} className={`flex items-center gap-2 text-[14px] ${e.captured ? '' : 'text-brand-grey'}`}>
+              <li key={e.id} className={`flex items-center gap-2 text-[15.5px] ${e.captured ? '' : 'text-brand-grey'}`}>
                 {e.captured ? <Check size={15} className="text-ok" aria-hidden="true" /> : <Circle size={13} aria-hidden="true" />}
                 {tx(e.label)}
               </li>
@@ -52,7 +52,7 @@ export default function ClaimDetails({ claim }) {
           </ul>
         </div>
       )}
-      {claim.capturedOffline && <p className="mt-3 text-[13px] text-brand-grey">{t('claim.syncedNote')}</p>}
+      {claim.capturedOffline && <p className="mt-3 text-[14.5px] text-brand-grey">{t('claim.syncedNote')}</p>}
     </div>
   );
 }

@@ -20,20 +20,20 @@ export default function ActionList({ tasks = [], clientName, onComplete, emptyTi
             <Icon size={18} className={`mt-0.5 shrink-0 ${days < 0 ? 'text-brand-red' : 'text-brand-black'}`} aria-hidden="true" />
             <div className="min-w-0 flex-1">
               <p className="font-semibold leading-snug">{tx(task.title)}</p>
-              <p className="text-[14px] text-brand-grey">
+              <p className="text-[15.5px] text-brand-grey">
                 {clientName ? `${clientName(task.clientId)}. ` : ''}
                 {tx(task.description)}
               </p>
-              <p className={`mt-1 text-[13px] ${urgency}`}>{describeDue(task.dueDate)}</p>
+              <p className={`mt-1 text-[14.5px] ${urgency}`}>{describeDue(task.dueDate)}</p>
             </div>
             <div className="flex shrink-0 flex-col items-end gap-1.5">
               {href && (
-                <Link to={href} className="rounded border border-brand-border px-3 py-1.5 text-[13.5px] font-semibold hover:border-brand-black">
+                <Link to={href} className="rounded border border-brand-border px-3 py-1.5 text-[15px] font-semibold hover:border-brand-black">
                   {t('common.open')}
                 </Link>
               )}
               {onComplete && (
-                <button type="button" onClick={() => onComplete(task.id)} className="text-[13px] text-brand-grey hover:text-brand-red">
+                <button type="button" onClick={() => onComplete(task.id)} className="text-[14.5px] text-brand-grey hover:text-brand-red">
                   {t('actionList.markDone')}
                 </button>
               )}

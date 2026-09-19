@@ -22,8 +22,8 @@ export default function WorkflowCard({ workflow, providerName, clientName, viewe
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-display text-[17px] font-medium">{tx(workflow.title)}</p>
-          <p className="text-[13.5px] text-brand-grey">
+          <p className="font-display text-[18px] font-medium">{tx(workflow.title)}</p>
+          <p className="text-[15px] text-brand-grey">
             {[clientName, providerName].filter(Boolean).join(', ') || 'Royal Square Financial'}
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function WorkflowCard({ workflow, providerName, clientName, viewe
         </div>
       )}
 
-      <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-[14px] sm:grid-cols-[1fr_auto]">
+      <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-[15.5px] sm:grid-cols-[1fr_auto]">
         <div>
           <dt className="label-muted">{t('workflow.nextAction')}</dt>
           <dd className="font-medium">{tx(workflow.nextAction)}</dd>

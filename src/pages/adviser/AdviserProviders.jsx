@@ -22,11 +22,11 @@ export default function AdviserProviders() {
             {list.map((p) => (
               <div key={p.id} className="rounded-md border border-brand-border p-5">
                 <div className="flex items-start justify-between gap-2">
-                  <p className="font-display text-[18px] font-medium">{p.name}</p>
+                  <p className="font-display text-[19px] font-medium">{p.name}</p>
                   <StatusBadge tone="neutral">{p.integration === 'mock' ? t('providers.mock') : p.integration}</StatusBadge>
                 </div>
-                <p className="text-[14px] text-brand-grey">{tx(p.category)}</p>
-                <dl className="mt-4 grid grid-cols-2 gap-2 text-[14px]">
+                <p className="text-[15.5px] text-brand-grey">{tx(p.category)}</p>
+                <dl className="mt-4 grid grid-cols-2 gap-2 text-[15.5px]">
                   <dt className="text-brand-grey">{t('providers.waiting')}</dt>
                   <dd className={`font-semibold ${waitingOn(p.id) ? 'text-brand-red' : ''}`}>{waitingOn(p.id)}</dd>
                   <dt className="text-brand-grey">{t('providers.response')}</dt>

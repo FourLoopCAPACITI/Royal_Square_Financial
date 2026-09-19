@@ -23,7 +23,7 @@ export function InboxGroups({ workflows, only }) {
           ))}
         </ul>
       ) : (
-        <p className="rounded-md border border-dashed border-brand-border p-4 text-[14px] text-brand-grey">{t(`inbox.empty.${g.key}`)}</p>
+        <p className="rounded-md border border-dashed border-brand-border p-4 text-[15.5px] text-brand-grey">{t(`inbox.empty.${g.key}`)}</p>
       )}
     </Section>
   ));

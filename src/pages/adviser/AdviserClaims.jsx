@@ -30,7 +30,7 @@ export default function AdviserClaims() {
                   return (
                     <div key={w.id}>
                       {claim && (
-                        <p className="mb-1.5 flex flex-wrap items-center gap-2 text-[13.5px] text-brand-grey">
+                        <p className="mb-1.5 flex flex-wrap items-center gap-2 text-[15px] text-brand-grey">
                           <span className="tabular-nums">{claim.claimNumber || t('claims.numberPending')}</span>
                           <span>{tx(claim.location)}</span>
                           {claim.capturedOffline && <StatusBadge tone="warning">{t('claims.capturedOffline')}</StatusBadge>}

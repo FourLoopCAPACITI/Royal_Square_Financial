@@ -16,14 +16,14 @@ export default function EvidenceChecklist({ report }) {
       </div>
       <ul className="space-y-1.5">
         {items.map((item) => (
-          <li key={item.key} className={`flex items-center gap-2 text-[14.5px] ${item.done ? '' : 'text-brand-grey'}`}>
+          <li key={item.key} className={`flex items-center gap-2 text-[16px] ${item.done ? '' : 'text-brand-grey'}`}>
             {item.done ? <Check size={16} className="text-ok" aria-hidden="true" /> : <Circle size={14} aria-hidden="true" />}
             {tx(item.label)}
             <span className="sr-only"> {item.done ? t('evidence.captured') : t('evidence.notCaptured')}</span>
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-[12.5px] text-brand-grey">{t('evidence.hint')}</p>
+      <p className="mt-3 text-[14px] text-brand-grey">{t('evidence.hint')}</p>
     </div>
   );
 }

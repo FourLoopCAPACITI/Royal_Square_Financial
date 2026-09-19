@@ -11,7 +11,7 @@ export default function SyncNotice() {
   if (!synced.length) return null;
   return (
     <div className="border-b border-ok/20 bg-ok-tint px-4 py-3 lg:px-8" role="status">
-      <div className="flex items-start gap-3 text-[14px] text-ok">
+      <div className="flex items-start gap-3 text-[15.5px] text-ok">
         <CheckCircle2 size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
         <p className="flex-1">
           {t('sync.backOnline', { count: synced.length })}{' '}

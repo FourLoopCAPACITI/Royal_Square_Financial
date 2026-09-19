@@ -30,7 +30,7 @@ function OfflineNotice() {
       <CloudOff size={20} className="mt-0.5 shrink-0 text-warn" aria-hidden="true" />
       <div>
         <p className="font-semibold">{t('shell.offline')}</p>
-        <p className="text-[14.5px]">{t('accident.offlineNotice')}</p>
+        <p className="text-[16px]">{t('accident.offlineNotice')}</p>
       </div>
     </div>
   );
@@ -126,9 +126,9 @@ export default function AccidentAssist() {
         <div>
           <p className="label-muted">{t('accident.title')}</p>
           <h1 className="font-display text-[26px] font-medium leading-tight">{tx(step.label)}</h1>
-          <p className="text-[14px] text-brand-grey">{t('accident.stepOf', { step: index + 1, total: ACCIDENT_STEPS.length })}</p>
+          <p className="text-[15.5px] text-brand-grey">{t('accident.stepOf', { step: index + 1, total: ACCIDENT_STEPS.length })}</p>
         </div>
-        <button type="button" onClick={cancel} className="text-[14px] font-semibold text-brand-grey hover:text-brand-black">{t('common.cancel')}</button>
+        <button type="button" onClick={cancel} className="text-[15.5px] font-semibold text-brand-grey hover:text-brand-black">{t('common.cancel')}</button>
       </div>
 
       <ProgressBar value={((index + 1) / ACCIDENT_STEPS.length) * 100} label={t('accident.progress')} className="mb-6" />
@@ -139,7 +139,7 @@ export default function AccidentAssist() {
         <div>
           <Step report={report} update={update} goTo={setIndex} defaultOwnRegistration={ownRegistration} />
 
-          {error && <p className="mt-4 rounded-md bg-warn-tint p-3 text-[14px]" role="alert">{error}</p>}
+          {error && <p className="mt-4 rounded-md bg-warn-tint p-3 text-[15.5px]" role="alert">{error}</p>}
 
           <div className="mt-8 flex items-center justify-between gap-3 border-t border-brand-border pt-5">
             <Button variant="ghost" onClick={() => setIndex((i) => i - 1)} disabled={index === 0} icon={ArrowLeft}>{t('common.back')}</Button>
@@ -157,7 +157,7 @@ export default function AccidentAssist() {
 
         <aside className="space-y-4">
           <EvidenceChecklist report={report} />
-          <ol className="hidden space-y-1 text-[14px] lg:block" aria-label={t('accident.steps')}>
+          <ol className="hidden space-y-1 text-[15.5px] lg:block" aria-label={t('accident.steps')}>
             {ACCIDENT_STEPS.map((s, i) => (
               <li key={s.key}>
                 <button

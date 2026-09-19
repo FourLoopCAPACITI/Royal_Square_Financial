@@ -44,7 +44,7 @@ export default function ClientProfile() {
                   <Row label={t('profile.occupation')} value={tx(c.occupation)} />
                   <Row label={t('profile.yourAdviser')} value={advisers.data?.filter((a) => c.adviserIds.includes(a.id)).map((a) => a.name).join(', ')} />
                 </dl>
-                <p className="mt-2 text-[13px] text-brand-grey">{t('profile.changeHint')}</p>
+                <p className="mt-2 text-[14.5px] text-brand-grey">{t('profile.changeHint')}</p>
               </Section>
               <Section title={t('profile.products')} count={products.data?.length}>
                 <QueryState query={products}>
@@ -54,9 +54,9 @@ export default function ClientProfile() {
                         <li key={p.id} className="flex flex-wrap justify-between gap-2 p-4">
                           <span>
                             <span className="block font-semibold">{tx(p.type)}</span>
-                            <span className="text-[14px] text-brand-grey">{providerName(p.providerId)}. {tx(p.description)}</span>
+                            <span className="text-[15.5px] text-brand-grey">{providerName(p.providerId)}. {tx(p.description)}</span>
                           </span>
-                          <span className="text-[14px] tabular-nums text-brand-grey">{p.policyNumber}</span>
+                          <span className="text-[15.5px] tabular-nums text-brand-grey">{p.policyNumber}</span>
                         </li>
                       ))}
                     </ul>

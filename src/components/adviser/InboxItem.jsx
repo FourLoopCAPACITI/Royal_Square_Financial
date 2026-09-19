@@ -19,9 +19,9 @@ export default function InboxItem({ workflow, clientName, providerName }) {
       <Link to={`/workflow/${workflow.id}`} className="group grid gap-2 p-4 hover:bg-brand-light-grey sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)_auto] sm:items-center sm:gap-6">
         <div className="min-w-0">
           <p className="font-semibold">{clientName || t('owner.client')}</p>
-          <p className="text-[14px] text-brand-grey">{tx(workflow.title)}</p>
+          <p className="text-[15.5px] text-brand-grey">{tx(workflow.title)}</p>
         </div>
-        <dl className="grid grid-cols-[110px_1fr] gap-x-3 text-[14px]">
+        <dl className="grid grid-cols-[110px_1fr] gap-x-3 text-[15.5px]">
           <dt className="text-brand-grey">{t('workflow.currentOwner')}</dt>
           <dd className="font-semibold">{owner}</dd>
           <dt className="text-brand-grey">{t('workflow.nextAction')}</dt>

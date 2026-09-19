@@ -46,7 +46,7 @@ export default function ClientGoals() {
           );
         }}
       </QueryState>
-      <p className="text-[13px] text-brand-grey">{t('goals.disclaimer')}</p>
+      <p className="text-[14.5px] text-brand-grey">{t('goals.disclaimer')}</p>
     </>
   );
 }

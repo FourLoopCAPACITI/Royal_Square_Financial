@@ -27,7 +27,7 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
     return (
       <div className="rounded-md border border-ok/30 bg-ok-tint p-5 text-ok">
         <p className="font-semibold">{t('workflow.complete')}</p>
-        <p className="text-[14px]">{t('workflow.completeHint')}</p>
+        <p className="text-[15.5px]">{t('workflow.completeHint')}</p>
       </div>
     );
   }
@@ -54,7 +54,7 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
           <Button variant="dark" onClick={() => onAdvance({ actorType: owner, actorName: sourceName, note: `${sourceName}: ${step.label.toLowerCase()} confirmed` })} disabled={busy}>
             {t('workflow.recordUpdate', { name: ownerName })}
           </Button>
-          <span className="text-[12.5px] text-brand-grey">{t('workflow.simulated')}</span>
+          <span className="text-[14px] text-brand-grey">{t('workflow.simulated')}</span>
         </div>
       );
     } else if (owner === 'client') {
@@ -66,16 +66,16 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
     <div className={`rounded-md border p-5 ${owner === viewerRole ? 'border-brand-red' : 'border-brand-border'}`}>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <p className="text-[13px] text-brand-grey">{t('workflow.currentStep')}</p>
+          <p className="text-[14.5px] text-brand-grey">{t('workflow.currentStep')}</p>
           <p className="font-semibold">{tx(step.label)}</p>
         </div>
         <div>
-          <p className="text-[13px] text-brand-grey">{t('workflow.nextAction')}</p>
+          <p className="text-[14.5px] text-brand-grey">{t('workflow.nextAction')}</p>
           <p className="font-semibold">{tx(workflow.nextAction)}</p>
-          <p className="text-[13.5px] text-brand-grey">{t('workflow.byOwner', { name: ownerName })}</p>
+          <p className="text-[15px] text-brand-grey">{t('workflow.byOwner', { name: ownerName })}</p>
         </div>
         <div>
-          <p className="text-[13px] text-brand-grey">{t('workflow.due')}</p>
+          <p className="text-[14.5px] text-brand-grey">{t('workflow.due')}</p>
           <p className={`font-semibold ${overdue ? 'text-brand-red' : ''}`}>{describeDue(workflow.dueDate)}</p>
         </div>
       </div>
@@ -112,7 +112,7 @@ export default function WorkflowDetail() {
 
   return (
     <>
-      <button type="button" onClick={() => navigate(-1)} className="mb-5 inline-flex items-center gap-1.5 text-[14px] text-brand-grey hover:text-brand-black">
+      <button type="button" onClick={() => navigate(-1)} className="mb-5 inline-flex items-center gap-1.5 text-[15.5px] text-brand-grey hover:text-brand-black">
         <ArrowLeft size={16} aria-hidden="true" /> {t('common.back')}
       </button>
       <QueryState query={workflow} loadingLabel={t('workflow.loading')}>
@@ -138,7 +138,7 @@ export default function WorkflowDetail() {
                 <WorkflowOwner workflow={w} providerName={pName} viewerRole={viewerRole} clientName={cName} />
                 <div className="mt-3 flex items-center gap-3">
                   <ProgressBar value={progress} className="flex-1" label={t('workflow.overallProgress')} tone={w.status === 'completed' ? 'green' : 'red'} />
-                  <span className="text-[13px] tabular-nums text-brand-grey">{progress}%</span>
+                  <span className="text-[14.5px] tabular-nums text-brand-grey">{progress}%</span>
                 </div>
               </section>
 

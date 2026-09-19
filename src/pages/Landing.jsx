@@ -203,7 +203,7 @@ export default function Landing() {
                     <Icon size={22} />
                   </div>
                   <h3 className="mt-4 text-xl font-medium">{title}</h3>
-                  <p className="mt-2 text-[15px] leading-6 text-brand-grey">{description}</p>
+                  <p className="mt-2 text-[16.5px] leading-6 text-brand-grey">{description}</p>
                 </div>
               ))}
             </div>

@@ -30,7 +30,7 @@ export default function DocumentList({ documents = [], clientName }) {
           <FileText size={18} className="shrink-0 text-brand-grey" aria-hidden="true" />
           <div className="min-w-0 flex-1">
             <p className="font-semibold leading-snug">{tx(doc.name)}</p>
-            <p className="text-[13.5px] text-brand-grey">
+            <p className="text-[15px] text-brand-grey">
               {clientName ? `${clientName(doc.clientId)}. ` : ''}
               {getDocumentTypeLabel(doc.type)}. {detail(doc)}
             </p>

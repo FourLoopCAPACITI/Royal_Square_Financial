@@ -86,7 +86,7 @@ export default function ClientRequests() {
               <NamedIcon name={r.icon} size={20} className="mt-0.5 shrink-0 text-brand-red" />
               <span>
                 <span className="block font-semibold">{tx(r.label)}</span>
-                <span className="block text-[13.5px] text-brand-grey">{tx(r.description)}</span>
+                <span className="block text-[15px] text-brand-grey">{tx(r.description)}</span>
               </span>
             </button>
           ))}

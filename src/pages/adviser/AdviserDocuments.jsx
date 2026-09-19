@@ -29,7 +29,7 @@ export default function AdviserDocuments() {
       <PageHeader title={t('documents.title')} description={t('documents.adviserDescription')} />
       <div className="mb-5 flex gap-2">
         {FILTERS.map((f) => (
-          <button key={f.key} type="button" onClick={() => setParams({ filter: f.key })} aria-pressed={filter.key === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${filter.key === f.key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
+          <button key={f.key} type="button" onClick={() => setParams({ filter: f.key })} aria-pressed={filter.key === f.key} className={`rounded border px-3 py-1.5 text-[15.5px] font-semibold ${filter.key === f.key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
             {t(`documents.filter.${f.key}`)}
           </button>
         ))}

@@ -32,7 +32,7 @@ export default function AdviserWorkflows() {
       <PageHeader title={t('workflows.title')} description={t('workflows.description')} />
       <div className="mb-5 flex flex-wrap items-center gap-2">
         {OWNER_FILTERS.map((key) => (
-          <button key={key} type="button" onClick={() => setOwner(key)} aria-pressed={owner === key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${owner === key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
+          <button key={key} type="button" onClick={() => setOwner(key)} aria-pressed={owner === key} className={`rounded border px-3 py-1.5 text-[15.5px] font-semibold ${owner === key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
             {t(`workflows.filter.${key}`)}
           </button>
         ))}

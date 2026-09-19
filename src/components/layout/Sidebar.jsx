@@ -17,7 +17,7 @@ export default function Sidebar({ items, footer }) {
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `relative flex items-center gap-3 rounded px-3 py-2.5 text-[15px] transition-colors ${
+                  `relative flex items-center gap-3 rounded px-3 py-2.5 text-[16.5px] transition-colors ${
                     isActive
                       ? 'bg-brand-red-tint font-semibold text-brand-red before:absolute before:inset-y-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-action'
                       : 'text-text-secondary hover:bg-brand-light-grey'

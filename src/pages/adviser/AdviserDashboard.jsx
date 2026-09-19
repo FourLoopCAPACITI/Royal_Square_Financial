@@ -14,7 +14,7 @@ import { useI18n } from '../../i18n/I18nContext.jsx';
 function Count({ label, value, tone }) {
   return (
     <div className="rounded-md border border-brand-border p-4">
-      <p className="text-[13px] text-brand-grey">{label}</p>
+      <p className="text-[14.5px] text-brand-grey">{label}</p>
       <p className={`font-display text-[28px] font-light tabular-nums ${tone === 'red' && value ? 'text-brand-red' : ''}`}>{value}</p>
     </div>
   );
@@ -33,7 +33,7 @@ export default function AdviserDashboard() {
       <PageHeader
         title={adviser.data ? t('adviser.dashboard.hello', { name: adviser.data.name.split(' ')[0] }) : t('nav.dashboard')}
         description={t('adviser.dashboard.description')}
-        actions={<Link to="/adviser/actions" className="text-[14px] font-semibold text-brand-red hover:underline">{t('adviser.dashboard.openInbox')}</Link>}
+        actions={<Link to="/adviser/actions" className="text-[15.5px] font-semibold text-brand-red hover:underline">{t('adviser.dashboard.openInbox')}</Link>}
       />
       <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">
         <Count label={t('inbox.group.overdue')} value={groups.overdue.length} tone="red" />

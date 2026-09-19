@@ -16,7 +16,7 @@ function PlanList({ title, items, done }) {
       <p className="mb-2 font-semibold">{title}</p>
       <ul className="space-y-1.5">
         {items.map((item) => (
-          <li key={item} className="flex items-center gap-2 text-[15px]">
+          <li key={item} className="flex items-center gap-2 text-[16.5px]">
             {done ? <Check size={16} className="text-ok" aria-hidden="true" /> : <Square size={16} className="text-brand-grey" aria-hidden="true" />}
             {tx(item)}
           </li>
@@ -59,7 +59,7 @@ export default function LifeEvents() {
             <NamedIcon name={ev.icon} size={20} className="mt-0.5 shrink-0 text-brand-red" />
             <span>
               <span className="block font-semibold">{tx(ev.label)}</span>
-              <span className="block text-[13.5px] text-brand-grey">{tx(ev.description)}</span>
+              <span className="block text-[15px] text-brand-grey">{tx(ev.description)}</span>
             </span>
           </button>
         ))}
@@ -79,14 +79,14 @@ export default function LifeEvents() {
       {selected && selected !== 'moved' && (
         <div className="mt-6 max-w-xl rounded-md border border-dashed border-brand-border p-5">
           <p className="font-semibold">{t('life.comingSoon')}</p>
-          <p className="text-[14.5px] text-brand-grey">{t('life.comingSoonHint')}</p>
+          <p className="text-[16px] text-brand-grey">{t('life.comingSoonHint')}</p>
           <Link to="/client/requests" className="mt-2 inline-block font-semibold text-brand-red hover:underline">{t('life.goToRequests')}</Link>
         </div>
       )}
 
       {outcome && (
         <div className="mt-6 rounded-md border border-brand-border p-5 sm:p-6" role="status">
-          <p className="text-[14px] text-ok">{t('life.created')}</p>
+          <p className="text-[15.5px] text-ok">{t('life.created')}</p>
           <h2 className="mt-1 text-2xl font-normal">{t('life.outcomeTitle')}</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
             <PlanList title={t('life.affected')} items={outcome.plan.affected} done />

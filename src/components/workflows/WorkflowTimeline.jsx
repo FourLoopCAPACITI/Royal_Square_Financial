@@ -39,12 +39,12 @@ export default function WorkflowTimeline({ workflow, providerName, viewerRole, c
                   {tx(step.label)}
                   <span className="sr-only"> ({t(`workflow.stepStatus.${step.status}`)})</span>
                 </p>
-                <p className="text-[13px] text-brand-grey">
+                <p className="text-[14.5px] text-brand-grey">
                   {step.status === 'complete' && step.completedAt && `${formatShortDate(step.completedAt)}, ${formatTime(step.completedAt)}`}
                   {step.status === 'current' && describeDue(workflow.dueDate)}
                 </p>
               </div>
-              <p className="text-[13px] text-brand-grey">
+              <p className="text-[14.5px] text-brand-grey">
                 {step.status === 'current' ? `${owner}: ${tx(step.nextAction)}` : owner}
               </p>
             </div>

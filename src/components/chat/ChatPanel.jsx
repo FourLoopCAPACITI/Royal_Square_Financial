@@ -8,7 +8,7 @@ import { DEMO_CLIENT_ID } from '../../data/mockData.js';
 
 function AssistantMessage({ content }) {
   return (
-    <div className="chat-markdown max-w-[85%] rounded-lg bg-brand-light-grey px-3.5 py-2.5 text-[14.5px] leading-relaxed text-brand-black">
+    <div className="chat-markdown max-w-[85%] rounded-lg bg-brand-light-grey px-3.5 py-2.5 text-[16px] leading-relaxed text-brand-black">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
     </div>
   );
@@ -50,19 +50,19 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
             {m.role === 'assistant' ? (
               <AssistantMessage content={m.content} />
             ) : (
-              <p className="max-w-[85%] whitespace-pre-wrap rounded-lg bg-strong px-3.5 py-2.5 text-[14.5px] leading-relaxed text-white">{m.content}</p>
+              <p className="max-w-[85%] whitespace-pre-wrap rounded-lg bg-strong px-3.5 py-2.5 text-[16px] leading-relaxed text-white">{m.content}</p>
             )}
           </div>
         ))}
         {sending && (
-          <div className="flex items-center gap-2 text-[14px] text-brand-grey" role="status">
+          <div className="flex items-center gap-2 text-[15.5px] text-brand-grey" role="status">
             <Loader2 size={16} className="animate-spin" aria-hidden="true" /> {t('chat.thinking')}
           </div>
         )}
         {history.length === 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
             {SUGGESTED_QUESTION_KEYS.map((key) => (
-              <button key={key} type="button" onClick={() => send(t(key))} className="rounded-full border border-brand-border px-3 py-1.5 text-left text-[13.5px] hover:border-brand-red hover:text-brand-red">
+              <button key={key} type="button" onClick={() => send(t(key))} className="rounded-full border border-brand-border px-3 py-1.5 text-left text-[15px] hover:border-brand-red hover:text-brand-red">
                 {t(key)}
               </button>
             ))}
@@ -95,7 +95,7 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
             <SendHorizontal size={18} />
           </button>
         </form>
-        <p className="mt-2 text-[12px] leading-snug text-brand-grey">
+        <p className="mt-2 text-[13.5px] leading-snug text-brand-grey">
           {t('chat.disclaimer')}
           {usedGuide && t('chat.usedGuide')}
         </p>
