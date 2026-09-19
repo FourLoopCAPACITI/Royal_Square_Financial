@@ -16,26 +16,23 @@ function sampleClaim() {
   return workflow;
 }
 
+// All visible text goes through t('landing.*') — add keys to src/i18n/locales/{en,af,zu}.js, never hardcode strings.
 const reasons = [
   {
     icon: ShieldCheck,
-    title: 'Secure and transparent',
-    description: 'Stay informed with clear progress updates, secure document access, and a visible workflow from start to finish.',
+    key: 'landing.why.1',
   },
   {
     icon: TrendingUp,
-    title: 'Clear next steps',
-    description: 'Every service request is mapped to responsibilities, actions, and due dates so nothing gets lost or delayed.',
+    key: 'landing.why.2',
   },
   {
     icon: BriefcaseBusiness,
-    title: 'Built for advice',
-    description: 'Clients and advisers work from the same source of truth, improving communication and reducing admin friction.',
+    key: 'landing.why.3',
   },
   {
     icon: Building2,
-    title: 'Independent support',
-    description: 'Royal Square Financial brings together claims, policy changes, reviews, and service requests in one experience.',
+    key: 'landing.why.4',
   },
 ];
 
@@ -70,20 +67,20 @@ export default function Landing() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Logo className="max-w-[155px]" />
 
-            <nav className="order-3 flex w-full items-center justify-center gap-5 overflow-x-auto border-t border-brand-border pt-3 text-sm font-semibold text-brand-black sm:order-none sm:w-auto sm:border-0 sm:pt-0 sm:gap-6 lg:gap-8" aria-label="Main navigation">
-              <a href="#about" className="whitespace-nowrap transition-colors hover:text-brand-red">About us</a>
-              <a href="#why-us" className="whitespace-nowrap transition-colors hover:text-brand-red">Why choose us</a>
-              <a href="#partners" className="whitespace-nowrap transition-colors hover:text-brand-red">Partners</a>
-              <a href="#contact" className="whitespace-nowrap transition-colors hover:text-brand-red">Contact</a>
+            <nav className="order-3 flex w-full items-center justify-center gap-5 overflow-x-auto border-t border-brand-border pt-3 text-sm font-semibold text-brand-black sm:order-none sm:w-auto sm:border-0 sm:pt-0 sm:gap-6 lg:gap-8" aria-label={t('landing.nav.label')}>
+              <a href="#about" className="whitespace-nowrap transition-colors hover:text-brand-red">{t('landing.nav.about')}</a>
+              <a href="#why-us" className="whitespace-nowrap transition-colors hover:text-brand-red">{t('landing.nav.why')}</a>
+              <a href="#partners" className="whitespace-nowrap transition-colors hover:text-brand-red">{t('landing.nav.partners')}</a>
+              <a href="#contact" className="whitespace-nowrap transition-colors hover:text-brand-red">{t('landing.nav.contact')}</a>
             </nav>
 
             <div className="flex items-center gap-2">
               <LanguageSelect id="landing-language" className="w-32" />
               <Button as={Link} to="/signin" variant="secondary" size="sm">
-                Sign in
+                {t('landing.signIn')}
               </Button>
               <Button as={Link} to="/signup" size="sm">
-                Sign up
+                {t('landing.signUp')}
               </Button>
             </div>
           </div>
@@ -93,20 +90,20 @@ export default function Landing() {
           <section className="overflow-hidden rounded-[28px] border border-brand-border bg-surface shadow-sm">
             <div className="grid items-center gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-10 md:py-12">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">Independent financial brokerage</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">{t('landing.hero.eyebrow')}</p>
                 <h1 className="mt-4 max-w-xl text-4xl font-light leading-tight tracking-[0.01em] sm:text-5xl">
-                  A clearer way to manage your financial journey.
+                  {t('landing.hero.title')}
                 </h1>
                 <p className="mt-5 max-w-xl text-lg text-brand-grey">
-                  Royal Square Financial helps clients and advisers stay connected, informed, and in control through a secure digital experience built around real progress and next steps.
+                  {t('landing.hero.body')}
                 </p>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button as={Link} to="/signup" size="lg">
-                    Get started <ArrowRight size={18} />
+                    {t('landing.getStarted')} <ArrowRight size={18} />
                   </Button>
                   <Button as={Link} to="/signin" variant="secondary" size="lg">
-                    Sign in
+                    {t('landing.signIn')}
                   </Button>
                 </div>
               </div>
@@ -121,14 +118,14 @@ export default function Landing() {
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div className="rounded-xl border border-brand-border bg-surface p-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-grey">Claims</p>
-                        <p className="mt-2 text-3xl font-semibold text-brand-black">24/7</p>
-                        <p className="mt-1 text-sm text-brand-grey">Workflow visibility</p>
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-grey">{t('landing.stat.claims')}</p>
+                        <p className="mt-2 text-3xl font-semibold text-brand-black">{t('landing.stat.claimsValue')}</p>
+                        <p className="mt-1 text-sm text-brand-grey">{t('landing.stat.claimsNote')}</p>
                       </div>
                       <div className="rounded-xl border border-brand-border bg-surface p-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-grey">Support</p>
-                        <p className="mt-2 text-3xl font-semibold text-brand-black">Clear</p>
-                        <p className="mt-1 text-sm text-brand-grey">Next steps</p>
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-grey">{t('landing.stat.support')}</p>
+                        <p className="mt-2 text-3xl font-semibold text-brand-black">{t('landing.stat.supportValue')}</p>
+                        <p className="mt-1 text-sm text-brand-grey">{t('landing.stat.supportNote')}</p>
                       </div>
                     </div>
                   </div>
@@ -152,13 +149,13 @@ export default function Landing() {
           <section id="about" className="mt-14 scroll-mt-6 rounded-[28px] border border-brand-border bg-surface p-6 shadow-sm sm:p-8">
             <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">About us</p>
-                <h2 className="mt-3 text-3xl font-light tracking-[0.01em] sm:text-4xl">Built around transparency, service, and trust.</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">{t('landing.about.eyebrow')}</p>
+                <h2 className="mt-3 text-3xl font-light tracking-[0.01em] sm:text-4xl">{t('landing.about.title')}</h2>
                 <p className="mt-4 text-[16px] leading-7 text-brand-grey">
-                  Royal Square Financial is an independent South African financial brokerage focused on helping clients and advisers work more efficiently. We simplify the admin around claims, policy servicing, document collection, and review processes, so everyone knows what is happening, what happens next, and who is responsible.
+                  {t('landing.about.p1')}
                 </p>
                 <p className="mt-4 text-[16px] leading-7 text-brand-grey">
-                  Our digital experience brings together advisory support, broader financial administration, and client communication into one connected environment.
+                  {t('landing.about.p2')}
                 </p>
               </div>
 
@@ -167,22 +164,22 @@ export default function Landing() {
                   <div className="flex items-start gap-3">
                     <div className="mt-1 rounded-full bg-surface p-2 text-brand-red"><ShieldCheck size={18} /></div>
                     <div>
-                      <p className="font-semibold">Client-first service</p>
-                      <p className="text-sm text-brand-grey">We keep communication simple, timely, and transparent.</p>
+                      <p className="font-semibold">{t('landing.about.a.title')}</p>
+                      <p className="text-sm text-brand-grey">{t('landing.about.a.body')}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="mt-1 rounded-full bg-surface p-2 text-brand-red"><TrendingUp size={18} /></div>
                     <div>
-                      <p className="font-semibold">Operational clarity</p>
-                      <p className="text-sm text-brand-grey">Every workflow is mapped to ownership and next actions.</p>
+                      <p className="font-semibold">{t('landing.about.b.title')}</p>
+                      <p className="text-sm text-brand-grey">{t('landing.about.b.body')}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="mt-1 rounded-full bg-surface p-2 text-brand-red"><BriefcaseBusiness size={18} /></div>
                     <div>
-                      <p className="font-semibold">Adviser support</p>
-                      <p className="text-sm text-brand-grey">We reduce admin friction so advisers can focus on guidance and outcomes.</p>
+                      <p className="font-semibold">{t('landing.about.c.title')}</p>
+                      <p className="text-sm text-brand-grey">{t('landing.about.c.body')}</p>
                     </div>
                   </div>
                 </div>
@@ -192,29 +189,29 @@ export default function Landing() {
 
           <section id="why-us" className="mt-14 scroll-mt-6">
             <div className="mb-6 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">Why choose us</p>
-              <h2 className="mt-3 text-3xl font-light tracking-[0.01em] sm:text-4xl">A better way to stay on top of what matters.</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-red">{t('landing.why.eyebrow')}</p>
+              <h2 className="mt-3 text-3xl font-light tracking-[0.01em] sm:text-4xl">{t('landing.why.title')}</h2>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {reasons.map(({ icon: Icon, title, description }) => (
-                <div key={title} className="rounded-2xl border border-brand-border bg-surface p-5 shadow-sm transition-transform duration-200 hover:-translate-y-1">
+              {reasons.map(({ icon: Icon, key }) => (
+                <div key={key} className="rounded-2xl border border-brand-border bg-surface p-5 shadow-sm transition-transform duration-200 hover:-translate-y-1">
                   <div className="inline-flex rounded-xl bg-brand-red-tint p-3 text-brand-red">
                     <Icon size={22} />
                   </div>
-                  <h3 className="mt-4 text-xl font-medium">{title}</h3>
-                  <p className="mt-2 text-[16.5px] leading-6 text-brand-grey">{description}</p>
+                  <h3 className="mt-4 text-xl font-medium">{t(`${key}.title`)}</h3>
+                  <p className="mt-2 text-[16.5px] leading-6 text-brand-grey">{t(`${key}.body`)}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <section id="partners" className="mt-14 scroll-mt-6 rounded-[24px] border border-brand-border bg-surface px-4 py-10 shadow-sm sm:px-10 sm:py-12">
-            <h2 className="text-center text-3xl font-semibold tracking-tight text-brand-black sm:text-4xl">Our trusted partners</h2>
+            <h2 className="text-center text-3xl font-semibold tracking-tight text-brand-black sm:text-4xl">{t('landing.partners.title')}</h2>
             <div className="mt-9 flex items-center gap-3 sm:gap-5">
               <button
                 type="button"
-                aria-label="Show previous partners"
+                aria-label={t('landing.partners.prev')}
                 onClick={() => setPartnerOffset((current) => (current - 1 + partners.length) % partners.length)}
                 className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-brand-red transition-colors hover:bg-brand-red-tint"
               >
@@ -233,7 +230,7 @@ export default function Landing() {
 
               <button
                 type="button"
-                aria-label="Show next partners"
+                aria-label={t('landing.partners.next')}
                 onClick={() => setPartnerOffset((current) => (current + 1) % partners.length)}
                 className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-brand-red transition-colors hover:bg-brand-red-tint"
               >
@@ -250,12 +247,12 @@ export default function Landing() {
                 <Logo className="block max-w-[180px]" />
               </div>
               <p className="mt-4 max-w-xs text-sm text-white/80">
-                Royal Square Financial helps clients and advisers navigate change with clarity, confidence, and better visibility.
+                {t('landing.footer.blurb')}
               </p>
             </div>
 
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">Contact</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">{t('landing.footer.contact')}</p>
               <ul className="mt-4 space-y-3 text-sm text-white/80">
                 <li className="flex items-center gap-2"><Mail size={16} className="text-brand-red" /> hello@royalsquarefinancial.co.za</li>
                 <li className="flex items-center gap-2"><Phone size={16} className="text-brand-red" /> +27 11 000 0000</li>
@@ -264,10 +261,10 @@ export default function Landing() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">Office hours</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">{t('landing.footer.hours')}</p>
               <ul className="mt-4 space-y-3 text-sm text-white/80">
-                <li className="flex items-center gap-2"><Clock3 size={16} className="text-brand-red" /> Mon - Fri: 8:00 - 17:00</li>
-                <li className="flex items-center gap-2"><Clock3 size={16} className="text-brand-red" /> Sat - Sun: By appointment</li>
+                <li className="flex items-center gap-2"><Clock3 size={16} className="text-brand-red" /> {t('landing.footer.weekdays')}</li>
+                <li className="flex items-center gap-2"><Clock3 size={16} className="text-brand-red" /> {t('landing.footer.weekend')}</li>
               </ul>
             </div>
           </div>
