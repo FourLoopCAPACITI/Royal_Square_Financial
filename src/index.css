@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-red: #9A1C20;
+  --brand-black: #0A0A0A;
+  --brand-white: #FFFFFF;
+  --brand-grey: #747474;
+  --brand-light-grey: #F5F5F5;
+  --brand-border: #E5E5E5;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white font-sans text-[15px] leading-relaxed text-brand-black antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display text-brand-black;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .label-muted {
+    @apply text-[13px] text-brand-grey;
+  }
+  .field {
+    @apply w-full rounded border border-brand-border bg-white px-3 py-2.5 text-[15px] text-brand-black placeholder:text-[#A3A3A3] focus:border-brand-red focus:outline-none;
+  }
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-brand-black;
+  }
+  .chat-markdown > :first-child {
+    @apply mt-0;
+  }
+  .chat-markdown > :last-child {
+    @apply mb-0;
+  }
+  .chat-markdown h1,
+  .chat-markdown h2,
+  .chat-markdown h3 {
+    @apply mb-1.5 mt-3 font-semibold leading-snug;
+  }
+  .chat-markdown h1 { @apply text-base; }
+  .chat-markdown h2 { @apply text-[15px]; }
+  .chat-markdown h3 { @apply text-[14.5px]; }
+  .chat-markdown p { @apply my-2; }
+  .chat-markdown ul { @apply my-2 list-disc pl-5; }
+  .chat-markdown ol { @apply my-2 list-decimal pl-5; }
+  .chat-markdown li { @apply pl-1; }
+  .chat-markdown li + li { @apply mt-1; }
+  .chat-markdown strong { @apply font-semibold; }
+  .chat-markdown a { @apply break-words font-medium text-brand-red underline underline-offset-2; }
+  .chat-markdown code { @apply break-words rounded bg-white/70 px-1 py-0.5 text-[13px]; }
+  .chat-markdown pre { @apply my-2 max-w-full overflow-x-auto rounded bg-white/70 p-2 text-[13px]; }
+  .chat-markdown pre code { @apply bg-transparent p-0; }
+  .chat-markdown blockquote { @apply my-2 border-l-2 border-brand-red pl-3 text-brand-grey; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes rsf-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+.rsf-ball {
+  animation: rsf-pulse 2.2s ease-in-out infinite;
+}
