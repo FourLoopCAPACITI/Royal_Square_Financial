@@ -1,9 +1,11 @@
 import { describeDay, formatTime } from '../../utils/format.js';
 import { EmptyState } from '../common/States.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /** Chronological record of what happened, grouped by day, newest day first. */
-export default function ActivityTimeline({ events = [], emptyMessage = 'Nothing has happened on this yet.' }) {
-  if (!events.length) return <EmptyState title="No activity yet" message={emptyMessage} />;
+export default function ActivityTimeline({ events = [], emptyMessage }) {
+  const { t, tx } = useI18n();
+  if (!events.length) return <EmptyState title={t('activity.emptyTitle')} message={emptyMessage || t('activity.emptyMessage')} />;
 
   const sorted = [...events].sort((a, b) => new Date(a.at) - new Date(b.at));
   const groups = [];
@@ -27,8 +29,8 @@ export default function ActivityTimeline({ events = [], emptyMessage = 'Nothing 
                   {formatTime(event.at)}
                 </time>
                 <div>
-                  <p className="leading-snug">{event.message}</p>
-                  <p className="text-[12.5px] text-brand-grey">{event.actorName}</p>
+                  <p className="leading-snug">{tx(event.message)}</p>
+                  <p className="text-[12.5px] text-brand-grey">{tx(event.actorName)}</p>
                 </div>
               </li>
             ))}

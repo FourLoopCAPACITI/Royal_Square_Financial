@@ -2,13 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Loader2, SendHorizontal } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { sendChatMessage, SUGGESTED_QUESTIONS } from '../../services/chatService.js';
+import { sendChatMessage, SUGGESTED_QUESTION_KEYS } from '../../services/chatService.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 import { DEMO_CLIENT_ID } from '../../data/mockData.js';
-
-const WELCOME = {
-  role: 'assistant',
-  content: 'Hi, I’m the Royal Square Assistant. I can help you find your way around: reporting an accident, uploading documents, making requests, or explaining what a status means.',
-};
 
 function AssistantMessage({ content }) {
   return (
@@ -20,7 +16,10 @@ function AssistantMessage({ content }) {
 
 /** Conversation UI shared by the floating widget and the Chat Assistant page. */
 export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', autoFocus = false }) {
-  const [messages, setMessages] = useState([WELCOME]);
+  const { t, lang } = useI18n();
+  // The welcome line is rendered from the active language, not stored, so it always matches the selection.
+  const [history, setMessages] = useState([]);
+  const messages = [{ role: 'assistant', content: t('chat.welcome') }, ...history];
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [usedGuide, setUsedGuide] = useState(false);
@@ -28,17 +27,16 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, sending]);
+  }, [history, sending]);
 
   async function send(text) {
     const content = text.trim();
     if (!content || sending) return;
-    const next = [...messages, { role: 'user', content }];
+    const next = [...history, { role: 'user', content }];
     setMessages(next);
     setInput('');
     setSending(true);
-    const history = next.filter((m) => m !== WELCOME);
-    const { reply, source } = await sendChatMessage(history, { clientId });
+    const { reply, source } = await sendChatMessage(next, { clientId });
     if (source === 'guide') setUsedGuide(true);
     setMessages((m) => [...m, { role: 'assistant', content: reply }]);
     setSending(false);
@@ -58,14 +56,14 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
         ))}
         {sending && (
           <div className="flex items-center gap-2 text-[14px] text-brand-grey" role="status">
-            <Loader2 size={16} className="animate-spin" aria-hidden="true" /> Thinking…
+            <Loader2 size={16} className="animate-spin" aria-hidden="true" /> {t('chat.thinking')}
           </div>
         )}
-        {messages.length === 1 && (
+        {history.length === 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
-            {SUGGESTED_QUESTIONS.map((q) => (
-              <button key={q} type="button" onClick={() => send(q)} className="rounded-full border border-brand-border px-3 py-1.5 text-left text-[13.5px] hover:border-brand-red hover:text-brand-red">
-                {q}
+            {SUGGESTED_QUESTION_KEYS.map((key) => (
+              <button key={key} type="button" onClick={() => send(t(key))} className="rounded-full border border-brand-border px-3 py-1.5 text-left text-[13.5px] hover:border-brand-red hover:text-brand-red">
+                {t(key)}
               </button>
             ))}
           </div>
@@ -81,24 +79,25 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
           className="flex gap-2"
         >
           <label htmlFor="chat-input" className="sr-only">
-            Ask a question
+            {t('chat.askLabel')}
           </label>
           <input
             id="chat-input"
             className="field"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about a process or page"
+            placeholder={t('chat.placeholder')}
+            lang={lang}
             autoFocus={autoFocus}
             autoComplete="off"
           />
-          <button type="submit" disabled={!input.trim() || sending} className="rounded bg-brand-red px-3 text-white hover:bg-brand-red-dark disabled:opacity-40" aria-label="Send">
+          <button type="submit" disabled={!input.trim() || sending} className="rounded bg-brand-red px-3 text-white hover:bg-brand-red-dark disabled:opacity-40" aria-label={t('chat.send')}>
             <SendHorizontal size={18} />
           </button>
         </form>
         <p className="mt-2 text-[12px] leading-snug text-brand-grey">
-          The assistant explains services and statuses. It doesn't give financial advice or decide claims.
-          {usedGuide && ' Answering from the built-in guide because the live assistant isn’t connected.'}
+          {t('chat.disclaimer')}
+          {usedGuide && t('chat.usedGuide')}
         </p>
       </div>
     </div>

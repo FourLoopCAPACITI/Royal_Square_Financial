@@ -8,7 +8,7 @@
  * inside the local Vite dev server (see vite.config.js).
  */
 import { getGroqConfig, GROQ_ENDPOINT } from './_lib/groqConfig.js';
-import { buildSystemPrompt } from './_lib/assistantPrompt.js';
+import { buildSystemPrompt, resolveLanguage } from './_lib/assistantPrompt.js';
 
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_CHARS = 2000;
@@ -68,6 +68,8 @@ export default async function handler(req, res) {
     return send(res, 400, { error: 'Send at least one user message.' });
   }
   const context = typeof body.context === 'string' ? body.context.slice(0, MAX_CONTEXT_CHARS) : '';
+  // The client sends the user's selected language explicitly; anything unrecognised falls back to English.
+  const language = resolveLanguage(body.language);
 
   for (const model of models) {
     try {
@@ -81,7 +83,7 @@ export default async function handler(req, res) {
           model,
           temperature,
           max_tokens: maxTokens,
-          messages: [{ role: 'system', content: buildSystemPrompt(context) }, ...messages],
+          messages: [{ role: 'system', content: buildSystemPrompt(context, language) }, ...messages],
         }),
       });
 
@@ -94,7 +96,7 @@ export default async function handler(req, res) {
 
       const data = await groqResponse.json();
       const reply = data?.choices?.[0]?.message?.content?.trim();
-      if (reply) return send(res, 200, { reply, model });
+      if (reply) return send(res, 200, { reply, model, language });
       console.error('Groq returned an empty reply', { model });
     } catch (err) {
       console.error('Groq request failed', { model, message: err?.message });

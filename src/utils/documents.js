@@ -1,5 +1,6 @@
 /** Document rules — pure functions. */
 import { daysUntil } from './format.js';
+import { t } from '../i18n/index.js';
 
 export const DOCUMENT_TYPES = [
   { type: 'id_document', label: 'ID document', expires: false },
@@ -23,7 +24,7 @@ export const DOCUMENT_STATUS = {
 export const EXPIRY_WARNING_DAYS = 60;
 
 export function getDocumentTypeLabel(type) {
-  return DOCUMENT_TYPES.find((t) => t.type === type)?.label || 'Document';
+  return DOCUMENT_TYPES.some((d) => d.type === type) ? t(`docType.${type}`) : t('docType.generic');
 }
 
 /** Expiry-based status wins over the stored "current" status. */

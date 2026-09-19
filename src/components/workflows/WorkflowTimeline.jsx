@@ -1,9 +1,11 @@
 import { Check } from 'lucide-react';
 import { getOwnerLabel } from '../../utils/workflow.js';
 import { describeDue, formatShortDate, formatTime } from '../../utils/format.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /** Step-by-step progress: ✓ done, ● current, ○ upcoming. */
 export default function WorkflowTimeline({ workflow, providerName, viewerRole, clientName }) {
+  const { t, tx } = useI18n();
   if (!workflow?.steps?.length) return null;
   return (
     <ol className="relative">
@@ -34,8 +36,8 @@ export default function WorkflowTimeline({ workflow, providerName, viewerRole, c
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                 <p className={`${step.status === 'current' ? 'font-semibold text-brand-red' : step.status === 'upcoming' ? 'text-brand-grey' : 'font-medium'}`}>
-                  {step.label}
-                  <span className="sr-only"> ({step.status})</span>
+                  {tx(step.label)}
+                  <span className="sr-only"> ({t(`workflow.stepStatus.${step.status}`)})</span>
                 </p>
                 <p className="text-[13px] text-brand-grey">
                   {step.status === 'complete' && step.completedAt && `${formatShortDate(step.completedAt)}, ${formatTime(step.completedAt)}`}
@@ -43,7 +45,7 @@ export default function WorkflowTimeline({ workflow, providerName, viewerRole, c
                 </p>
               </div>
               <p className="text-[13px] text-brand-grey">
-                {step.status === 'current' ? `${owner}: ${step.nextAction}` : owner}
+                {step.status === 'current' ? `${owner}: ${tx(step.nextAction)}` : owner}
               </p>
             </div>
           </li>

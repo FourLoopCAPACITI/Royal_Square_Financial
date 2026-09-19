@@ -6,6 +6,8 @@ import { useSession } from '../context/SessionContext.jsx';
 import { homeFor } from '../components/layout/ProtectedRoute.jsx';
 import { IS_SUPABASE_CONFIGURED } from '../config/env.js';
 import { createWorkflow, advanceWorkflow } from '../utils/workflow.js';
+import LanguageSelect from '../components/common/LanguageSelect.jsx';
+import { useI18n } from '../i18n/I18nContext.jsx';
 
 // A sample claim three steps in, used to illustrate the idea on the landing page.
 function sampleClaim() {
@@ -15,6 +17,7 @@ function sampleClaim() {
 }
 
 export default function Landing() {
+  const { t } = useI18n();
   const { isAuthenticated, role, demoModeEnabled, setDemoRole } = useSession();
   const navigate = useNavigate();
 
@@ -31,23 +34,26 @@ export default function Landing() {
       <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-6 py-10 sm:px-10">
         <header className="flex items-center justify-between">
           <Logo className="max-w-[150px]" />
-          {IS_SUPABASE_CONFIGURED && (
-            <Link to="/login" className="text-[15px] font-semibold text-brand-red hover:underline">
-              Sign in
-            </Link>
-          )}
+          <div className="flex items-end gap-5">
+            <LanguageSelect id="landing-language" className="w-36" />
+            {IS_SUPABASE_CONFIGURED && (
+              <Link to="/login" className="pb-2.5 text-[15px] font-semibold text-brand-red hover:underline">
+                {t('login.title')}
+              </Link>
+            )}
+          </div>
         </header>
 
         <main className="flex flex-1 flex-col justify-center py-14">
           <h1 className="max-w-3xl text-[34px] font-light leading-[1.15] tracking-[0.005em] sm:text-[48px]">
-            Always know what is happening, what happens next, and who is holding the ball.
+            {t('landing.headline')}
           </h1>
           <p className="mt-5 max-w-xl text-[17px] text-[#4A4A4A]">
-            Claims, policy changes, documents and reviews in one place for Royal Square Financial clients and advisers.
+            {t('landing.sub')}
           </p>
 
           <div className="mt-10 max-w-3xl">
-            <p className="mb-2 text-[13px] text-brand-grey">A motor claim, right now</p>
+            <p className="mb-2 text-[13px] text-brand-grey">{t('landing.sample')}</p>
             <WorkflowOwner workflow={sampleClaim()} providerName="Santam" viewerRole="client" />
           </div>
 
@@ -55,19 +61,19 @@ export default function Landing() {
             <button type="button" onClick={() => enter('client')} className="group flex items-start gap-4 rounded-md border border-brand-border p-5 text-left transition-colors hover:border-brand-red">
               <UserRound className="mt-0.5 text-brand-red" size={22} aria-hidden="true" />
               <span>
-                <span className="block font-display text-lg font-medium">Open client view</span>
-                <span className="block text-[14px] text-brand-grey">See the portal as Lerato Molefe</span>
+                <span className="block font-display text-lg font-medium">{t('landing.openClient')}</span>
+                <span className="block text-[14px] text-brand-grey">{t('landing.openClientHint')}</span>
               </span>
             </button>
             <button type="button" onClick={() => enter('adviser')} className="group flex items-start gap-4 rounded-md border border-brand-border p-5 text-left transition-colors hover:border-brand-red">
               <Briefcase className="mt-0.5 text-brand-red" size={22} aria-hidden="true" />
               <span>
-                <span className="block font-display text-lg font-medium">Open adviser view</span>
-                <span className="block text-[14px] text-brand-grey">See the Action Inbox as Sipho Ndlovu</span>
+                <span className="block font-display text-lg font-medium">{t('landing.openAdviser')}</span>
+                <span className="block text-[14px] text-brand-grey">{t('landing.openAdviserHint')}</span>
               </span>
             </button>
           </div>
-          <p className="mt-4 text-[13px] text-brand-grey">Demo mode uses fictional data. No account needed.</p>
+          <p className="mt-4 text-[13px] text-brand-grey">{t('landing.demoNote')}</p>
         </main>
       </div>
     </div>

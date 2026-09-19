@@ -42,7 +42,7 @@ export function SessionProvider({ children }) {
     }
     supabase
       .from('profiles')
-      .select('id, role, full_name, email')
+      .select('*') // '*' so a database that hasn't run the profiles.language migration yet still signs in
       .eq('id', session.user.id)
       .maybeSingle()
       .then(({ data }) => setProfile(data));
@@ -56,6 +56,17 @@ export function SessionProvider({ children }) {
       /* ignore */
     }
   }, []);
+
+  /** Update the signed-in user's own profile row (e.g. { language }). Local state updates immediately. */
+  const updateProfile = useCallback(
+    async (patch) => {
+      if (!supabase || !session?.user) return;
+      setProfile((p) => (p ? { ...p, ...patch } : p));
+      const { error } = await supabase.from('profiles').update(patch).eq('id', session.user.id);
+      if (error) console.error('Could not save profile changes', error.message);
+    },
+    [session],
+  );
 
   const signIn = useCallback(async (email, password) => {
     if (!supabase) throw new Error('Supabase is not configured.');
@@ -79,10 +90,11 @@ export function SessionProvider({ children }) {
       profile,
       loading: authLoading || (isAuthenticated && !profile),
       setDemoRole,
+      updateProfile,
       signIn,
       signOut,
     };
-  }, [session, profile, demoRole, authLoading, setDemoRole, signIn, signOut]);
+  }, [session, profile, demoRole, authLoading, setDemoRole, updateProfile, signIn, signOut]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

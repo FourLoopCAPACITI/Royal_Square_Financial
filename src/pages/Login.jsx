@@ -5,8 +5,11 @@ import Button from '../components/common/Button.jsx';
 import { useSession } from '../context/SessionContext.jsx';
 import { homeFor } from '../components/layout/ProtectedRoute.jsx';
 import { IS_SUPABASE_CONFIGURED } from '../config/env.js';
+import LanguageSelect from '../components/common/LanguageSelect.jsx';
+import { useI18n, validationProps } from '../i18n/I18nContext.jsx';
 
 export default function Login() {
+  const { t, tx } = useI18n();
   const { signIn, isAuthenticated, role, demoModeEnabled } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +25,7 @@ export default function Login() {
     try {
       await signIn(email, password);
     } catch (err) {
-      setError(err.message || 'Sign-in failed. Check your email and password.');
+      setError(tx(err.message) === err.message ? t('login.failed') : tx(err.message));
     } finally {
       setBusy(false);
     }
@@ -32,30 +35,31 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-brand-light-grey px-4">
       <div className="w-full max-w-sm rounded-md border border-brand-border bg-white p-7">
         <Logo className="mx-auto mb-7 max-w-[160px]" />
-        <h1 className="mb-1 text-2xl font-normal">Sign in</h1>
+        <h1 className="mb-1 text-2xl font-normal">{t('login.title')}</h1>
         {!IS_SUPABASE_CONFIGURED ? (
           <p className="text-[14px] text-brand-grey">
-            Supabase isn't configured yet, so sign-in is off. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.local, or use demo mode.
+            {t('login.notConfigured')}
           </p>
         ) : (
           <form onSubmit={onSubmit} className="mt-5 space-y-4">
             <div>
-              <label htmlFor="email" className="field-label">Email</label>
-              <input id="email" type="email" className="field" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+              <label htmlFor="email" className="field-label">{t('login.email')}</label>
+              <input id="email" type="email" className="field" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" {...validationProps()} />
             </div>
             <div>
-              <label htmlFor="password" className="field-label">Password</label>
-              <input id="password" type="password" className="field" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
+              <label htmlFor="password" className="field-label">{t('login.password')}</label>
+              <input id="password" type="password" className="field" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" {...validationProps()} />
             </div>
             {error && <p className="text-[14px] text-brand-red" role="alert">{error}</p>}
-            <Button type="submit" className="w-full" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</Button>
+            <Button type="submit" className="w-full" disabled={busy}>{busy ? t('login.submitting') : t('login.submit')}</Button>
           </form>
         )}
         {demoModeEnabled && (
           <p className="mt-6 text-center text-[14px]">
-            <Link to="/" className="font-semibold text-brand-red hover:underline">Use demo mode instead</Link>
+            <Link to="/" className="font-semibold text-brand-red hover:underline">{t('login.useDemo')}</Link>
           </p>
         )}
+        <LanguageSelect id="login-language" className="mt-6" />
       </div>
     </div>
   );

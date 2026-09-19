@@ -13,8 +13,10 @@ import { useLookups } from '../../hooks/useLookups.js';
 import { createServiceRequest, listServiceRequests } from '../../services/requestService.js';
 import { listWorkflows } from '../../services/workflowService.js';
 import { SERVICE_REQUEST_TYPES } from '../../utils/workflowTemplates.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 function RequestForm({ def, clientId, providers, onCreated, onCancel }) {
+  const { t, tx } = useI18n();
   const [providerId, setProviderId] = useState(providers[0]?.id || '');
   const [note, setNote] = useState('');
   const [busy, setBusy] = useState(false);
@@ -29,10 +31,10 @@ function RequestForm({ def, clientId, providers, onCreated, onCancel }) {
 
   return (
     <form onSubmit={submit} className="mt-4 space-y-4 rounded-md border border-brand-black p-5">
-      <p className="font-display text-lg font-medium">{def.label}</p>
+      <p className="font-display text-lg font-medium">{tx(def.label)}</p>
       {def.askProvider && (
         <div>
-          <label htmlFor="provider" className="field-label">Which provider?</label>
+          <label htmlFor="provider" className="field-label">{t('requests.provider')}</label>
           <select id="provider" className="field" value={providerId} onChange={(e) => setProviderId(e.target.value)}>
             {providers.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
@@ -41,18 +43,19 @@ function RequestForm({ def, clientId, providers, onCreated, onCancel }) {
         </div>
       )}
       <div>
-        <label htmlFor="note" className="field-label">Anything we should know? <span className="font-normal text-brand-grey">(optional)</span></label>
+        <label htmlFor="note" className="field-label">{t('requests.note')} <span className="font-normal text-brand-grey">{t('common.optional')}</span></label>
         <textarea id="note" rows={3} className="field" value={note} onChange={(e) => setNote(e.target.value)} />
       </div>
       <div className="flex gap-2">
-        <Button type="submit" disabled={busy}>{busy ? 'Sending…' : 'Send request'}</Button>
-        <Button variant="ghost" onClick={onCancel}>Cancel</Button>
+        <Button type="submit" disabled={busy}>{busy ? t('requests.sending') : t('requests.send')}</Button>
+        <Button variant="ghost" onClick={onCancel}>{t('common.cancel')}</Button>
       </div>
     </form>
   );
 }
 
 export default function ClientRequests() {
+  const { t, tx } = useI18n();
   const client = useCurrentClient();
   const clientId = client.data?.id;
   const { providers, providerName } = useLookups();
@@ -65,9 +68,9 @@ export default function ClientRequests() {
 
   return (
     <>
-      <PageHeader title="Requests" description="Ask for a change or a document. Each request is tracked step by step." />
+      <PageHeader title={t('requests.title')} description={t('requests.description')} />
 
-      <Section title="Start a request">
+      <Section title={t('requests.start')}>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_REQUEST_TYPES.map((r) => (
             <button
@@ -82,8 +85,8 @@ export default function ClientRequests() {
             >
               <NamedIcon name={r.icon} size={20} className="mt-0.5 shrink-0 text-brand-red" />
               <span>
-                <span className="block font-semibold">{r.label}</span>
-                <span className="block text-[13.5px] text-brand-grey">{r.description}</span>
+                <span className="block font-semibold">{tx(r.label)}</span>
+                <span className="block text-[13.5px] text-brand-grey">{tx(r.description)}</span>
               </span>
             </button>
           ))}
@@ -94,13 +97,13 @@ export default function ClientRequests() {
         {created && (
           <div className="mt-4 flex flex-wrap items-center gap-3 rounded-md bg-ok-tint p-4 text-ok" role="status">
             <CheckCircle2 size={18} aria-hidden="true" />
-            <span className="flex-1">Request sent. Royal Square is holding the ball: {created.nextAction.toLowerCase()}.</span>
-            <Link to={`/workflow/${created.id}`} className="font-semibold underline">Track it</Link>
+            <span className="flex-1">{t('requests.sent', { action: tx(created.nextAction).toLowerCase() })}</span>
+            <Link to={`/workflow/${created.id}`} className="font-semibold underline">{t('requests.track')}</Link>
           </div>
         )}
       </Section>
 
-      <Section title="Your requests" count={requests.data?.length}>
+      <Section title={t('requests.yours')} count={requests.data?.length}>
         <QueryState query={requests}>
           {(list) =>
             list.length ? (
@@ -111,7 +114,7 @@ export default function ClientRequests() {
                 })}
               </div>
             ) : (
-              <EmptyState title="No requests yet" message="Choose a request above to get started." />
+              <EmptyState title={t('requests.none')} message={t('requests.noneHint')} />
             )
           }
         </QueryState>

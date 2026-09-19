@@ -1,23 +1,18 @@
 import { Check } from 'lucide-react';
 import { getOwnerLabel, getOwnerSequence } from '../../utils/workflow.js';
-
-const STATE_TEXT = {
-  complete: 'Complete',
-  current: 'Holding the ball',
-  paused: 'Done for now',
-  later: 'Later',
-};
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /**
  * "Who's holding the ball?" — the parties in a process, left to right,
  * with the current owner shown as a solid Royal Square red block.
  */
 export default function WorkflowOwner({ workflow, providerName, viewerRole, clientName, compact = false }) {
+  const { t } = useI18n();
   const sequence = getOwnerSequence(workflow);
   if (!sequence.length) return null;
 
   return (
-    <ol className="flex w-full overflow-x-auto" aria-label="Who is responsible at each stage">
+    <ol className="flex w-full overflow-x-auto" aria-label={t('owner.aria')}>
       {sequence.map(({ owner, state }) => {
         const name = getOwnerLabel(owner, { providerName, viewerRole, clientName });
         const isCurrent = state === 'current';
@@ -37,7 +32,7 @@ export default function WorkflowOwner({ workflow, providerName, viewerRole, clie
             <span className={`mt-1 flex items-center gap-1.5 ${compact ? 'text-[12px]' : 'text-[13px]'} ${isCurrent ? 'text-white/90' : ''}`}>
               {isCurrent && <span className="rsf-ball inline-block h-2 w-2 rounded-full bg-white" aria-hidden="true" />}
               {(state === 'complete' || state === 'paused') && <Check size={13} aria-hidden="true" />}
-              {STATE_TEXT[state]}
+              {t(`owner.state.${state}`)}
             </span>
           </li>
         );

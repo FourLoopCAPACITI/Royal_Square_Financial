@@ -12,6 +12,7 @@
  */
 import { getTemplate } from './workflowTemplates.js';
 import { daysFromNow, startOfDay, uid } from './format.js';
+import { t } from '../i18n/index.js';
 
 export const OWNERS = ['client', 'adviser', 'provider', 'repairer', 'system'];
 
@@ -25,17 +26,17 @@ export const WORKFLOW_STATUS = {
 export function getOwnerLabel(owner, { providerName, viewerRole, clientName } = {}) {
   switch (owner) {
     case 'client':
-      return viewerRole === 'client' ? 'You' : clientName || 'Client';
+      return viewerRole === 'client' ? t('owner.you') : clientName || t('owner.client');
     case 'adviser':
-      return 'Royal Square';
+      return t('owner.adviser');
     case 'provider':
-      return providerName || 'Provider';
+      return providerName || t('owner.provider');
     case 'repairer':
-      return 'Repairer';
+      return t('owner.repairer');
     case 'system':
-      return 'Automatic';
+      return t('owner.system');
     default:
-      return 'Unassigned';
+      return t('owner.unassigned');
   }
 }
 
@@ -206,13 +207,13 @@ export function groupWorkflowsForInbox(workflows, now = new Date()) {
 /** Short status phrase such as "Waiting on Santam". */
 export function describeWorkflowStatus(workflow, opts = {}) {
   if (!workflow) return '';
-  if (workflow.status === WORKFLOW_STATUS.completed) return 'Completed';
-  if (workflow.status === WORKFLOW_STATUS.cancelled) return 'Cancelled';
+  if (workflow.status === WORKFLOW_STATUS.completed) return t('status.completed');
+  if (workflow.status === WORKFLOW_STATUS.cancelled) return t('workflow.cancelled');
   const owner = getCurrentOwner(workflow);
-  if (owner === 'client') return opts.viewerRole === 'client' ? 'Waiting on you' : 'Waiting on client';
-  if (owner === 'adviser') return 'With Royal Square';
-  if (owner === 'system') return 'Processing';
-  return `Waiting on ${getOwnerLabel(owner, opts)}`;
+  if (owner === 'client') return opts.viewerRole === 'client' ? t('workflow.waitingOnYou') : t('workflow.waitingOnClient');
+  if (owner === 'adviser') return t('workflow.withRoyalSquare');
+  if (owner === 'system') return t('workflow.processing');
+  return t('workflow.waitingOn', { name: getOwnerLabel(owner, opts) });
 }
 
 /** When did the current step start? Used for "Waiting 3 days". */
