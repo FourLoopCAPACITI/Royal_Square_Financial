@@ -6,7 +6,6 @@ import ActionList from '../../components/dashboard/ActionList.jsx';
 import NetWorthSummary from '../../components/dashboard/NetWorthSummary.jsx';
 import GoalCard from '../../components/goals/GoalCard.jsx';
 import WorkflowCard from '../../components/workflows/WorkflowCard.jsx';
-import AccidentButton from '../../components/claims/AccidentButton.jsx';
 import { useCurrentClient } from '../../hooks/useCurrentUser.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
@@ -24,9 +23,9 @@ function greeting() {
 export default function ClientDashboard() {
   const client = useCurrentClient();
   const clientId = client.data?.id;
-  const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId]);
-  const workflows = useServiceQuery(() => (clientId ? listWorkflows({ clientId, includeCompleted: false }) : []), [clientId]);
-  const goals = useServiceQuery(() => (clientId ? listGoals({ clientId }) : []), [clientId]);
+  const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId], { dependsOn: client });
+  const workflows = useServiceQuery(() => (clientId ? listWorkflows({ clientId, includeCompleted: false }) : []), [clientId], { dependsOn: client });
+  const goals = useServiceQuery(() => (clientId ? listGoals({ clientId }) : []), [clientId], { dependsOn: client });
   const { providerName } = useLookups();
 
   return (
@@ -34,7 +33,6 @@ export default function ClientDashboard() {
       <PageHeader
         title={`${greeting()}${client.data ? `, ${client.data.firstName}` : ''}`}
         description="Here's what needs you today and where everything else stands."
-        actions={<AccidentButton />}
       />
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">

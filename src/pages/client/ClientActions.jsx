@@ -13,12 +13,12 @@ import { formatDate } from '../../utils/format.js';
 export default function ClientActions() {
   const client = useCurrentClient();
   const clientId = client.data?.id;
-  const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId]);
+  const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId], { dependsOn: client });
   const waiting = useServiceQuery(
     async () => (clientId ? (await listWorkflows({ clientId, includeCompleted: false })).filter((w) => w.currentOwner === 'client') : []),
-    [clientId],
+    [clientId], { dependsOn: client },
   );
-  const reminders = useServiceQuery(() => (clientId ? listReminders({ clientId }) : []), [clientId]);
+  const reminders = useServiceQuery(() => (clientId ? listReminders({ clientId }) : []), [clientId], { dependsOn: client });
   const { providerName } = useLookups();
 
   return (

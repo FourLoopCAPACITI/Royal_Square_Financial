@@ -12,8 +12,8 @@ import { formatZAR } from '../../utils/format.js';
 import { isWorkflowOverdue } from '../../utils/workflow.js';
 
 export default function AdviserClients() {
-  const { adviserId, workflows } = useAdviserWorkflows({ includeCompleted: false });
-  const clients = useServiceQuery(() => (adviserId ? listClients({ adviserId }) : []), [adviserId]);
+  const { adviser, adviserId, workflows } = useAdviserWorkflows({ includeCompleted: false });
+  const clients = useServiceQuery(() => (adviserId ? listClients({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { providerName } = useLookups();
   const [query, setQuery] = useState('');
   const [openId, setOpenId] = useState(null);

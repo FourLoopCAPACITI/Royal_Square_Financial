@@ -16,7 +16,7 @@ export default function WorkflowCard({ workflow, providerName, clientName, viewe
   return (
     <Link
       to={`/workflow/${workflow.id}`}
-      className="group block rounded-md border border-brand-border bg-white p-4 transition-colors hover:border-brand-black sm:p-5"
+      className="group block rounded-md border border-brand-border bg-surface p-4 transition-colors hover:border-brand-black sm:p-5"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">

@@ -107,6 +107,7 @@ export function mapDocument(row) {
     name: row.name,
     status: row.status,
     uploadedAt: row.uploaded_at,
+    updatedAt: row.updated_at,
     expiryDate: row.expiry_date,
     storagePath: row.storage_path,
   };
@@ -132,6 +133,8 @@ export function mapTask(row) {
     clientId: row.client_id,
     workflowId: row.workflow_id,
     taskKey: row.task_key,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
     assignee: row.assignee_role,
     adviserId: row.assigned_adviser_id,
     kind: row.kind,

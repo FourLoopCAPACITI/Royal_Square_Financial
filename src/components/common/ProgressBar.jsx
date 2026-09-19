@@ -1,5 +1,5 @@
 export default function ProgressBar({ value = 0, tone = 'red', label, className = '' }) {
-  const colour = tone === 'green' ? 'bg-ok' : tone === 'dark' ? 'bg-brand-black' : 'bg-brand-red';
+  const colour = tone === 'green' ? 'bg-ok' : tone === 'dark' ? 'bg-strong' : 'bg-action';
   return (
     <div className={className}>
       <div

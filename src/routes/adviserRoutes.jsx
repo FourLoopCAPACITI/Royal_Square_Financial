@@ -11,9 +11,11 @@ import AdviserRequests from '../pages/adviser/AdviserRequests.jsx';
 import AdviserProviders from '../pages/adviser/AdviserProviders.jsx';
 import AdviserChat from '../pages/adviser/AdviserChat.jsx';
 import AdviserProfile from '../pages/adviser/AdviserProfile.jsx';
+import Notifications from '../pages/Notifications.jsx';
 
 export const adviserRoutes = (
   <>
+    <Route path="/adviser/notifications" element={<Notifications />} />
     <Route path="/adviser" element={<AdviserDashboard />} />
     <Route path="/adviser/actions" element={<ActionInbox />} />
     <Route path="/adviser/clients" element={<AdviserClients />} />

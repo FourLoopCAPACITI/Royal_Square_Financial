@@ -8,6 +8,12 @@ import { supabase, isSupabaseConfigured } from './supabase.js';
 import { subscribe as subscribeToStore } from './store.js';
 
 let cachedMode = null;
+const changeListeners = new Set();
+
+/** Refresh mounted queries after a successful remote mutation. */
+export function notifyDataChanged() {
+  changeListeners.forEach((listener) => listener());
+}
 
 export async function getDataMode() {
   if (!isSupabaseConfigured || !supabase) return 'mock';
@@ -30,5 +36,10 @@ export function getCachedDataMode() {
 
 /** Subscribe to data changes (mock store changes; Supabase realtime can be added here later). */
 export function subscribeToData(listener) {
-  return subscribeToStore(listener);
+  changeListeners.add(listener);
+  const unsubscribe = subscribeToStore(listener);
+  return () => {
+    changeListeners.delete(listener);
+    unsubscribe();
+  };
 }

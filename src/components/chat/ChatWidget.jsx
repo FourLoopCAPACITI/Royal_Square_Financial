@@ -9,7 +9,7 @@ export default function ChatWidget() {
     <div className="fixed bottom-20 right-4 z-40 lg:bottom-6 lg:right-6">
       {open && (
         <div
-          className="mb-3 flex h-[min(560px,70vh)] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-lg border border-brand-border bg-white shadow-[0_8px_30px_rgba(10,10,10,0.12)]"
+          className="mb-3 flex h-[min(560px,70vh)] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-lg border border-brand-border bg-surface shadow-[0_8px_30px_rgba(10,10,10,0.12)]"
           role="dialog"
           aria-label="Royal Square Assistant"
         >
@@ -28,7 +28,7 @@ export default function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="ml-auto flex items-center gap-2 rounded-full border border-brand-border bg-white px-4 py-3 text-[14px] font-semibold shadow-[0_4px_14px_rgba(10,10,10,0.10)] hover:border-brand-red"
+        className="ml-auto flex items-center gap-2 rounded-full border border-brand-border bg-surface px-4 py-3 text-[14px] font-semibold shadow-[0_4px_14px_rgba(10,10,10,0.10)] hover:border-brand-red"
         aria-expanded={open}
       >
         <MessageCircle size={18} className="text-brand-red" aria-hidden="true" />

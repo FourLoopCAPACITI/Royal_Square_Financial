@@ -2,7 +2,6 @@ import PageHeader from '../../components/common/PageHeader.jsx';
 import Section from '../../components/common/Section.jsx';
 import { QueryState, EmptyState } from '../../components/common/States.jsx';
 import WorkflowCard from '../../components/workflows/WorkflowCard.jsx';
-import AccidentButton from '../../components/claims/AccidentButton.jsx';
 import { useCurrentClient } from '../../hooks/useCurrentUser.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
@@ -13,13 +12,13 @@ export default function ClientClaims() {
   const clientId = client.data?.id;
   const claims = useServiceQuery(
     async () => (clientId ? (await listWorkflows({ clientId })).filter((w) => w.type === 'motor_claim') : []),
-    [clientId],
+    [clientId], { dependsOn: client },
   );
   const { providerName } = useLookups();
 
   return (
     <>
-      <PageHeader title="Claims" description="Report an incident and follow every step until your claim is closed." actions={<AccidentButton />} />
+      <PageHeader title="Claims" description="Report an incident and follow every step until your claim is closed." />
       <Section title="Your claims" count={claims.data?.length}>
         <QueryState query={claims} loadingLabel="Loading claims">
           {(list) =>

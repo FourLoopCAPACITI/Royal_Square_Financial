@@ -19,7 +19,7 @@ function Row({ label, value }) {
 export default function ClientProfile() {
   const client = useCurrentClient();
   const clientId = client.data?.id;
-  const products = useServiceQuery(() => (clientId ? listClientProducts(clientId) : []), [clientId]);
+  const products = useServiceQuery(() => (clientId ? listClientProducts(clientId) : []), [clientId], { dependsOn: client });
   const advisers = useServiceQuery(() => listAdvisers(), []);
   const { providerName } = useLookups();
 

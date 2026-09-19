@@ -37,15 +37,15 @@ export function SafetyStep({ report, update }) {
         <Choice label="Someone is hurt" selected={s.injuries === true} onClick={() => update('safety', { ...s, injuries: true })} />
       </div>
       {s.injuries === true && (
-        <div className="rounded-md bg-brand-red p-4 text-white" role="alert">
+        <div className="rounded-md bg-action p-4 text-white" role="alert">
           <p className="font-semibold">Call for help now</p>
           <p className="text-[14.5px]">Emergency from a mobile: 112. SAPS: 10111. Continue here only once help is on the way.</p>
-          <a href="tel:112" className="mt-3 inline-flex items-center gap-2 rounded bg-white px-4 py-2 font-semibold text-brand-red">
+          <a href="tel:112" className="mt-3 inline-flex items-center gap-2 rounded bg-surface px-4 py-2 font-semibold text-brand-red">
             <Phone size={16} aria-hidden="true" /> Call 112
           </a>
         </div>
       )}
-      <ul className="list-disc space-y-1 pl-5 text-[14.5px] text-[#3A3A3A]">
+      <ul className="list-disc space-y-1 pl-5 text-[14.5px] text-text-secondary">
         <li>Switch on your hazard lights and move out of traffic if you can.</li>
         <li>Don't admit fault or sign anything at the scene.</li>
         <li>You may need to report the accident at a police station within 24 hours.</li>
@@ -199,7 +199,7 @@ export function DescriptionStep({ report, update }) {
         <Button variant={recording ? 'dark' : 'secondary'} onClick={toggle} icon={recording ? Square : Mic}>
           {recording ? 'Stop recording' : report.voiceNote ? 'Record again' : 'Record a voice description'}
         </Button>
-        {recording && <span className="flex items-center gap-2 text-[14px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-brand-red" aria-hidden="true" />Recording</span>}
+        {recording && <span className="flex items-center gap-2 text-[14px] text-brand-red"><span className="rsf-ball h-2.5 w-2.5 rounded-full bg-action" aria-hidden="true" />Recording</span>}
         {!recording && report.voiceNote && <span className="text-[14px] text-ok">Voice note saved ({report.voiceNote.durationSeconds}s)</span>}
       </div>
       <p className="text-[12.5px] text-brand-grey">Voice recording is simulated in the web prototype.</p>

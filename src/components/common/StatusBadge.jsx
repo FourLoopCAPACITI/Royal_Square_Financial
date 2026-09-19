@@ -1,10 +1,10 @@
 const TONES = {
-  action: 'bg-brand-red text-white',
+  action: 'bg-action text-white',
   red: 'bg-brand-red-tint text-brand-red',
   success: 'bg-ok-tint text-ok',
   warning: 'bg-warn-tint text-warn',
-  neutral: 'bg-brand-light-grey text-[#4A4A4A]',
-  dark: 'bg-brand-black text-white',
+  neutral: 'bg-brand-light-grey text-text-secondary',
+  dark: 'bg-strong text-white',
 };
 
 /** Map common statuses to tones so every page labels them the same way. */

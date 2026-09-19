@@ -30,7 +30,7 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-brand-light-grey px-4">
-      <div className="w-full max-w-sm rounded-md border border-brand-border bg-white p-7">
+      <div className="w-full max-w-sm rounded-md border border-brand-border bg-surface p-7">
         <Logo className="mx-auto mb-7 max-w-[160px]" />
         <h1 className="mb-1 text-2xl font-normal">Sign in</h1>
         {!IS_SUPABASE_CONFIGURED ? (

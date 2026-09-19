@@ -9,8 +9,8 @@ import { useLookups } from '../../hooks/useLookups.js';
 import { listClaims } from '../../services/claimService.js';
 
 export default function AdviserClaims() {
-  const { adviserId, workflows } = useAdviserWorkflows();
-  const claims = useServiceQuery(() => (adviserId ? listClaims({ adviserId }) : []), [adviserId]);
+  const { adviser, adviserId, workflows } = useAdviserWorkflows();
+  const claims = useServiceQuery(() => (adviserId ? listClaims({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { clientName, providerName } = useLookups();
   const claimFor = (workflowId) => claims.data?.find((c) => c.workflowId === workflowId);
 

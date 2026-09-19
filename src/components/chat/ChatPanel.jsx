@@ -52,7 +52,7 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
             {m.role === 'assistant' ? (
               <AssistantMessage content={m.content} />
             ) : (
-              <p className="max-w-[85%] whitespace-pre-wrap rounded-lg bg-brand-black px-3.5 py-2.5 text-[14.5px] leading-relaxed text-white">{m.content}</p>
+              <p className="max-w-[85%] whitespace-pre-wrap rounded-lg bg-strong px-3.5 py-2.5 text-[14.5px] leading-relaxed text-white">{m.content}</p>
             )}
           </div>
         ))}
@@ -92,7 +92,7 @@ export default function ChatPanel({ clientId = DEMO_CLIENT_ID, className = '', a
             autoFocus={autoFocus}
             autoComplete="off"
           />
-          <button type="submit" disabled={!input.trim() || sending} className="rounded bg-brand-red px-3 text-white hover:bg-brand-red-dark disabled:opacity-40" aria-label="Send">
+          <button type="submit" disabled={!input.trim() || sending} className="rounded bg-action px-3 text-white hover:bg-brand-red-dark disabled:opacity-40" aria-label="Send">
             <SendHorizontal size={18} />
           </button>
         </form>

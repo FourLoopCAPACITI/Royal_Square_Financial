@@ -10,8 +10,8 @@ import { getHousehold, lookupClientName } from '../../services/clientService.js'
 export default function ClientGoals() {
   const client = useCurrentClient();
   const clientId = client.data?.id;
-  const goals = useServiceQuery(() => (clientId ? listGoals({ clientId }) : []), [clientId]);
-  const household = useServiceQuery(() => getHousehold(client.data?.householdId), [client.data?.householdId]);
+  const goals = useServiceQuery(() => (clientId ? listGoals({ clientId }) : []), [clientId], { dependsOn: client });
+  const household = useServiceQuery(() => getHousehold(client.data?.householdId), [client.data?.householdId], { dependsOn: client });
 
   const members = household.data?.memberIds?.map((id) => lookupClientName(id)).filter(Boolean).join(' and ');
 

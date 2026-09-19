@@ -13,7 +13,7 @@ export default function MobileNav({ items, footer }) {
 
   return (
     <>
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-border bg-white px-4 py-2.5 lg:hidden">
+      <div className="sticky top-14 z-30 flex items-center justify-between border-b border-brand-border bg-surface px-4 py-2.5 lg:hidden">
         <div className="flex items-center gap-2.5">
           <Logo variant="mark" />
           <span className="font-display text-[13px] uppercase tracking-[0.28em]">
@@ -22,7 +22,7 @@ export default function MobileNav({ items, footer }) {
         </div>
       </div>
 
-      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 border-t border-brand-border bg-white pb-[env(safe-area-inset-bottom)] lg:hidden">
+      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 border-t border-brand-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden">
         <ul className="grid grid-cols-5">
           {primary.map(({ to, label, icon: Icon, end }) => (
             <li key={to}>
@@ -30,7 +30,7 @@ export default function MobileNav({ items, footer }) {
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `flex flex-col items-center gap-0.5 px-1 py-2 text-[11px] ${isActive ? 'font-semibold text-brand-red' : 'text-[#4A4A4A]'}`
+                  `flex flex-col items-center gap-0.5 px-1 py-2 text-[11px] ${isActive ? 'font-semibold text-brand-red' : 'text-text-secondary'}`
                 }
               >
                 <Icon size={20} aria-hidden="true" />
@@ -39,7 +39,7 @@ export default function MobileNav({ items, footer }) {
             </li>
           ))}
           <li>
-            <button type="button" onClick={() => setOpen(true)} className="flex w-full flex-col items-center gap-0.5 px-1 py-2 text-[11px] text-[#4A4A4A]" aria-expanded={open}>
+            <button type="button" onClick={() => setOpen(true)} className="flex w-full flex-col items-center gap-0.5 px-1 py-2 text-[11px] text-text-secondary" aria-expanded={open}>
               <Menu size={20} aria-hidden="true" />
               More
             </button>
@@ -50,7 +50,7 @@ export default function MobileNav({ items, footer }) {
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="All pages">
           <button type="button" className="absolute inset-0 bg-black/30" aria-label="Close menu" onClick={() => setOpen(false)} />
-          <div className="absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-lg bg-white p-4 pb-8">
+          <div className="absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-lg bg-surface p-4 pb-8">
             <div className="mb-2 flex items-center justify-between">
               <p className="font-display text-lg">All pages</p>
               <button type="button" onClick={() => setOpen(false)} className="rounded p-2 hover:bg-brand-light-grey" aria-label="Close menu">

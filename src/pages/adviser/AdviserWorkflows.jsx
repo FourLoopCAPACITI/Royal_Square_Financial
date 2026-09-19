@@ -35,7 +35,7 @@ export default function AdviserWorkflows() {
       <PageHeader title="Workflows" description="Every process runs on the same workflow engine. Filter by owner or type." />
       <div className="mb-5 flex flex-wrap items-center gap-2">
         {OWNER_FILTERS.map((f) => (
-          <button key={f.key} type="button" onClick={() => setOwner(f.key)} aria-pressed={owner === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${owner === f.key ? 'border-brand-red bg-brand-red text-white' : 'border-brand-border hover:border-brand-black'}`}>
+          <button key={f.key} type="button" onClick={() => setOwner(f.key)} aria-pressed={owner === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${owner === f.key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
             {f.label}
           </button>
         ))}

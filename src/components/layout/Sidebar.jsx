@@ -3,9 +3,9 @@ import Logo from '../common/Logo.jsx';
 
 export default function Sidebar({ items, footer }) {
   return (
-    <aside className="sticky top-0 hidden h-screen w-[248px] shrink-0 flex-col border-r border-brand-border bg-white lg:flex">
+    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-[248px] shrink-0 flex-col border-r border-brand-border bg-surface lg:flex">
       <div className="px-6 pb-6 pt-7">
-        <Logo />
+        <Logo className="rounded-xl" />
       </div>
       <nav aria-label="Main" className="flex-1 overflow-y-auto px-3">
         <ul className="space-y-0.5">
@@ -17,8 +17,8 @@ export default function Sidebar({ items, footer }) {
                 className={({ isActive }) =>
                   `relative flex items-center gap-3 rounded px-3 py-2.5 text-[15px] transition-colors ${
                     isActive
-                      ? 'bg-brand-red-tint font-semibold text-brand-red before:absolute before:inset-y-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-brand-red'
-                      : 'text-[#3A3A3A] hover:bg-brand-light-grey'
+                      ? 'bg-brand-red-tint font-semibold text-brand-red before:absolute before:inset-y-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-action'
+                      : 'text-text-secondary hover:bg-brand-light-grey'
                   }`
                 }
               >

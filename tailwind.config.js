@@ -1,21 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        strong: '#0A0A0A',
+        action: '#9A1C20',
+        'text-secondary': 'rgb(var(--text-secondary) / <alpha-value>)',
         brand: {
-          red: '#9A1C20',
+          red: 'rgb(var(--brand-red) / <alpha-value>)',
           'red-dark': '#7C1519',
-          'red-tint': '#F7ECEC',
-          black: '#0A0A0A',
+          'red-tint': 'rgb(var(--brand-red-tint) / <alpha-value>)',
+          black: 'rgb(var(--brand-black) / <alpha-value>)',
           white: '#FFFFFF',
-          grey: '#747474',
-          'light-grey': '#F5F5F5',
-          border: '#E5E5E5',
+          grey: 'rgb(var(--brand-grey) / <alpha-value>)',
+          'light-grey': 'rgb(var(--brand-light-grey) / <alpha-value>)',
+          border: 'rgb(var(--brand-border) / <alpha-value>)',
         },
-        ok: { DEFAULT: '#2F6B45', tint: '#EAF3ED' },
-        warn: { DEFAULT: '#9A6412', tint: '#FBF3E4' },
+        ok: { DEFAULT: 'rgb(var(--ok) / <alpha-value>)', tint: 'rgb(var(--ok-tint) / <alpha-value>)' },
+        warn: { DEFAULT: 'rgb(var(--warn) / <alpha-value>)', tint: 'rgb(var(--warn-tint) / <alpha-value>)' },
       },
       fontFamily: {
         display: ['Jost', 'Futura', '"Century Gothic"', 'system-ui', 'sans-serif'],

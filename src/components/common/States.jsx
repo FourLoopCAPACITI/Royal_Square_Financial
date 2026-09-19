@@ -27,7 +27,7 @@ export function ErrorState({ error, onRetry }) {
       <div className="flex items-center gap-2 font-semibold text-brand-red">
         <AlertCircle size={18} aria-hidden="true" /> This section didn't load
       </div>
-      <p className="text-sm text-[#4A4A4A]">{String(error?.message || error || 'Unknown error')}. Check your connection or Supabase settings, then try again.</p>
+      <p className="text-sm text-text-secondary">{String(error?.message || error || 'Unknown error')}. Check your connection or Supabase settings, then try again.</p>
       {onRetry && (
         <Button size="sm" variant="secondary" onClick={onRetry}>
           Try again

@@ -10,7 +10,7 @@ import { listDocuments } from '../../services/documentService.js';
 export default function ClientDocuments() {
   const client = useCurrentClient();
   const clientId = client.data?.id;
-  const documents = useServiceQuery(() => (clientId ? listDocuments({ clientId }) : []), [clientId]);
+  const documents = useServiceQuery(() => (clientId ? listDocuments({ clientId }) : []), [clientId], { dependsOn: client });
   const attention = documents.data?.filter((d) => d.status !== 'current').length || 0;
 
   return (

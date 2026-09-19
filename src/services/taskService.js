@@ -1,6 +1,6 @@
 /** Tasks and reminders ("My Actions"). */
 import { supabase } from './supabase.js';
-import { useSupabase } from './dataSource.js';
+import { notifyDataChanged, useSupabase } from './dataSource.js';
 import { getState, setState, simulateLatency } from './store.js';
 import { mapTask } from './mappers.js';
 
@@ -27,6 +27,7 @@ export async function completeTask(taskId) {
   if (await useSupabase()) {
     const { error } = await supabase.from('tasks').update({ status: 'done' }).eq('id', taskId);
     if (error) throw error;
+    notifyDataChanged();
     return;
   }
   setState((s) => ({ ...s, tasks: s.tasks.map((t) => (t.id === taskId ? { ...t, status: 'done' } : t)) }));
@@ -38,7 +39,7 @@ export async function listReminders({ clientId } = {}) {
     if (clientId) query = query.eq('client_id', clientId);
     const { data, error } = await query;
     if (error) throw error;
-    return data.map((r) => ({ id: r.id, clientId: r.client_id, documentId: r.document_id, title: r.title, remindAt: r.remind_at, channel: r.channel }));
+    return data.map((r) => ({ id: r.id, clientId: r.client_id, documentId: r.document_id, taskId: r.task_id, title: r.title, remindAt: r.remind_at, channel: r.channel, updatedAt: r.updated_at }));
   }
   await simulateLatency();
   return getState().reminders.filter((r) => !clientId || r.clientId === clientId);

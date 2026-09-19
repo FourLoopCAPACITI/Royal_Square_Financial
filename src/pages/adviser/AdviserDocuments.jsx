@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../../components/common/PageHeader.jsx';
 import Section from '../../components/common/Section.jsx';
 import { QueryState } from '../../components/common/States.jsx';
@@ -16,16 +16,17 @@ const FILTERS = [
 export default function AdviserDocuments() {
   const adviser = useCurrentAdviser();
   const adviserId = adviser.data?.id;
-  const docs = useServiceQuery(() => (adviserId ? listDocuments({ adviserId }) : []), [adviserId]);
+  const docs = useServiceQuery(() => (adviserId ? listDocuments({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { clientName } = useLookups();
-  const [filter, setFilter] = useState(FILTERS[0]);
+  const [params, setParams] = useSearchParams();
+  const filter = FILTERS.find((item) => item.key === params.get('filter')) || FILTERS[0];
 
   return (
     <>
       <PageHeader title="Documents" description="Missing, expiring and under-review documents across your clients." />
       <div className="mb-5 flex gap-2">
         {FILTERS.map((f) => (
-          <button key={f.key} type="button" onClick={() => setFilter(f)} aria-pressed={filter.key === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${filter.key === f.key ? 'border-brand-red bg-brand-red text-white' : 'border-brand-border hover:border-brand-black'}`}>
+          <button key={f.key} type="button" onClick={() => setParams({ filter: f.key })} aria-pressed={filter.key === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${filter.key === f.key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
             {f.label}
           </button>
         ))}

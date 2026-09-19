@@ -58,8 +58,8 @@ export default function ClientRequests() {
   const { providers, providerName } = useLookups();
   const [selected, setSelected] = useState(null);
   const [created, setCreated] = useState(null);
-  const requests = useServiceQuery(() => (clientId ? listServiceRequests({ clientId }) : []), [clientId]);
-  const workflows = useServiceQuery(() => (clientId ? listWorkflows({ clientId }) : []), [clientId]);
+  const requests = useServiceQuery(() => (clientId ? listServiceRequests({ clientId }) : []), [clientId], { dependsOn: client });
+  const workflows = useServiceQuery(() => (clientId ? listWorkflows({ clientId }) : []), [clientId], { dependsOn: client });
 
   const def = SERVICE_REQUEST_TYPES.find((r) => r.type === selected);
 

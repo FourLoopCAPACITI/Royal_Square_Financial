@@ -1,11 +1,12 @@
 import {
   BookUser, Briefcase, Building2, ClipboardCheck, FileText, Inbox, LayoutDashboard,
-  ListChecks, MessageCircle, Sparkles, Target, UserRound, Users, Workflow, ShieldAlert,
+  ListChecks, MessageCircle, Sparkles, Target, UserRound, Users, Workflow, ShieldAlert, Bell,
 } from 'lucide-react';
 
 export const CLIENT_NAV = [
   { to: '/client', label: 'Dashboard', icon: LayoutDashboard, end: true, mobile: true },
   { to: '/client/actions', label: 'My Actions', icon: ListChecks, mobile: true },
+  { to: '/client/notifications', label: 'Notifications', icon: Bell },
   { to: '/client/goals', label: 'Goals', icon: Target },
   { to: '/client/documents', label: 'Documents', icon: FileText, mobile: true },
   { to: '/client/claims', label: 'Claims', icon: ShieldAlert, mobile: true },
@@ -18,6 +19,7 @@ export const CLIENT_NAV = [
 export const ADVISER_NAV = [
   { to: '/adviser', label: 'Dashboard', icon: LayoutDashboard, end: true, mobile: true },
   { to: '/adviser/actions', label: 'Action Inbox', icon: Inbox, mobile: true },
+  { to: '/adviser/notifications', label: 'Notifications', icon: Bell },
   { to: '/adviser/clients', label: 'Clients', icon: Users, mobile: true },
   { to: '/adviser/workflows', label: 'Workflows', icon: Workflow, mobile: true },
   { to: '/adviser/goals', label: 'Goals', icon: Target },
@@ -32,4 +34,3 @@ export const ADVISER_NAV = [
 export function navFor(role) {
   return role === 'adviser' || role === 'admin' ? ADVISER_NAV : CLIENT_NAV;
 }
-

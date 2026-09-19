@@ -11,8 +11,8 @@ import { describeWorkflowStatus } from '../../utils/workflow.js';
 import { formatDate } from '../../utils/format.js';
 
 export default function AdviserRequests() {
-  const { adviserId, workflows } = useAdviserWorkflows();
-  const requests = useServiceQuery(() => (adviserId ? listServiceRequests({ adviserId }) : []), [adviserId]);
+  const { adviser, adviserId, workflows } = useAdviserWorkflows();
+  const requests = useServiceQuery(() => (adviserId ? listServiceRequests({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { clientName, providerName } = useLookups();
   const workflowFor = (id) => workflows.data?.find((w) => w.id === id);
 

@@ -6,6 +6,6 @@ import { listWorkflows } from '../services/workflowService.js';
 export function useAdviserWorkflows({ includeCompleted = true } = {}) {
   const adviser = useCurrentAdviser();
   const adviserId = adviser.data?.id;
-  const workflows = useServiceQuery(() => (adviserId ? listWorkflows({ adviserId, includeCompleted }) : []), [adviserId, includeCompleted]);
+  const workflows = useServiceQuery(() => (adviserId ? listWorkflows({ adviserId, includeCompleted }) : []), [adviserId, includeCompleted], { dependsOn: adviser });
   return { adviser, adviserId, workflows };
 }

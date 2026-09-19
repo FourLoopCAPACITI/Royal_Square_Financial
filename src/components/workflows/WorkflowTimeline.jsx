@@ -14,22 +14,22 @@ export default function WorkflowTimeline({ workflow, providerName, viewerRole, c
           <li key={step.id} className="relative flex gap-4 pb-5 last:pb-0">
             {!isLast && (
               <span
-                className={`absolute left-[11px] top-6 h-[calc(100%-18px)] w-px ${step.status === 'complete' ? 'bg-brand-black' : 'bg-brand-border'}`}
+                className={`absolute left-[11px] top-6 h-[calc(100%-18px)] w-px ${step.status === 'complete' ? 'bg-strong' : 'bg-brand-border'}`}
                 aria-hidden="true"
               />
             )}
             <span className="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center" aria-hidden="true">
               {step.status === 'complete' && (
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-black text-white">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-strong text-white">
                   <Check size={14} strokeWidth={3} />
                 </span>
               )}
               {step.status === 'current' && (
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-brand-red bg-white">
-                  <span className="h-2.5 w-2.5 rounded-full bg-brand-red" />
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-brand-red bg-surface">
+                  <span className="h-2.5 w-2.5 rounded-full bg-action" />
                 </span>
               )}
-              {step.status === 'upcoming' && <span className="h-6 w-6 rounded-full border-2 border-brand-border bg-white" />}
+              {step.status === 'upcoming' && <span className="h-6 w-6 rounded-full border-2 border-brand-border bg-surface" />}
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">

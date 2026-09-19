@@ -9,7 +9,7 @@ import { listGoals } from '../../services/goalService.js';
 export default function AdviserGoals() {
   const adviser = useCurrentAdviser();
   const adviserId = adviser.data?.id;
-  const goals = useServiceQuery(() => (adviserId ? listGoals({ adviserId }) : []), [adviserId]);
+  const goals = useServiceQuery(() => (adviserId ? listGoals({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   const { clientName } = useLookups();
   return (
     <>

@@ -27,7 +27,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface">
       <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-6 py-10 sm:px-10">
         <header className="flex items-center justify-between">
           <Logo className="max-w-[150px]" />
@@ -42,7 +42,7 @@ export default function Landing() {
           <h1 className="max-w-3xl text-[34px] font-light leading-[1.15] tracking-[0.005em] sm:text-[48px]">
             Always know what is happening, what happens next, and who is holding the ball.
           </h1>
-          <p className="mt-5 max-w-xl text-[17px] text-[#4A4A4A]">
+          <p className="mt-5 max-w-xl text-[17px] text-text-secondary">
             Claims, policy changes, documents and reviews in one place for Royal Square Financial clients and advisers.
           </p>
 

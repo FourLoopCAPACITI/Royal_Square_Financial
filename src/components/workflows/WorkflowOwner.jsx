@@ -23,9 +23,9 @@ export default function WorkflowOwner({ workflow, providerName, viewerRole, clie
         const isCurrent = state === 'current';
         const base = compact ? 'min-w-[96px] px-2.5 py-2' : 'min-w-[128px] px-3.5 py-3';
         const tone = isCurrent
-          ? 'bg-brand-red text-white border-brand-red'
+          ? 'bg-action text-white border-brand-red'
           : state === 'later'
-            ? 'bg-white text-brand-grey border-brand-border border-dashed'
+            ? 'bg-surface text-brand-grey border-brand-border border-dashed'
             : 'bg-brand-light-grey text-brand-black border-brand-light-grey';
         return (
           <li

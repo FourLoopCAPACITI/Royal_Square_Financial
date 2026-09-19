@@ -4,7 +4,7 @@
  * and move a workflow forward — the "admin disappears" moment of the demo.
  */
 import { supabase, STORAGE_BUCKETS, clientDocumentPath } from './supabase.js';
-import { useSupabase } from './dataSource.js';
+import { notifyDataChanged, useSupabase } from './dataSource.js';
 import { getState, setState, simulateLatency } from './store.js';
 import { mapDocument } from './mappers.js';
 import { extractDocumentData } from './documentIntelligence.js';
@@ -69,6 +69,7 @@ export async function uploadAndProcessDocument({ clientId, type, file }) {
     name: label,
     status: type === 'drivers_licence' ? 'current' : 'under_review',
     uploadedAt: now,
+    updatedAt: now,
     expiryDate,
     storagePath,
   };
@@ -83,6 +84,7 @@ export async function uploadAndProcessDocument({ clientId, type, file }) {
       .single();
     if (error) throw error;
     document.id = data.id;
+    notifyDataChanged();
     actions.push('Client record updated');
     return { document, outcome: { headline: `${label} uploaded`, detected, actions } };
   }

@@ -22,7 +22,7 @@ function Count({ label, value, tone }) {
 /** Adviser home: the inbox first, a short task list second. Deliberately not an analytics dashboard. */
 export default function AdviserDashboard() {
   const { adviser, adviserId, workflows } = useAdviserWorkflows({ includeCompleted: false });
-  const tasks = useServiceQuery(() => (adviserId ? listTasks({ adviserId, assignee: 'adviser' }) : []), [adviserId]);
+  const tasks = useServiceQuery(() => (adviserId ? listTasks({ adviserId, assignee: 'adviser' }) : []), [adviserId], { dependsOn: adviser });
   const { clientName } = useLookups();
   const groups = groupWorkflowsForInbox(workflows.data || []);
 

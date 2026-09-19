@@ -8,7 +8,7 @@ import { listClients } from '../../services/clientService.js';
 export default function AdviserProfile() {
   const adviser = useCurrentAdviser();
   const adviserId = adviser.data?.id;
-  const clients = useServiceQuery(() => (adviserId ? listClients({ adviserId }) : []), [adviserId]);
+  const clients = useServiceQuery(() => (adviserId ? listClients({ adviserId }) : []), [adviserId], { dependsOn: adviser });
   return (
     <>
       <PageHeader title="Profile" description="Your adviser details." />

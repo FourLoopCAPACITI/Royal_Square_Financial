@@ -14,7 +14,7 @@ export default function PhotoCapture({ kind, photos, onChange, tips }) {
   }
   return (
     <div>
-      <ul className="mb-4 list-disc space-y-1 pl-5 text-[14.5px] text-[#3A3A3A]">
+      <ul className="mb-4 list-disc space-y-1 pl-5 text-[14.5px] text-text-secondary">
         {tips.map((t) => <li key={t}>{t}</li>)}
       </ul>
       <Button onClick={take} disabled={busy} icon={busy ? undefined : Camera} size="lg">
@@ -27,7 +27,7 @@ export default function PhotoCapture({ kind, photos, onChange, tips }) {
             <li key={p.id} className="relative flex aspect-square flex-col items-center justify-center rounded border border-brand-border bg-brand-light-grey text-brand-grey">
               <ImageIcon size={22} aria-hidden="true" />
               <span className="mt-1 text-[11.5px]">Photo {i + 1}</span>
-              <button type="button" onClick={() => onChange(photos.filter((x) => x.id !== p.id))} className="absolute right-1 top-1 rounded bg-white p-0.5 hover:text-brand-red" aria-label={`Remove photo ${i + 1}`}>
+              <button type="button" onClick={() => onChange(photos.filter((x) => x.id !== p.id))} className="absolute right-1 top-1 rounded bg-surface p-0.5 hover:text-brand-red" aria-label={`Remove photo ${i + 1}`}>
                 <X size={14} />
               </button>
             </li>

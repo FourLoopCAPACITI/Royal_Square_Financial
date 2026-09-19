@@ -1,8 +1,8 @@
 const VARIANTS = {
-  primary: 'bg-brand-red text-white hover:bg-brand-red-dark border border-brand-red',
-  secondary: 'bg-white text-brand-black border border-brand-border hover:border-brand-black',
+  primary: 'bg-action text-white hover:bg-brand-red-dark border border-brand-red',
+  secondary: 'bg-surface text-brand-black border border-brand-border hover:border-brand-black',
   ghost: 'bg-transparent text-brand-black border border-transparent hover:bg-brand-light-grey',
-  dark: 'bg-brand-black text-white border border-brand-black hover:bg-[#262626]',
+  dark: 'bg-strong text-white border border-brand-black hover:bg-[#262626]',
 };
 
 const SIZES = {

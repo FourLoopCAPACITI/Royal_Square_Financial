@@ -124,6 +124,14 @@ Provider adapter / mock integration   (providers.integration_mode = 'mock')
 - **Mock store** (`src/services/store.js`) persists demo changes in localStorage. Reset from the demo bar.
 - **Demo mode** (`SessionContext.jsx`, `DemoBar.jsx`) is clearly marked and removable: set `VITE_ENABLE_DEMO_MODE=false`, then delete `DemoBar.jsx` and the demo-role code in `SessionContext.jsx`.
 
+### In-app notifications
+
+The header bell and Notifications pages show open tasks, reminders due or coming up within seven days, and the latest document statuses. Clients see their own records; advisers see assigned clients and their own or unassigned adviser tasks. Marking an item as read does not complete its task. Tasks can be completed from the full notification inbox.
+
+Document edits/uploads/status changes and task changes create a new unread version of the item. Completed tasks leave the inbox. The feed shows the latest state of each record rather than an audit history. Read status is saved per account and role in this browser; it does not sync across devices. The feed refreshes after local changes, on tab focus/reconnect, and every 30 seconds while visible, including updates made by other users in Supabase. No schema migration is needed.
+
+These are in-app notifications only. Email, SMS and background push delivery are not implemented.
+
 ### Groq assistant
 
 ```
