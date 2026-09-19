@@ -1,0 +1,59 @@
+import { Link } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
+import StatusBadge from '../common/StatusBadge.jsx';
+import ProgressBar from '../common/ProgressBar.jsx';
+import WorkflowOwner from './WorkflowOwner.jsx';
+import { describeWorkflowStatus, getWorkflowProgress, isWorkflowOverdue } from '../../utils/workflow.js';
+import { describeDue } from '../../utils/format.js';
+
+/** Summary card for one process. Links to the full workflow page. */
+export default function WorkflowCard({ workflow, providerName, clientName, viewerRole, showOwner = true }) {
+  const overdue = isWorkflowOverdue(workflow);
+  const progress = getWorkflowProgress(workflow);
+  const status = describeWorkflowStatus(workflow, { providerName, viewerRole });
+  const needsViewer = workflow.currentOwner === viewerRole || (viewerRole === 'adviser' && workflow.currentOwner === 'system');
+
+  return (
+    <Link
+      to={`/workflow/${workflow.id}`}
+      className="group block rounded-md border border-brand-border bg-white p-4 transition-colors hover:border-brand-black sm:p-5"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-display text-[18px] font-medium">{workflow.title}</p>
+          <p className="text-[15px] text-brand-grey">
+            {[clientName, providerName].filter(Boolean).join(', ') || 'Royal Square Financial'}
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          {overdue ? (
+            <StatusBadge status="overdue" />
+          ) : needsViewer ? (
+            <StatusBadge tone="action">{viewerRole === 'client' ? 'Your turn' : 'Needs you'}</StatusBadge>
+          ) : (
+            <StatusBadge tone={workflow.status === 'completed' ? 'success' : 'neutral'}>{status}</StatusBadge>
+          )}
+          <ChevronRight size={18} className="text-brand-grey transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+        </div>
+      </div>
+
+      {showOwner && workflow.status === 'active' && (
+        <div className="mt-4">
+          <WorkflowOwner workflow={workflow} providerName={providerName} viewerRole={viewerRole} clientName={clientName} compact />
+        </div>
+      )}
+
+      <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-[15.5px] sm:grid-cols-[1fr_auto]">
+        <div>
+          <dt className="label-muted">Next action</dt>
+          <dd className="font-medium">{workflow.nextAction}</dd>
+        </div>
+        <div className="sm:text-right">
+          <dt className="label-muted">Due</dt>
+          <dd className={overdue ? 'font-semibold text-brand-red' : 'font-medium'}>{workflow.status === 'active' ? describeDue(workflow.dueDate) : 'Closed'}</dd>
+        </div>
+      </dl>
+      <ProgressBar value={progress} className="mt-4" label={`${workflow.title} progress`} tone={workflow.status === 'completed' ? 'green' : 'red'} />
+    </Link>
+  );
+}
