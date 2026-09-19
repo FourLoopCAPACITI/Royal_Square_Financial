@@ -1,5 +1,5 @@
 /**
- * Afrikaans (Suid-Afrikaans). ui → t() keys, data → tx() English source text, chat → built-in guide.
+ * Afrikaans (Suid-Afrikaans). ui → t() keys, data → tx() English source text, chat.
  * Anything missing here falls back to English.
  */
 const ui = {
@@ -17,7 +17,7 @@ const ui = {
   'common.progress': 'Vordering',
 
   'language.label': 'Taal',
-  'language.help': 'Word deur die hele portaal en deur die Royal Square-assistent gebruik. Gestoor in jou profiel.',
+  'language.help': "Word deur die hele portaal en deur die Royal Square VGV-Bot gebruik. Gestoor in jou profiel.",
 
   'nav.main': 'Hoof',
   'nav.dashboard': 'Kontrolepaneel',
@@ -28,7 +28,7 @@ const ui = {
   'nav.claims': 'Eise',
   'nav.requests': 'Versoeke',
   'nav.lifeEvents': 'Lewensgebeure',
-  'nav.chat': 'Klets-assistent',
+  'nav.chat': "VGV-Bot",
   'nav.profile': 'Profiel',
   'nav.actionInbox': 'Aksie-inkassie',
   'nav.actionInbox.short': 'Inkassie',
@@ -382,24 +382,17 @@ const ui = {
   'providers.responseDays': '{count} dae',
   'providers.contact': 'Kontak',
 
-  'chat.title': 'Royal Square-assistent',
-  'chat.clientDescription': 'Vra hoe om iets in die portaal te doen of wat \'n status beteken. Vir advies, praat met jou adviseur.',
-  'chat.adviserDescription': 'Sien vooraf die assistent wat jou kliënte gebruik. Dit verduidelik die portaal en statusse; dit gee nooit advies nie.',
-  'chat.welcome': 'Hallo, ek is die Royal Square-assistent. Ek kan jou help om jou pad te vind: \'n ongeluk aanmeld, dokumente oplaai, versoeke rig, of verduidelik wat \'n status beteken.',
-  'chat.subtitle': 'Hulp met dienste en statusse',
-  'chat.thinking': 'Dink tans…',
+  'chat.title': "Royal Square VGV-Bot",
+  'chat.clientDescription': "Kry vinnige antwoorde op algemene vrae oor die portaal. Vir advies, praat met jou adviseur.",
+  'chat.adviserDescription': "Sien vooraf die VGV-Bot wat jou kliënte gebruik. Dit beantwoord algemene vrae oor die portaal; dit gee nooit advies nie.",
+  'chat.welcome': "Hallo, ek is die Royal Square VGV-Bot (veelgestelde vrae). Ek kan algemene vrae oor die portaal beantwoord: 'n ongeluk aanmeld, dokumente oplaai, versoeke rig, of wat 'n status beteken.",
+  'chat.subtitle': "Antwoorde op algemene vrae",
   'chat.askLabel': 'Vra \'n vraag',
-  'chat.placeholder': 'Vra oor \'n proses of bladsy',
+  'chat.placeholder': "Vra 'n vraag, bv. “Hoe laai ek 'n dokument op?”",
   'chat.send': 'Stuur',
-  'chat.disclaimer': 'Die assistent verduidelik dienste en statusse. Dit gee nie finansiële advies nie en besluit nie oor eise nie.',
-  'chat.usedGuide': ' Antwoord uit die ingeboude gids omdat die lewendige assistent nie gekoppel is nie.',
+  'chat.disclaimer': "Die VGV-Bot is slegs informatief. Dit gee nie finansiële, beleggings-, versekerings-, regs- of eisadvies nie.",
   'chat.needHelp': 'Hulp nodig?',
-  'chat.closeAssistant': 'Sluit assistent',
-  'chat.suggest.accident': 'Hoe meld ek \'n ongeluk aan?',
-  'chat.suggest.review': 'Watter dokumente het ek nodig vir my jaarlikse hersiening?',
-  'chat.suggest.licence': 'Waar kan ek my bestuurslisensie oplaai?',
-  'chat.suggest.provider': 'Wat beteken “wag op verskaffer”?',
-  'chat.suggest.address': 'Hoe werk ek my adres by?',
+  'chat.closeAssistant': "Sluit VGV-Bot",
 
   'accident.title': 'Ongelukhulp',
   'accident.stepOf': 'Stap {step} van {total}. Jou vordering word outomaties gestoor.',
@@ -736,19 +729,4 @@ const data = {
   'Email not confirmed': 'E-pos nie bevestig nie',
 };
 
-const chat = {
-  advice: 'Vir finansiële advies of produkaanbevelings, praat asseblief met jou Royal Square Financial-adviseur.',
-  fallback: [
-    { match: /(belê|belegg|watter (polis|produk|fonds)|moet ek (koop|neem|kies)|aanbeveel|aanbeveling|beste (polis|versekeraar|fonds))/i, answer: 'advice' },
-    { match: /(ongeluk|botsing|crash)/i, answer: 'Tik op die rooi “Ek was in \'n ongeluk”-knoppie, of gaan na Lewensgebeure → Ek was in \'n ongeluk. Ongelukhulp lei jou deur 10 kort stappe en werk selfs sonder sein. As iemand beseer is, bel eers 112 vanaf \'n selfoon.' },
-    { match: /(jaarlikse hersiening|hersieningsdokumente)/i, answer: 'Vir jou jaarlikse hersiening het ons gewoonlik jou ID, bewys van adres (nie ouer as 3 maande nie), onlangse polis- en beleggingstate, en bewys van inkomste nodig. Laai dit op die Dokumente-bladsy op. Jou adviseur bevestig die finale lys.' },
-    { match: /(lisensie|licence|license|oplaai|laai .*op)/i, answer: 'Gaan na Dokumente → Laai dokument op en kies die dokumentsoort. By \'n bestuurslisensie lees ons die vervaldatum en stel \'n hernuwingsherinnering vir jou.' },
-    { match: /(wag op verskaffer|verskaffer)/i, answer: '“Wag op verskaffer” beteken Royal Square het jou versoek na die versekeraar of beleggingsmaatskappy gestuur en wag vir hulle. Jou adviseur volg op; jy hoef niks te doen nie.' },
-    { match: /(adres|getrek|trek)/i, answer: 'Gaan na Lewensgebeure → Ek het getrek. Ons skep een adresveranderingsproses wat jou profiel en elke geraakte polis bywerk. Jy hoef net bewys van adres op te laai.' },
-    { match: /(polisdokument|skedule|grensbrief|irp5|belastingsertifikaat)/i, answer: 'Gaan na Versoeke en kies die dokument wat jy nodig het. Ons vra dit by die verskaffer aan en jy kan by elke stap volg wie dit het.' },
-    { match: /(eis|status|waar is)/i, answer: 'Maak Eise of jou Kontrolepaneel oop. Elke proses wys wie die bal het, die huidige stap, die volgende aksie en die sperdatum.' },
-  ],
-  default: 'Ek kan jou help om jou pad in die portaal te vind: \'n ongeluk aanmeld, dokumente oplaai, versoeke, en wat \'n status beteken. Vir enigiets oor jou spesifieke dekking, stuur asseblief vir jou adviseur \'n boodskap.',
-};
-
-export default { ui, data, chat };
+export default { ui, data };

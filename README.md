@@ -20,7 +20,7 @@ The design is workflow- and action-first, not an analytics dashboard.
 |---|---|
 | Frontend | React 18, Vite 5, **JavaScript only** (no TypeScript), Tailwind CSS 3, React Router 6, Lucide React |
 | Data | Supabase: PostgreSQL, Auth, Storage (optional: mock data fallback) |
-| AI | Groq chat completions via a Vercel serverless function |
+| FAQ Bot | Hardcoded, client-side FAQ matching (`src/data/faqs.js`); no AI, no API |
 | Deploy | Vercel |
 | Future mobile | Capacitor (architecture prepared, no native projects yet) |
 
@@ -31,7 +31,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173. **No environment variables are needed** to run it: without Supabase the app uses `src/data/mockData.js`, and without a Groq key the assistant answers common questions from a built-in offline FAQ.
+Open http://localhost:5173. **No environment variables are needed** to run it: without Supabase the app uses `src/data/mockData.js`, and the FAQ Bot is fully client-side, so it needs no API key or internet connection.
 
 Click **Client portal** or **Adviser portal** on the landing page, or use the **demo bar** at the top of the app to switch views, toggle Online/Offline and reset demo data.
 
@@ -52,10 +52,8 @@ Copy `.env.example` to `.env.local`.
 | `VITE_SUPABASE_URL` | Browser | Supabase project URL (Project Settings → API). |
 | `VITE_SUPABASE_ANON_KEY` | Browser | Supabase anon/public key. Safe in the browser because RLS protects the data. |
 | `VITE_ENABLE_DEMO_MODE` | Browser | `true` shows the Client/Adviser demo switch. **Set to `false` before a real launch.** |
-| `GROQ_API_KEY` | **Server only** | Used by `api/chat.js`. Never prefix with `VITE_`. |
-| `GROQ_MODEL` | Server only | Optional model override. Default lives in `api/_lib/groqConfig.js`. |
 
-There is deliberately **no `VITE_GROQ_API_KEY`**, and the Supabase **service-role key must never** be added to this frontend.
+The Supabase **service-role key must never** be added to this frontend.
 
 On Vercel: Project → Settings → Environment Variables, add the same names.
 
@@ -134,15 +132,18 @@ Document edits/uploads/status changes and task changes create a new unread versi
 
 These are in-app notifications only. Email, SMS and background push delivery are not implemented.
 
-### Groq assistant
+### FAQ Bot
+
+The "Royal Square FAQ Bot" is a hardcoded, informational-only FAQ helper. There is no AI, no server function and no external API call, so it works offline and needs no environment variables.
 
 ```
-React (ChatPanel) → POST /api/chat → api/chat.js (Vercel Function, reads GROQ_API_KEY) → Groq API
+React (ChatPanel) → answerQuestion() in src/data/faqs.js → matched FAQ answer (or fallback)
 ```
 
-The browser never sees the key: it only calls `/api/chat`. During `npm run dev`, a small plugin in `vite.config.js` serves `/api/chat` from the same file on the Node side. Change the model in **one place**: `api/_lib/groqConfig.js` (or `GROQ_MODEL`).
-
-"Royal Square Assistant" explains portal navigation and the client's current statuses (passed as context by `chatService.buildStatusContext`). Its system prompt (`api/_lib/assistantPrompt.js`) forbids recommending investments or insurance products, regulated financial advice, predicting claim outcomes, legal determinations and inventing account data, and redirects with: *"For financial advice or product recommendations, please speak to your Royal Square Financial adviser."*
+- **Add or edit an FAQ** in one place: `src/data/faqs.js`. Each entry has an `id`, `keywords`, and a question (`q`) and answer (`a`) in `en` / `af` / `zu` (missing translations fall back to English). Set `suggest: true` to show it as a tap-to-ask chip.
+- **Matching** is simple keyword matching: keywords found at the start of a word in the user's question are scored (longer phrases score higher) and the best FAQ wins. No match returns a fallback that points the user to their adviser.
+- The bot never gives financial, investment, insurance, legal or claims advice. Advice-style questions (e.g. "which fund should I buy?") get the disclaimer answer.
+- It works in both the Client and Adviser portals and answers in the selected language.
 
 ### Languages (English, Afrikaans, isiZulu)
 
@@ -150,10 +151,10 @@ Everything user-facing goes through `src/i18n`:
 
 - `t('nav.dashboard', { count })` for UI copy (semantic keys, `key_one` / `key_other` for plurals). Use `const { t } = useI18n()` in components; utils and services can import `t` directly.
 - `tx('Motor claim')` for text that is stored or generated as English (workflow templates, activity messages, mock data). It is looked up by its English text; entries with `{0}` placeholders match dynamic sentences.
-- Copy lives in `src/i18n/locales/{en,af,zu}.js`. English is the default and the fallback for anything missing. To add a page, add its keys to `en.js` (and `af.js` / `zu.js`) and call `t()`; nothing else to wire up. A new language is one more locale file plus an entry in `LANGUAGES` (`src/i18n/index.js`) and `api/_lib/assistantPrompt.js`.
+- Copy lives in `src/i18n/locales/{en,af,zu}.js`. English is the default and the fallback for anything missing. To add a page, add its keys to `en.js` (and `af.js` / `zu.js`) and call `t()`; nothing else to wire up. A new language is one more locale file plus an entry in `LANGUAGES` (`src/i18n/index.js`).
 - `<LanguageSelect />` is the dropdown. It is on the Client and Adviser profile pages, and on the start and sign-in pages.
 - Persistence: signed in → `profiles.language` (shared by clients and advisers, loaded with the session); signed out or demo → this device's localStorage.
-- Chatbot: the browser sends `language` in the `/api/chat` body, and the server builds the system prompt for that language (fixed safety sentences are pre-translated). Unknown values fall back to English.
+- FAQ Bot: answers come from `src/data/faqs.js` in the selected language; anything untranslated falls back to English.
 
 ### Offline SOS and Capacitor
 
@@ -192,7 +193,7 @@ Nothing else needs to change: pages only call these services.
 | Offline storage and sync | **Simplified** (localStorage + demo toggle) |
 | Document OCR / expiry detection | **Simulated** (`documentIntelligence.js`) |
 | Reminders (email/SMS) | **Recorded only**, nothing is sent |
-| Groq assistant | **Real** with `GROQ_API_KEY`; offline FAQ fallback without it |
+| FAQ Bot | **Real**, hardcoded FAQs, fully client-side |
 | People, ID numbers, policies | **Fictional** |
 
 ## Routes
@@ -216,7 +217,6 @@ Nothing else needs to change: pages only call these services.
 ## Folder structure
 
 ```
-api/                    Vercel functions (chat.js) + api/_lib (not routed)
 public/                 logo, favicon
 scripts/                generate-seed.mjs
 src/

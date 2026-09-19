@@ -1,5 +1,5 @@
 /**
- * isiZulu. ui → t() keys, data → tx() English source text, chat → built-in guide.
+ * isiZulu. ui → t() keys, data → tx() English source text, chat.
  * Anything missing here falls back to English.
  */
 const ui = {
@@ -17,7 +17,7 @@ const ui = {
   'common.progress': 'Inqubekelaphambili',
 
   'language.label': 'Ulimi',
-  'language.help': 'Lusetshenziswa kuyo yonke iphothali nanguMsizi weRoyal Square. Lugcinwa kuphrofayela yakho.',
+  'language.help': "Lusetshenziswa kuyo yonke iphothali nase-Royal Square FAQ Bot. Lugcinwa kuphrofayela yakho.",
 
   'nav.main': 'Okuyinhloko',
   'nav.dashboard': 'Ideshibhodi',
@@ -28,7 +28,7 @@ const ui = {
   'nav.claims': 'Izicelo zesinxephezelo',
   'nav.requests': 'Izicelo',
   'nav.lifeEvents': 'Izigameko zempilo',
-  'nav.chat': 'Umsizi wengxoxo',
+  'nav.chat': "I-FAQ Bot",
   'nav.profile': 'Iphrofayela',
   'nav.actionInbox': 'Ibhokisi lezenzo',
   'nav.actionInbox.short': 'Ibhokisi',
@@ -382,24 +382,17 @@ const ui = {
   'providers.responseDays': 'Izinsuku ezingu-{count}',
   'providers.contact': 'Xhumana',
 
-  'chat.title': 'Umsizi weRoyal Square',
-  'chat.clientDescription': 'Buza ukuthi wenza kanjani okuthile kuphothali noma ukuthi isimo sisho ukuthini. Ngeseluleko, khuluma nomluleki wakho.',
-  'chat.adviserDescription': 'Buka kuqala umsizi asebenzisa amakhasimende akho. Uchaza iphothali nezimo; akaze anikeze iseluleko.',
-  'chat.welcome': 'Sawubona, nginguMsizi weRoyal Square. Ngingakusiza uthole indlela: ukubika ingozi, ukulayisha amadokhumenti, ukwenza izicelo, noma ukuchaza ukuthi isimo sisho ukuthini.',
-  'chat.subtitle': 'Usizo ngezinsizakalo nezimo',
-  'chat.thinking': 'Iyacabanga…',
+  'chat.title': "I-Royal Square FAQ Bot",
+  'chat.clientDescription': "Thola izimpendulo ezisheshayo zemibuzo evamile ngephothali. Ngeseluleko, khuluma nomluleki wakho.",
+  'chat.adviserDescription': "Buka kuqala i-FAQ Bot asebenzisa amakhasimende akho. Iphendula imibuzo evamile ngephothali; ayinikezi iseluleko.",
+  'chat.welcome': "Sawubona, ngiyi-Royal Square FAQ Bot. Ngingaphendula imibuzo evamile ngephothali: ukubika ingozi, ukulayisha amadokhumenti, ukwenza izicelo, noma ukuthi isimo sisho ukuthini.",
+  'chat.subtitle': "Izimpendulo zemibuzo evamile",
   'chat.askLabel': 'Buza umbuzo',
-  'chat.placeholder': 'Buza ngenqubo noma ikhasi',
+  'chat.placeholder': "Buza umbuzo, isb. “Ngilayisha kanjani idokhumenti?”",
   'chat.send': 'Thumela',
-  'chat.disclaimer': 'Umsizi uchaza izinsizakalo nezimo. Akanikezi iseluleko sezezimali futhi akanqumi ngezicelo zesinxephezelo.',
-  'chat.usedGuide': ' Iphendula ngohlelo oluhlanganisiwe ngoba umsizi oqondile akaxhunyiwe.',
+  'chat.disclaimer': "I-FAQ Bot inikeza ulwazi kuphela. Ayinikezi iseluleko sezezimali, sokutshala imali, somshwalense, sezomthetho noma sezicelo zesinxephezelo.",
   'chat.needHelp': 'Udinga usizo?',
-  'chat.closeAssistant': 'Vala umsizi',
-  'chat.suggest.accident': 'Ngibika kanjani ingozi?',
-  'chat.suggest.review': 'Ngidinga amaphi amadokhumenti ekubuyekezweni kwami konyaka?',
-  'chat.suggest.licence': 'Ngingayilayisha kuphi ilayisense yami yokushayela?',
-  'chat.suggest.provider': 'Kusho ukuthini “ilinde umhlinzeki”?',
-  'chat.suggest.address': 'Ngikubuyekeza kanjani ikheli lami?',
+  'chat.closeAssistant': "Vala i-FAQ Bot",
 
   'accident.title': 'I-Accident Assist',
   'accident.stepOf': 'Isinyathelo {step} kwezingu-{total}. Inqubekelaphambili yakho igcinwa ngokuzenzakalelayo.',
@@ -735,22 +728,7 @@ const data = {
   'Email not confirmed': 'I-imeyili ayiqinisekisiwe',
 };
 
-const chat = {
-  advice: 'Ngeseluleko sezezimali noma izincomo zemikhiqizo, sicela ukhulume nomluleki wakho weRoyal Square Financial.',
-  fallback: [
-    { match: /(tshala|utshala|iphi ipholisi|umkhiqizo|kufanele ngithenge|incoma|izincomo|ipholisi elingcono)/i, answer: 'advice' },
-    { match: /(ingozi|ingozini|ngozi)/i, answer: 'Thinta inkinobho ebomvu ethi “Ngibe ngengozini”, noma uye ku-Izigameko zempilo → Ngibe ngengozini. I-Accident Assist ikuhola ngezinyathelo ezingu-10 ezimfushane futhi isebenza ngisho ngaphandle kwesignali. Uma umuntu elimele, shayela i-112 ocingweni lwesikhathi kuqala.' },
-    { match: /(ukubuyekezwa konyaka|ukubuyekeza konyaka|amadokhumenti okubuyekeza)/i, answer: 'Ekubuyekezweni kwakho konyaka ngokuvamile sidinga isazisi sakho, ubufakazi bekheli (obungadluli izinyanga ezingu-3), izitatimende zamaphoslisi nezokutshala imali zamuva, nobufakazi bemali engenayo. Zilayishe ekhasini Lamadokhumenti. Umluleki wakho uqinisekisa uhlu lokugcina.' },
-    { match: /(ilayisense|layisha|ukulayisha)/i, answer: 'Iya ku-Amadokhumenti → Layisha idokhumenti bese ukhetha uhlobo lwedokhumenti. Ilayisense yokushayela siyifunda usuku lokuphelelwa yisikhathi bese sikusetha isikhumbuzo sokuvuselela.' },
-    { match: /(ilinde umhlinzeki|umhlinzeki)/i, answer: '“Ilinde umhlinzeki” kusho ukuthi iRoyal Square ithumele isicelo sakho enkampanini yomshwalense noma yokutshala imali futhi ilindele impendulo yabo. Umluleki wakho uyalandelela; awudingi ukwenza lutho.' },
-    { match: /(ikheli|ngithuthile|ukuthutha)/i, answer: 'Iya ku-Izigameko zempilo → Ngithuthile. Sidala inqubo eyodwa yokushintsha ikheli ebuyekeza iphrofayela yakho nepholisi ngalinye elithintekayo. Udinga kuphela ukulayisha ubufakazi bekheli.' },
-    { match: /(idokhumenti yepholisi|uhlelo lwepholisi|incwadi yomngcele|irp5|isitifiketi sentela)/i, answer: 'Iya ku-Izicelo bese ukhetha idokhumenti oyidingayo. Siyicela kumhlinzeki futhi ungalandelela ukuthi ubani ayiphethe esinyathelweni ngasinye.' },
-    { match: /(isicelo sesinxephezelo|isimo|iphi)/i, answer: 'Vula Izicelo zesinxephezelo noma Ideshibhodi yakho. Inqubo ngayinye ibonisa ukuthi ubani ophethe ibhola, isinyathelo samanje, isenzo esilandelayo nosuku lokuphela.' },
-  ],
-  default: 'Ngingakusiza uthole indlela kuphothali: ukubika ingozi, ukulayisha amadokhumenti, izicelo, nokuthi isimo sisho ukuthini. Nganoma yini mayelana nomshwalense wakho ngqo, sicela uthumelele umluleki wakho umlayezo.',
-};
-
 // Explicit month names: browsers' Intl data for isiZulu is incomplete and falls back to English.
 const months = ['Januwari', 'Febhuwari', 'Mashi', 'Ephreli', 'Meyi', 'Juni', 'Julayi', 'Agasti', 'Septhemba', 'Okthoba', 'Novemba', 'Disemba'];
 
-export default { ui, data, chat, months };
+export default { ui, data, months };

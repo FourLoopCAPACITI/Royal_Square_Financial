@@ -86,8 +86,3 @@ export function tx(text) {
 
 /** Month names for languages whose browser Intl data is incomplete (isiZulu formats as English in Chrome). */
 export const getMonthNames = () => RESOURCES[current].months ?? null;
-
-/** Chatbot fallback guide for the active language (see locales → chat.fallback). */
-export function getFallbackGuide() {
-  return RESOURCES[current].chat ?? en.chat;
-}

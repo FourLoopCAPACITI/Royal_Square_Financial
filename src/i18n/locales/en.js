@@ -2,7 +2,6 @@
  * English — the source language and the fallback for every other language.
  * ui:   semantic keys used with t().
  * data: empty — tx() returns English text unchanged.
- * chat: built-in guide used when the live assistant is unreachable (regexes match the user's question).
  */
 const ui = {
   'nav.notifications': 'Notifications',
@@ -21,7 +20,7 @@ const ui = {
 
   // ── Language selector ──
   'language.label': 'Language',
-  'language.help': 'Used across the portal and by the Royal Square Assistant. Saved to your profile.',
+  'language.help': "Used across the portal and by the Royal Square FAQ Bot. Saved to your profile.",
 
   // ── Navigation ──
   'nav.main': 'Main',
@@ -33,7 +32,7 @@ const ui = {
   'nav.claims': 'Claims',
   'nav.requests': 'Requests',
   'nav.lifeEvents': 'Life Events',
-  'nav.chat': 'Chat Assistant',
+  'nav.chat': "FAQ Bot",
   'nav.profile': 'Profile',
   'nav.actionInbox': 'Action Inbox',
   'nav.actionInbox.short': 'Inbox',
@@ -401,24 +400,17 @@ const ui = {
   'providers.contact': 'Contact',
 
   // ── Chat ──
-  'chat.title': 'Royal Square Assistant',
-  'chat.clientDescription': 'Ask how to do something in the portal or what a status means. For advice, speak to your adviser.',
-  'chat.adviserDescription': 'Preview the assistant your clients use. It explains the portal and statuses; it never gives advice.',
-  'chat.welcome': 'Hi, I’m the Royal Square Assistant. I can help you find your way around: reporting an accident, uploading documents, making requests, or explaining what a status means.',
-  'chat.subtitle': 'Help with services and statuses',
-  'chat.thinking': 'Thinking…',
+  'chat.title': "Royal Square FAQ Bot",
+  'chat.clientDescription': "Get quick answers to common questions about the portal. For advice, speak to your adviser.",
+  'chat.adviserDescription': "Preview the FAQ Bot your clients use. It answers common questions about the portal; it never gives advice.",
+  'chat.welcome': "Hi, I’m the Royal Square FAQ Bot. I can answer common questions about the portal: reporting an accident, uploading documents, making requests, or what a status means.",
+  'chat.subtitle': "Answers to common questions",
   'chat.askLabel': 'Ask a question',
-  'chat.placeholder': 'Ask about a process or page',
+  'chat.placeholder': "Ask a question, e.g. “How do I upload a document?”",
   'chat.send': 'Send',
-  'chat.disclaimer': "The assistant explains services and statuses. It doesn't give financial advice or decide claims.",
-  'chat.usedGuide': ' Answering from the built-in guide because the live assistant isn’t connected.',
+  'chat.disclaimer': "The FAQ Bot is informational only. It doesn’t provide financial, investment, insurance, legal or claims advice.",
   'chat.needHelp': 'Need help?',
-  'chat.closeAssistant': 'Close assistant',
-  'chat.suggest.accident': 'How do I report an accident?',
-  'chat.suggest.review': 'What documents do I need for my annual review?',
-  'chat.suggest.licence': 'Where can I upload my driver’s licence?',
-  'chat.suggest.provider': 'What does “waiting on provider” mean?',
-  'chat.suggest.address': 'How do I update my address?',
+  'chat.closeAssistant': "Close FAQ Bot",
 
   // ── Accident Assist ──
   'accident.title': 'Accident Assist',
@@ -507,19 +499,4 @@ const ui = {
   'accident.review.description': 'Description',
 };
 
-const chat = {
-  advice: 'For financial advice or product recommendations, please speak to your Royal Square Financial adviser.',
-  fallback: [
-    { match: /(invest|which (policy|product|fund)|should i (buy|take|choose)|recommend|best (policy|insurer|fund))/i, answer: 'advice' },
-    { match: /(accident|crash|collision)/i, answer: 'Tap the red “I’ve been in an accident” button, or go to Life Events → I’ve been in an accident. Accident Assist takes you through 10 short steps and still works without signal. If anyone is hurt, call 112 from a mobile first.' },
-    { match: /(annual review|review documents)/i, answer: 'For your annual review we usually need your ID, proof of address (not older than 3 months), recent policy and investment statements, and proof of income. Upload them on the Documents page. Your adviser confirms the final list.' },
-    { match: /(licen[cs]e|upload)/i, answer: 'Go to Documents → Upload document and choose the document type. For a driver’s licence we read the expiry date and set a renewal reminder for you.' },
-    { match: /(waiting on provider|provider)/i, answer: '“Waiting on provider” means Royal Square has sent your request to the insurer or investment company and is waiting for them. Your adviser follows up; you don’t need to do anything.' },
-    { match: /(address|moved|move)/i, answer: 'Go to Life Events → I moved. We create one change-of-address process that updates your profile and each affected policy. You only need to upload proof of address.' },
-    { match: /(policy document|schedule|border letter|irp5|tax certificate)/i, answer: 'Go to Requests and choose the document you need. We request it from the provider and you can track who is holding it at every step.' },
-    { match: /(claim|status|where is)/i, answer: 'Open Claims or your Dashboard. Each process shows who is holding the ball, the current step, the next action and the due date.' },
-  ],
-  default: 'I can help you find your way around the portal: reporting an accident, uploading documents, requests, and what a status means. For anything about your specific cover, please message your adviser.',
-};
-
-export default { ui, data: {}, chat };
+export default { ui, data: {} };

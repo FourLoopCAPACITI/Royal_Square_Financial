@@ -10,4 +10,3 @@ export const IS_SUPABASE_CONFIGURED = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY)
  */
 export const DEMO_MODE_ENABLED = import.meta.env.VITE_ENABLE_DEMO_MODE !== 'false';
 
-export const CHAT_ENDPOINT = '/api/chat';

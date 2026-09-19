@@ -2,7 +2,7 @@ import PageHeader from '../../components/common/PageHeader.jsx';
 import ChatPanel from '../../components/chat/ChatPanel.jsx';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 
-/** Advisers can preview exactly what clients see from the assistant (demo client context). */
+/** Same FAQ Bot as the Client Portal, so advisers see exactly what clients see. */
 export default function AdviserChat() {
   const { t } = useI18n();
   return (
