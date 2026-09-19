@@ -41,6 +41,8 @@ create table public.profiles (
   full_name   text,
   email       text,
   phone       text,
+  -- UI + chatbot language: 'en' (default/fallback), 'af' (Afrikaans), 'zu' (isiZulu).
+  language    text not null default 'en' check (language in ('en', 'af', 'zu')),
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );

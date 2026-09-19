@@ -9,8 +9,10 @@ import { useLookups } from '../../hooks/useLookups.js';
 import { completeTask, listReminders, listTasks } from '../../services/taskService.js';
 import { listWorkflows } from '../../services/workflowService.js';
 import { formatDate } from '../../utils/format.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function ClientActions() {
+  const { t, tx } = useI18n();
   const client = useCurrentClient();
   const clientId = client.data?.id;
   const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId]);
@@ -23,15 +25,15 @@ export default function ClientActions() {
 
   return (
     <>
-      <PageHeader title="My actions" description="Everything that is waiting on you, in one list." />
+      <PageHeader title={t('client.actions.title')} description={t('client.actions.description')} />
 
-      <Section title="To do" count={tasks.data?.length}>
+      <Section title={t('client.actions.todo')} count={tasks.data?.length}>
         <QueryState query={tasks}>
-          {(list) => <ActionList tasks={list} onComplete={completeTask} emptyTitle="You're up to date" />}
+          {(list) => <ActionList tasks={list} onComplete={completeTask} emptyTitle={t('client.dashboard.upToDate')} />}
         </QueryState>
       </Section>
 
-      <Section title="Processes waiting on you" count={waiting.data?.length}>
+      <Section title={t('client.actions.waiting')} count={waiting.data?.length}>
         <QueryState query={waiting}>
           {(list) =>
             list.length ? (
@@ -41,26 +43,26 @@ export default function ClientActions() {
                 ))}
               </div>
             ) : (
-              <EmptyState title="Nothing is waiting on you" message="Royal Square and your providers are handling everything in progress." />
+              <EmptyState title={t('client.actions.nothingWaiting')} message={t('client.actions.nothingWaitingHint')} />
             )
           }
         </QueryState>
       </Section>
 
-      <Section title="Scheduled reminders" count={reminders.data?.length}>
+      <Section title={t('client.actions.reminders')} count={reminders.data?.length}>
         <QueryState query={reminders}>
           {(list) =>
             list.length ? (
               <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
                 {list.map((r) => (
                   <li key={r.id} className="flex justify-between gap-4 p-4 text-[15px]">
-                    <span>{r.title}</span>
-                    <span className="text-brand-grey">{formatDate(r.remindAt)} by {r.channel}</span>
+                    <span>{tx(r.title)}</span>
+                    <span className="text-brand-grey">{t('client.actions.reminderLine', { date: formatDate(r.remindAt), channel: t(`channel.${r.channel}`) })}</span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <EmptyState title="No reminders scheduled" />
+              <EmptyState title={t('client.actions.noReminders')} />
             )
           }
         </QueryState>

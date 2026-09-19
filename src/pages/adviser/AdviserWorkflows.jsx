@@ -5,16 +5,13 @@ import WorkflowCard from '../../components/workflows/WorkflowCard.jsx';
 import { useAdviserWorkflows } from '../../hooks/useAdviserData.js';
 import { useLookups } from '../../hooks/useLookups.js';
 import { WORKFLOW_TEMPLATES } from '../../utils/workflowTemplates.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
-const OWNER_FILTERS = [
-  { key: 'all', label: 'All' },
-  { key: 'adviser', label: 'Royal Square' },
-  { key: 'client', label: 'Client' },
-  { key: 'provider', label: 'Provider' },
-  { key: 'completed', label: 'Completed' },
-];
+// Labels are i18n keys: workflows.filter.<key>.
+const OWNER_FILTERS = ['all', 'adviser', 'client', 'provider', 'completed'];
 
 export default function AdviserWorkflows() {
+  const { t, tx } = useI18n();
   const { workflows } = useAdviserWorkflows();
   const { clientName, providerName } = useLookups();
   const [owner, setOwner] = useState('all');
@@ -32,20 +29,20 @@ export default function AdviserWorkflows() {
 
   return (
     <>
-      <PageHeader title="Workflows" description="Every process runs on the same workflow engine. Filter by owner or type." />
+      <PageHeader title={t('workflows.title')} description={t('workflows.description')} />
       <div className="mb-5 flex flex-wrap items-center gap-2">
-        {OWNER_FILTERS.map((f) => (
-          <button key={f.key} type="button" onClick={() => setOwner(f.key)} aria-pressed={owner === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${owner === f.key ? 'border-brand-red bg-brand-red text-white' : 'border-brand-border hover:border-brand-black'}`}>
-            {f.label}
+        {OWNER_FILTERS.map((key) => (
+          <button key={key} type="button" onClick={() => setOwner(key)} aria-pressed={owner === key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${owner === key ? 'border-brand-red bg-brand-red text-white' : 'border-brand-border hover:border-brand-black'}`}>
+            {t(`workflows.filter.${key}`)}
           </button>
         ))}
-        <label htmlFor="wf-type" className="sr-only">Workflow type</label>
+        <label htmlFor="wf-type" className="sr-only">{t('workflows.type')}</label>
         <select id="wf-type" className="field ml-auto w-auto" value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="all">All types</option>
-          {Object.entries(WORKFLOW_TEMPLATES).map(([key, t]) => <option key={key} value={key}>{t.label}</option>)}
+          <option value="all">{t('workflows.allTypes')}</option>
+          {Object.entries(WORKFLOW_TEMPLATES).map(([key, tpl]) => <option key={key} value={key}>{tx(tpl.label)}</option>)}
         </select>
       </div>
-      <QueryState query={workflows} loadingLabel="Loading workflows">
+      <QueryState query={workflows} loadingLabel={t('workflows.loading')}>
         {(list) => {
           const shown = list.filter(matches);
           return shown.length ? (
@@ -53,7 +50,7 @@ export default function AdviserWorkflows() {
               {shown.map((w) => <WorkflowCard key={w.id} workflow={w} clientName={clientName(w.clientId)} providerName={providerName(w.providerId)} viewerRole="adviser" />)}
             </div>
           ) : (
-            <EmptyState title="No workflows match" message="Try a different filter." />
+            <EmptyState title={t('workflows.none')} message={t('workflows.noneHint')} />
           );
         }}
       </QueryState>

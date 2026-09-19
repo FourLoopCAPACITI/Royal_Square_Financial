@@ -1,3 +1,5 @@
+import { useI18n } from '../../i18n/I18nContext.jsx';
+
 const TONES = {
   action: 'bg-brand-red text-white',
   red: 'bg-brand-red-tint text-brand-red',
@@ -9,24 +11,25 @@ const TONES = {
 
 /** Map common statuses to tones so every page labels them the same way. */
 const STATUS_MAP = {
-  current: { tone: 'success', label: 'Current' },
-  missing: { tone: 'red', label: 'Missing' },
-  expiring_soon: { tone: 'warning', label: 'Expiring soon' },
-  expired: { tone: 'red', label: 'Expired' },
-  under_review: { tone: 'neutral', label: 'Under review' },
-  active: { tone: 'neutral', label: 'In progress' },
-  in_progress: { tone: 'neutral', label: 'In progress' },
-  completed: { tone: 'success', label: 'Completed' },
-  overdue: { tone: 'red', label: 'Overdue' },
-  high: { tone: 'warning', label: 'High priority' },
+  current: { tone: 'success' },
+  missing: { tone: 'red' },
+  expiring_soon: { tone: 'warning' },
+  expired: { tone: 'red' },
+  under_review: { tone: 'neutral' },
+  active: { tone: 'neutral' },
+  in_progress: { tone: 'neutral' },
+  completed: { tone: 'success' },
+  overdue: { tone: 'red' },
+  high: { tone: 'warning' },
 };
 
 export default function StatusBadge({ status, tone, children, className = '' }) {
+  const { t } = useI18n();
   const mapped = STATUS_MAP[status] || {};
   const finalTone = tone || mapped.tone || 'neutral';
   return (
     <span className={`inline-flex items-center whitespace-nowrap rounded px-2 py-0.5 text-[12.5px] font-semibold ${TONES[finalTone]} ${className}`}>
-      {children || mapped.label || status}
+      {children || (STATUS_MAP[status] ? t(`status.${status}`) : status)}
     </span>
   );
 }

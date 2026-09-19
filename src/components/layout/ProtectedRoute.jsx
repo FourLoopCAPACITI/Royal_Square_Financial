@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext.jsx';
 import { LoadingState } from '../common/States.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export function homeFor(role) {
   return role === 'adviser' || role === 'admin' ? '/adviser' : '/client';
@@ -13,10 +14,11 @@ export function homeFor(role) {
  */
 export default function ProtectedRoute({ allow }) {
   const { role, loading } = useSession();
+  const { t } = useI18n();
   if (loading) {
     return (
       <div className="px-8">
-        <LoadingState label="Checking your session" />
+        <LoadingState label={t('shell.checkingSession')} />
       </div>
     );
   }

@@ -7,13 +7,16 @@ import { useCurrentAdviser } from '../../hooks/useCurrentUser.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
 import { useLookups } from '../../hooks/useLookups.js';
 import { listDocuments } from '../../services/documentService.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
+// Labels are i18n keys: documents.filter.<key>.
 const FILTERS = [
-  { key: 'attention', label: 'Needs attention', statuses: ['missing', 'expired', 'expiring_soon', 'under_review'] },
-  { key: 'all', label: 'All documents', statuses: null },
+  { key: 'attention', statuses: ['missing', 'expired', 'expiring_soon', 'under_review'] },
+  { key: 'all', statuses: null },
 ];
 
 export default function AdviserDocuments() {
+  const { t } = useI18n();
   const adviser = useCurrentAdviser();
   const adviserId = adviser.data?.id;
   const docs = useServiceQuery(() => (adviserId ? listDocuments({ adviserId }) : []), [adviserId]);
@@ -22,19 +25,19 @@ export default function AdviserDocuments() {
 
   return (
     <>
-      <PageHeader title="Documents" description="Missing, expiring and under-review documents across your clients." />
+      <PageHeader title={t('documents.title')} description={t('documents.adviserDescription')} />
       <div className="mb-5 flex gap-2">
         {FILTERS.map((f) => (
           <button key={f.key} type="button" onClick={() => setFilter(f)} aria-pressed={filter.key === f.key} className={`rounded border px-3 py-1.5 text-[14px] font-semibold ${filter.key === f.key ? 'border-brand-red bg-brand-red text-white' : 'border-brand-border hover:border-brand-black'}`}>
-            {f.label}
+            {t(`documents.filter.${f.key}`)}
           </button>
         ))}
       </div>
-      <QueryState query={docs} loadingLabel="Loading documents">
+      <QueryState query={docs} loadingLabel={t('documents.loading')}>
         {(list) => {
           const shown = filter.statuses ? list.filter((d) => filter.statuses.includes(d.status)) : list;
           return (
-            <Section title={filter.label} count={shown.length}>
+            <Section title={t(`documents.filter.${filter.key}`)} count={shown.length}>
               <DocumentList documents={shown} clientName={clientName} />
             </Section>
           );

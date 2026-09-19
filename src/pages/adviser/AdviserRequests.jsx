@@ -9,8 +9,10 @@ import { listServiceRequests } from '../../services/requestService.js';
 import { getServiceRequestType } from '../../utils/workflowTemplates.js';
 import { describeWorkflowStatus } from '../../utils/workflow.js';
 import { formatDate } from '../../utils/format.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function AdviserRequests() {
+  const { t, tx } = useI18n();
   const { adviserId, workflows } = useAdviserWorkflows();
   const requests = useServiceQuery(() => (adviserId ? listServiceRequests({ adviserId }) : []), [adviserId]);
   const { clientName, providerName } = useLookups();
@@ -18,8 +20,8 @@ export default function AdviserRequests() {
 
   return (
     <>
-      <PageHeader title="Client requests" description="Requests from the Client Service Centre. Each one runs as a workflow." />
-      <QueryState query={requests} loadingLabel="Loading requests">
+      <PageHeader title={t('requests.adviserTitle')} description={t('requests.adviserDescription')} />
+      <QueryState query={requests} loadingLabel={t('requests.loading')}>
         {(list) =>
           list.length ? (
             <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
@@ -29,12 +31,12 @@ export default function AdviserRequests() {
                   <li key={r.id}>
                     <Link to={r.workflowId ? `/workflow/${r.workflowId}` : '#'} className="grid gap-2 p-4 hover:bg-brand-light-grey sm:grid-cols-[1fr_1fr_auto] sm:items-center">
                       <span>
-                        <span className="block font-semibold">{getServiceRequestType(r.type)?.label || r.type}</span>
-                        <span className="text-[13.5px] text-brand-grey">{clientName(r.clientId)}. Received {formatDate(r.createdAt)}</span>
+                        <span className="block font-semibold">{tx(getServiceRequestType(r.type)?.label || r.type)}</span>
+                        <span className="text-[13.5px] text-brand-grey">{t('requests.received', { client: clientName(r.clientId), date: formatDate(r.createdAt) })}</span>
                       </span>
-                      <span className="text-[14px]">{w ? w.nextAction : ''}</span>
+                      <span className="text-[14px]">{w ? tx(w.nextAction) : ''}</span>
                       <StatusBadge tone={w?.status === 'completed' ? 'success' : w && ['adviser', 'system'].includes(w.currentOwner) ? 'action' : 'neutral'}>
-                        {w ? describeWorkflowStatus(w, { providerName: providerName(w.providerId), clientName: clientName(w.clientId) }) : r.status}
+                        {w ? describeWorkflowStatus(w, { providerName: providerName(w.providerId), clientName: clientName(w.clientId) }) : tx(r.status)}
                       </StatusBadge>
                     </Link>
                   </li>
@@ -42,7 +44,7 @@ export default function AdviserRequests() {
               })}
             </ul>
           ) : (
-            <EmptyState title="No requests" message="Client requests will appear here." />
+            <EmptyState title={t('requests.adviserNone')} message={t('requests.adviserNoneHint')} />
           )
         }
       </QueryState>

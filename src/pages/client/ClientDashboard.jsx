@@ -13,15 +13,17 @@ import { useLookups } from '../../hooks/useLookups.js';
 import { listTasks } from '../../services/taskService.js';
 import { listWorkflows } from '../../services/workflowService.js';
 import { listGoals } from '../../services/goalService.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
-function greeting() {
+function greeting(t) {
   const h = new Date().getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 18) return 'Good afternoon';
-  return 'Good evening';
+  if (h < 12) return t('greeting.morning');
+  if (h < 18) return t('greeting.afternoon');
+  return t('greeting.evening');
 }
 
 export default function ClientDashboard() {
+  const { t } = useI18n();
   const client = useCurrentClient();
   const clientId = client.data?.id;
   const tasks = useServiceQuery(() => (clientId ? listTasks({ clientId, assignee: 'client' }) : []), [clientId]);
@@ -32,21 +34,21 @@ export default function ClientDashboard() {
   return (
     <>
       <PageHeader
-        title={`${greeting()}${client.data ? `, ${client.data.firstName}` : ''}`}
-        description="Here's what needs you today and where everything else stands."
+        title={`${greeting(t)}${client.data ? `, ${client.data.firstName}` : ''}`}
+        description={t('client.dashboard.description')}
         actions={<AccidentButton />}
       />
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div>
-          <Section title="Action required" count={tasks.data?.length} action={<Link to="/client/actions" className="text-[14px] font-semibold text-brand-red hover:underline">All actions</Link>}>
-            <QueryState query={tasks} loadingLabel="Loading your actions">
-              {(list) => <ActionList tasks={list.slice(0, 4)} emptyTitle="You're up to date" />}
+          <Section title={t('client.dashboard.actionRequired')} count={tasks.data?.length} action={<Link to="/client/actions" className="text-[14px] font-semibold text-brand-red hover:underline">{t('client.dashboard.allActions')}</Link>}>
+            <QueryState query={tasks} loadingLabel={t('client.dashboard.loadingActions')}>
+              {(list) => <ActionList tasks={list.slice(0, 4)} emptyTitle={t('client.dashboard.upToDate')} />}
             </QueryState>
           </Section>
 
-          <Section title="Active processes" count={workflows.data?.length}>
-            <QueryState query={workflows} loadingLabel="Loading your processes">
+          <Section title={t('client.dashboard.activeProcesses')} count={workflows.data?.length}>
+            <QueryState query={workflows} loadingLabel={t('client.dashboard.loadingProcesses')}>
               {(list) =>
                 list.length ? (
                   <div className="space-y-3">
@@ -55,7 +57,7 @@ export default function ClientDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <EmptyState title="No active processes" message="When you make a request or report a claim, you can track it here." />
+                  <EmptyState title={t('client.dashboard.noProcesses')} message={t('client.dashboard.noProcessesHint')} />
                 )
               }
             </QueryState>
@@ -66,10 +68,10 @@ export default function ClientDashboard() {
           {client.data && <NetWorthSummary assets={client.data.totalAssets} liabilities={client.data.totalLiabilities} />}
           <div>
             <div className="mb-3 flex items-baseline justify-between">
-              <h2 className="text-lg font-medium">Goals</h2>
-              <Link to="/client/goals" className="text-[14px] font-semibold text-brand-red hover:underline">View goals</Link>
+              <h2 className="text-lg font-medium">{t('client.dashboard.goals')}</h2>
+              <Link to="/client/goals" className="text-[14px] font-semibold text-brand-red hover:underline">{t('client.dashboard.viewGoals')}</Link>
             </div>
-            <QueryState query={goals} loadingLabel="Loading goals">
+            <QueryState query={goals} loadingLabel={t('client.dashboard.loadingGoals')}>
               {(list) => (
                 <div className="space-y-3">
                   {list.map((g) => (

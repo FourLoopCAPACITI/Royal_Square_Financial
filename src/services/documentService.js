@@ -9,7 +9,7 @@ import { getState, setState, simulateLatency } from './store.js';
 import { mapDocument } from './mappers.js';
 import { extractDocumentData } from './documentIntelligence.js';
 import { advance } from './workflowService.js';
-import { computeDocumentStatus, getDocumentTypeLabel, EXPIRY_WARNING_DAYS } from '../utils/documents.js';
+import { computeDocumentStatus, DOCUMENT_TYPES, EXPIRY_WARNING_DAYS } from '../utils/documents.js';
 import { formatDate, uid } from '../utils/format.js';
 
 export async function listDocuments({ clientId, adviserId } = {}) {
@@ -44,7 +44,8 @@ function folderFor(type) {
  * Returns { document, outcome: { headline, detected: [{label, value}], actions: [string] } }
  */
 export async function uploadAndProcessDocument({ clientId, type, file }) {
-  const label = getDocumentTypeLabel(type);
+  // English source text is stored; the UI translates it on display (tx), so it reads right in every language.
+  const label = DOCUMENT_TYPES.find((d) => d.type === type)?.label || 'Document';
   const fileName = file?.name || `${type}.pdf`;
   let storagePath = null;
 
