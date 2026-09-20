@@ -7,7 +7,7 @@ export default function ClientChat() {
   return (
     <>
       <PageHeader title={t('chat.title')} description={t('chat.clientDescription')} />
-      <div className="flex h-[min(640px,70vh)] max-w-3xl flex-col overflow-hidden rounded-md border border-brand-border">
+      <div className="flex h-[min(640px,70vh)] max-w-3xl flex-col overflow-hidden rounded-lg border border-brand-border bg-surface shadow-card">
         <ChatPanel className="flex-1" />
       </div>
     </>

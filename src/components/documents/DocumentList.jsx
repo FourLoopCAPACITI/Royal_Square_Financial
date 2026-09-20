@@ -24,13 +24,13 @@ export default function DocumentList({ documents = [], clientName }) {
   if (!documents.length) return <EmptyState icon={FileText} title={tr('documents.empty')} message={tr('documents.emptyHint')} />;
   const sorted = [...documents].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
   return (
-    <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+    <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
       {sorted.map((doc) => (
         <li key={doc.id} className="flex items-center gap-3 p-4">
-          <FileText size={18} className="shrink-0 text-brand-grey" aria-hidden="true" />
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-brand-red-tint"><FileText size={18} className="text-brand-red" aria-hidden="true" /></span>
           <div className="min-w-0 flex-1">
             <p className="font-semibold leading-snug">{tx(doc.name)}</p>
-            <p className="text-[15px] text-brand-grey">
+            <p className="text-[15px] text-text-secondary">
               {clientName ? `${clientName(doc.clientId)}. ` : ''}
               {getDocumentTypeLabel(doc.type)}. {detail(doc)}
             </p>

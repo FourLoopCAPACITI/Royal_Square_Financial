@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
-export default function ThemeToggle({ children }) {
+// `hidden` keeps the theme logic mounted (dark class, storage sync) but renders no toolbar UI.
+export default function ThemeToggle({ children, hidden = false }) {
   const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
 
   useEffect(() => {
@@ -34,6 +35,8 @@ export default function ThemeToggle({ children }) {
   };
   const label = `Switch to ${dark ? 'light' : 'dark'} mode`;
   const Icon = dark ? Sun : Moon;
+
+  if (hidden) return null;
 
   return (
     <div className="sticky top-0 z-50 flex h-14 items-center justify-end gap-2 border-b border-brand-border bg-surface px-3 sm:gap-3 sm:px-6">

@@ -7,7 +7,7 @@ export default function GoalCard({ goal, ownerLabel, compact = false }) {
   const { t, tx } = useI18n();
   const pct = percent(goal.currentAmount, goal.targetAmount);
   return (
-    <div className={`rounded-md border border-brand-border ${compact ? 'p-4' : 'p-5'}`}>
+    <div className={`rounded-lg border border-brand-border bg-surface shadow-card ${compact ? 'p-4' : 'p-5'}`}>
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-display text-[18px] font-medium">{tx(goal.name)}</p>
@@ -16,7 +16,7 @@ export default function GoalCard({ goal, ownerLabel, compact = false }) {
             {ownerLabel || (goal.ownerType === 'household' ? t('goals.sharedHousehold') : t('goals.personal'))}
           </p>
         </div>
-        <p className="font-display text-[22px] font-light tabular-nums">{pct}%</p>
+        <p className="font-display text-[26px] font-semibold tabular-nums">{pct}%</p>
       </div>
       <ProgressBar value={pct} tone={pct >= 100 ? 'green' : 'dark'} className="mt-3" label={t('goals.progress', { name: tx(goal.name) })} />
       <p className="mt-2 text-[15.5px] tabular-nums">

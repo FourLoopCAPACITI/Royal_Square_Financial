@@ -6,34 +6,46 @@
 
 :root {
   color-scheme: light;
-  --surface: 255 255 255;
-  --brand-red: 154 28 32;
-  --brand-red-tint: 247 236 236;
-  --brand-black: 10 10 10;
-  --brand-grey: 102 102 102;
-  --text-secondary: 65 65 65;
-  --brand-light-grey: 245 245 245;
-  --brand-border: 210 210 210;
-  --ok: 47 107 69;
-  --ok-tint: 234 243 237;
-  --warn: 133 84 10;
-  --warn-tint: 251 243 228;
+  --surface: 255 255 253;
+  --brand-red: 15 39 71;          /* Midnight Navy — primary accent (name kept for existing classes) */
+  --brand-red-tint: 236 240 246;
+  --brand-black: 15 39 71;
+  --brand-grey: 78 86 101;        /* Slate, darkened for stronger AA contrast on ivory and white */
+  --text-secondary: 52 61 77;
+  --brand-light-grey: 248 245 236; /* Ivory Cream */
+  --brand-border: 200 192 170;
+  --strong: 15 39 71;
+  --action: 15 39 71;
+  --action-hover: 10 27 52;
+  --gold-deep: 125 93 34;
+  --ok: 47 111 102;               /* Sage */
+  --ok-tint: 228 240 237;
+  --warn: 138 90 14;
+  --warn-tint: 250 241 222;
+  --danger: 155 44 44;
+  --danger-tint: 250 236 234;
 }
 
 :root.dark {
   color-scheme: dark;
-  --surface: 20 23 29;
-  --brand-red: 255 145 150;
-  --brand-red-tint: 57 30 36;
-  --brand-black: 243 244 246;
-  --brand-grey: 177 184 196;
-  --text-secondary: 210 215 224;
-  --brand-light-grey: 32 37 46;
-  --brand-border: 77 85 100;
-  --ok: 137 215 162;
-  --ok-tint: 25 51 37;
-  --warn: 243 199 119;
-  --warn-tint: 54 43 25;
+  --surface: 22 40 68;
+  --brand-red: 212 175 107;
+  --brand-red-tint: 30 46 72;
+  --brand-black: 246 242 232;
+  --brand-grey: 182 191 206;
+  --text-secondary: 208 214 225;
+  --brand-light-grey: 11 23 42;
+  --brand-border: 66 86 120;
+  --strong: 30 56 96;
+  --action: 212 175 107;          /* Royal Gold; label colour flipped to navy below */
+  --action-hover: 226 194 132;
+  --gold-deep: 212 175 107;
+  --ok: 129 196 178;
+  --ok-tint: 21 49 50;
+  --warn: 232 190 110;
+  --warn-tint: 52 44 28;
+  --danger: 245 165 160;
+  --danger-tint: 60 30 38;
 }
 
 @layer base {
@@ -41,13 +53,15 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-surface font-sans text-[16.5px] leading-relaxed text-brand-black antialiased;
+    @apply bg-brand-light-grey font-sans text-[16.5px] leading-relaxed text-brand-black antialiased;
   }
   h1, h2, h3 {
-    @apply font-display text-brand-black;
+    @apply font-display font-semibold text-brand-black;
+    font-variant-numeric: lining-nums;
   }
+  .font-display { font-variant-numeric: lining-nums; }
   :focus-visible {
-    outline: 2px solid rgb(var(--brand-red));
+    outline: 2px solid rgb(var(--gold-deep));
     outline-offset: 2px;
   }
 }
@@ -57,7 +71,14 @@
     @apply text-[14.5px] text-brand-grey;
   }
   .field {
-    @apply w-full rounded border border-brand-border bg-surface px-3 py-2.5 text-[16.5px] text-brand-black placeholder:text-brand-grey focus:border-brand-red focus:outline-none;
+    @apply w-full rounded-md border border-brand-grey/40 bg-surface px-3 py-2.5 text-[16.5px] text-brand-black shadow-sm transition-colors placeholder:text-brand-grey/80 hover:border-brand-grey focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-gold/60;
+  }
+  /* Selectable option tile: opaque surface, visible edge, clear hover and selected states. */
+  .option-tile {
+    @apply flex items-start gap-3 rounded-lg border border-brand-border bg-surface p-4 text-left shadow-card transition-colors hover:border-brand-red hover:bg-brand-red-tint;
+  }
+  .option-tile[aria-pressed='true'] {
+    @apply border-brand-red bg-brand-red-tint ring-1 ring-brand-red;
   }
   .field-label {
     @apply mb-1.5 block text-sm font-semibold text-brand-black;
@@ -88,6 +109,8 @@
   .chat-markdown pre code { @apply bg-transparent p-0; }
   .chat-markdown blockquote { @apply my-2 border-l-2 border-brand-red pl-3 text-brand-grey; }
 }
+
+.dark .bg-action { color: #0F2747; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

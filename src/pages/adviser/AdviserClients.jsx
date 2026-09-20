@@ -34,7 +34,7 @@ export default function AdviserClients() {
       <QueryState query={clients} loadingLabel={t('clients.loading')}>
         {(list) =>
           filter(list).length ? (
-            <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+            <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
               {filter(list).map((c) => {
                 const mine = active.filter((w) => w.clientId === c.id);
                 const overdue = mine.filter((w) => isWorkflowOverdue(w)).length;

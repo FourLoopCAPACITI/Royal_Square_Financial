@@ -7,7 +7,7 @@ export default function ClaimDetails({ claim }) {
   if (!claim) return null;
   const captured = claim.evidence?.filter((e) => e.captured).length || 0;
   return (
-    <div className="rounded-md border border-brand-border p-5">
+    <div className="rounded-lg border border-brand-border bg-surface shadow-card p-5">
       <h2 className="mb-3 text-lg font-medium">{t('claim.details')}</h2>
       <dl className="grid gap-x-6 gap-y-3 text-[16px] sm:grid-cols-2">
         <div>

@@ -54,19 +54,19 @@ export default function LifeEvents() {
             type="button"
             onClick={() => (ev.route ? navigate(ev.route) : (setSelected(ev.key), setOutcome(null)))}
             aria-pressed={selected === ev.key}
-            className={`flex items-start gap-3 rounded-md border p-4 text-left transition-colors ${selected === ev.key ? 'border-brand-red bg-brand-red-tint' : 'border-brand-border hover:border-brand-black'}`}
+            className="option-tile"
           >
             <NamedIcon name={ev.icon} size={20} className="mt-0.5 shrink-0 text-brand-red" />
             <span>
               <span className="block font-semibold">{tx(ev.label)}</span>
-              <span className="block text-[15px] text-brand-grey">{tx(ev.description)}</span>
+              <span className="block text-[15px] text-text-secondary">{tx(ev.description)}</span>
             </span>
           </button>
         ))}
       </div>
 
       {selected === 'moved' && !outcome && (
-        <form onSubmit={submitMove} className="mt-6 max-w-xl space-y-4 rounded-md border border-brand-black p-5">
+        <form onSubmit={submitMove} className="mt-6 max-w-xl space-y-4 rounded-lg border border-gold bg-surface shadow-card p-5">
           <p className="font-display text-lg font-medium">{t('life.moved.title')}</p>
           <div>
             <label htmlFor="new-address" className="field-label">{t('life.moved.address')}</label>
@@ -85,7 +85,7 @@ export default function LifeEvents() {
       )}
 
       {outcome && (
-        <div className="mt-6 rounded-md border border-brand-border p-5 sm:p-6" role="status">
+        <div className="mt-6 rounded-lg border border-brand-border bg-surface shadow-card p-5 sm:p-6" role="status">
           <p className="text-[15.5px] text-ok">{t('life.created')}</p>
           <h2 className="mt-1 text-2xl font-normal">{t('life.outcomeTitle')}</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">

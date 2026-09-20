@@ -63,7 +63,7 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
   }
 
   return (
-    <div className={`rounded-md border p-5 ${owner === viewerRole ? 'border-brand-red' : 'border-brand-border'}`}>
+    <div className={`rounded-lg border bg-surface p-5 shadow-card ${owner === viewerRole ? 'border-brand-red' : 'border-brand-border'}`}>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <p className="text-[14.5px] text-brand-grey">{t('workflow.currentStep')}</p>
@@ -76,7 +76,7 @@ function CurrentStepPanel({ workflow, viewerRole, providerName, clientName, onAd
         </div>
         <div>
           <p className="text-[14.5px] text-brand-grey">{t('workflow.due')}</p>
-          <p className={`font-semibold ${overdue ? 'text-brand-red' : ''}`}>{describeDue(workflow.dueDate)}</p>
+          <p className={`font-semibold ${overdue ? 'text-danger' : ''}`}>{describeDue(workflow.dueDate)}</p>
         </div>
       </div>
       {action && <div className="mt-5 border-t border-brand-border pt-4">{action}</div>}

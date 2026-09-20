@@ -18,7 +18,7 @@ export default function WorkflowCard({ workflow, providerName, clientName, viewe
   return (
     <Link
       to={`/workflow/${workflow.id}`}
-      className="group block rounded-md border border-brand-border bg-surface p-4 transition-colors hover:border-brand-black sm:p-5"
+      className="group block rounded-lg border border-brand-border bg-surface p-4 shadow-card transition-colors hover:border-brand-black sm:p-5"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -52,7 +52,7 @@ export default function WorkflowCard({ workflow, providerName, clientName, viewe
         </div>
         <div className="sm:text-right">
           <dt className="label-muted">{t('workflow.due')}</dt>
-          <dd className={overdue ? 'font-semibold text-brand-red' : 'font-medium'}>{workflow.status === 'active' ? describeDue(workflow.dueDate) : t('workflow.closed')}</dd>
+          <dd className={overdue ? 'font-semibold text-danger' : 'font-medium'}>{workflow.status === 'active' ? describeDue(workflow.dueDate) : t('workflow.closed')}</dd>
         </div>
       </dl>
       <ProgressBar value={progress} className="mt-4" label={t('workflow.progress', { title: tx(workflow.title) })} tone={workflow.status === 'completed' ? 'green' : 'red'} />

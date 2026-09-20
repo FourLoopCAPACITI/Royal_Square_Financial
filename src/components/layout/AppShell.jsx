@@ -35,7 +35,7 @@ export default function AppShell() {
   const onChatPage = location.pathname.endsWith('/chat');
 
   return (
-    <div className="flex min-h-screen bg-surface">
+    <div className="flex min-h-screen bg-brand-light-grey">
       <Sidebar items={items} footer={<AccountFooter />} />
       <div className="flex min-w-0 flex-1 flex-col">
         {demoModeEnabled && <DemoBar />}

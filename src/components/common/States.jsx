@@ -14,8 +14,8 @@ export function LoadingState({ label }) {
 
 export function EmptyState({ icon: Icon = Inbox, title, message, action }) {
   return (
-    <div className="flex flex-col items-start gap-2 rounded-md border border-dashed border-brand-border px-5 py-8">
-      <Icon size={22} className="text-brand-grey" aria-hidden="true" />
+    <div className="flex flex-col items-start gap-2 rounded-lg border border-dashed border-gold/60 bg-surface px-5 py-8">
+      <Icon size={22} className="text-gold-deep" aria-hidden="true" />
       <p className="font-semibold">{title}</p>
       {message && <p className="max-w-prose text-brand-grey">{message}</p>}
       {action && <div className="mt-2">{action}</div>}
@@ -26,8 +26,8 @@ export function EmptyState({ icon: Icon = Inbox, title, message, action }) {
 export function ErrorState({ error, onRetry }) {
   const { t } = useI18n();
   return (
-    <div className="flex flex-col items-start gap-2 rounded-md border border-brand-red/30 bg-brand-red-tint px-5 py-6" role="alert">
-      <div className="flex items-center gap-2 font-semibold text-brand-red">
+    <div className="flex flex-col items-start gap-2 rounded-lg border border-danger/30 bg-danger-tint px-5 py-6" role="alert">
+      <div className="flex items-center gap-2 font-semibold text-danger">
         <AlertCircle size={18} aria-hidden="true" /> {t('state.didntLoad')}
       </div>
       <p className="text-sm text-text-secondary">{String(error?.message || error || t('state.unknownError'))}. {t('state.errorHint')}</p>

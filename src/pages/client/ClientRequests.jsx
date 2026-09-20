@@ -30,7 +30,7 @@ function RequestForm({ def, clientId, providers, onCreated, onCancel }) {
   }
 
   return (
-    <form onSubmit={submit} className="mt-4 space-y-4 rounded-md border border-brand-black p-5">
+    <form onSubmit={submit} className="mt-4 space-y-4 rounded-lg border border-gold bg-surface shadow-card p-5">
       <p className="font-display text-lg font-medium">{tx(def.label)}</p>
       {def.askProvider && (
         <div>
@@ -81,12 +81,12 @@ export default function ClientRequests() {
                 setCreated(null);
               }}
               aria-pressed={selected === r.type}
-              className={`flex items-start gap-3 rounded-md border p-4 text-left transition-colors ${selected === r.type ? 'border-brand-red bg-brand-red-tint' : 'border-brand-border hover:border-brand-black'}`}
+              className="option-tile"
             >
               <NamedIcon name={r.icon} size={20} className="mt-0.5 shrink-0 text-brand-red" />
               <span>
                 <span className="block font-semibold">{tx(r.label)}</span>
-                <span className="block text-[15px] text-brand-grey">{tx(r.description)}</span>
+                <span className="block text-[15px] text-text-secondary">{tx(r.description)}</span>
               </span>
             </button>
           ))}

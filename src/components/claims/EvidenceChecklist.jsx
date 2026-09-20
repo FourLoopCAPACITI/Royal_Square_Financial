@@ -6,7 +6,7 @@ export default function EvidenceChecklist({ report }) {
   const { t, tx } = useI18n();
   const { items, completed, total } = getEvidenceChecklist(report);
   return (
-    <div className="rounded-md border border-brand-border p-4">
+    <div className="rounded-lg border border-brand-border bg-surface shadow-card p-4">
       <div className="mb-3 flex items-baseline justify-between">
         <p className="font-semibold">{t('evidence.title')}</p>
         <p className="font-display text-lg tabular-nums">

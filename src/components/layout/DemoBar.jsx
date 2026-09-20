@@ -21,7 +21,7 @@ export default function DemoBar() {
   };
 
   return (
-    <div className="bg-strong text-white">
+    <div className="bg-navy-deep text-white">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 text-[14.5px] lg:px-8">
         <span className="rounded-sm border border-white/40 px-1.5 py-px text-[12.5px] font-semibold">{t('demo.mode')}</span>
 
@@ -36,7 +36,7 @@ export default function DemoBar() {
                 type="button"
                 onClick={() => switchTo(value)}
                 aria-pressed={role === value}
-                className={`px-3 py-1 ${role === value ? 'bg-action font-semibold' : 'hover:bg-white/10'}`}
+                className={`px-3 py-1 ${role === value ? 'bg-gold font-semibold text-navy' : 'hover:bg-white/10'}`}
               >
                 {label}
               </button>

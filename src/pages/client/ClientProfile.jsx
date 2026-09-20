@@ -49,14 +49,14 @@ export default function ClientProfile() {
               <Section title={t('profile.products')} count={products.data?.length}>
                 <QueryState query={products}>
                   {(list) => (
-                    <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+                    <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
                       {list.map((p) => (
                         <li key={p.id} className="flex flex-wrap justify-between gap-2 p-4">
                           <span>
                             <span className="block font-semibold">{tx(p.type)}</span>
-                            <span className="text-[15.5px] text-brand-grey">{providerName(p.providerId)}. {tx(p.description)}</span>
+                            <span className="text-[15.5px] text-text-secondary">{providerName(p.providerId)}. {tx(p.description)}</span>
                           </span>
-                          <span className="text-[15.5px] tabular-nums text-brand-grey">{p.policyNumber}</span>
+                          <span className="text-[15.5px] tabular-nums text-text-secondary">{p.policyNumber}</span>
                         </li>
                       ))}
                     </ul>

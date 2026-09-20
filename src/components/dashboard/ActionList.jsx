@@ -9,15 +9,15 @@ export default function ActionList({ tasks = [], clientName, onComplete, emptyTi
   const { t, tx } = useI18n();
   if (!tasks.length) return <EmptyState icon={CheckCircle2} title={emptyTitle || t('actionList.empty')} message={emptyMessage || t('actionList.emptyHint')} />;
   return (
-    <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+    <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
       {tasks.map((task) => {
         const days = daysUntil(task.dueDate);
-        const urgency = days < 0 ? 'text-brand-red font-semibold' : days <= 7 ? 'text-warn font-semibold' : 'text-brand-grey';
+        const urgency = days < 0 ? 'text-danger font-semibold' : days <= 7 ? 'text-warn font-semibold' : 'text-brand-grey';
         const Icon = task.kind === 'reminder' ? BellRing : CircleAlert;
         const href = task.workflowId ? `/workflow/${task.workflowId}` : task.link;
         return (
           <li key={task.id} className="flex items-start gap-3 p-4">
-            <Icon size={18} className={`mt-0.5 shrink-0 ${days < 0 ? 'text-brand-red' : 'text-brand-black'}`} aria-hidden="true" />
+            <Icon size={18} className={`mt-0.5 shrink-0 ${days < 0 ? 'text-danger' : 'text-brand-black'}`} aria-hidden="true" />
             <div className="min-w-0 flex-1">
               <p className="font-semibold leading-snug">{tx(task.title)}</p>
               <p className="text-[15.5px] text-brand-grey">

@@ -11,7 +11,7 @@ export default function LanguageSelect({ id = 'language', className = '', showHe
           <option key={l.code} value={l.code}>{l.label}</option>
         ))}
       </select>
-      {showHelp && <p className="mt-1.5 text-[13px] text-brand-grey">{t('language.help')}</p>}
+      {showHelp && <p className="mt-1.5 text-sm text-text-secondary">{t('language.help')}</p>}
     </div>
   );
 }

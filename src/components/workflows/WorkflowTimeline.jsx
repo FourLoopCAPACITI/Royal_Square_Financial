@@ -27,7 +27,7 @@ export default function WorkflowTimeline({ workflow, providerName, viewerRole, c
                 </span>
               )}
               {step.status === 'current' && (
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-brand-red bg-surface">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-gold bg-surface">
                   <span className="h-2.5 w-2.5 rounded-full bg-action" />
                 </span>
               )}

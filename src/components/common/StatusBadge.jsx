@@ -2,11 +2,12 @@ import { useI18n } from '../../i18n/I18nContext.jsx';
 
 const TONES = {
   action: 'bg-action text-white',
-  red: 'bg-brand-red-tint text-brand-red',
+  red: 'bg-danger-tint text-danger',
   success: 'bg-ok-tint text-ok',
   warning: 'bg-warn-tint text-warn',
-  neutral: 'bg-brand-light-grey text-text-secondary',
+  neutral: 'bg-brand-red-tint text-text-secondary ring-1 ring-inset ring-brand-border',
   dark: 'bg-strong text-white',
+  gold: 'bg-warn-tint text-gold-deep ring-1 ring-inset ring-gold/50',
 };
 
 /** Map common statuses to tones so every page labels them the same way. */
@@ -28,7 +29,7 @@ export default function StatusBadge({ status, tone, children, className = '' }) 
   const mapped = STATUS_MAP[status] || {};
   const finalTone = tone || mapped.tone || 'neutral';
   return (
-    <span className={`inline-flex items-center whitespace-nowrap rounded px-2 py-0.5 text-[14px] font-semibold ${TONES[finalTone]} ${className}`}>
+    <span className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13.5px] font-semibold ${TONES[finalTone]} ${className}`}>
       {children || (STATUS_MAP[status] ? t(`status.${status}`) : status)}
     </span>
   );

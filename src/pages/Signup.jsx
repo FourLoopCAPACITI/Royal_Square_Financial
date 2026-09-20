@@ -52,9 +52,9 @@ export default function Signup() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-brand-light-grey px-4">
-      <div className="w-full max-w-sm rounded-md border border-brand-border bg-surface p-7">
-        <Logo className="mx-auto mb-7 max-w-[160px]" />
-        <h1 className="mb-1 text-2xl font-normal">Sign up</h1>
+      <div className="w-full max-w-sm rounded-lg border border-brand-border border-t-4 border-t-gold bg-surface p-8 shadow-card">
+        <Logo className="mx-auto mb-8 max-w-[230px]" />
+        <h1 className="mb-1 text-3xl font-semibold">Sign up</h1>
 
         {!IS_SUPABASE_CONFIGURED ? (
           <p className="text-[14px] text-brand-grey">
@@ -150,7 +150,7 @@ export default function Signup() {
               </span>
             </label>
 
-            {error && <p className="text-[14px] text-brand-red" role="alert">{error}</p>}
+            {error && <p className="text-[14px] text-danger" role="alert">{error}</p>}
             {success && <p className="text-[14px] text-brand-black" role="status">{success}</p>}
 
             <Button type="submit" className="w-full" disabled={busy}>

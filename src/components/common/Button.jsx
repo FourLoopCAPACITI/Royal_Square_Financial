@@ -1,8 +1,9 @@
 const VARIANTS = {
-  primary: 'bg-action text-white hover:bg-brand-red-dark border border-brand-red',
-  secondary: 'bg-surface text-brand-black border border-brand-border hover:border-brand-black',
+  primary: 'bg-action text-white hover:bg-brand-red-dark border border-action shadow-sm',
+  gold: 'bg-gold text-navy hover:bg-[#E0C084] border border-gold shadow-sm',
+  secondary: 'bg-surface text-brand-black border border-brand-grey/40 hover:border-brand-black hover:bg-brand-light-grey',
   ghost: 'bg-transparent text-brand-black border border-transparent hover:bg-brand-light-grey',
-  dark: 'bg-strong text-white border border-brand-black hover:bg-[#262626]',
+  dark: 'bg-strong text-white border border-strong hover:opacity-90',
 };
 
 const SIZES = {
@@ -15,7 +16,7 @@ export default function Button({ as: Component = 'button', variant = 'primary', 
   const typeProps = Component === 'button' ? { type: props.type || 'button' } : {};
   return (
     <Component
-      className={`inline-flex items-center justify-center gap-2 rounded font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md font-semibold tracking-[0.01em] transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...typeProps}
       {...props}
     >

@@ -24,7 +24,7 @@ export default function AdviserRequests() {
       <QueryState query={requests} loadingLabel={t('requests.loading')}>
         {(list) =>
           list.length ? (
-            <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+            <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
               {list.map((r) => {
                 const w = workflowFor(r.workflowId);
                 return (

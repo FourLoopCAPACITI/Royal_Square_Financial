@@ -13,9 +13,9 @@ import { useI18n } from '../../i18n/I18nContext.jsx';
 
 function Count({ label, value, tone }) {
   return (
-    <div className="rounded-md border border-brand-border p-4">
+    <div className="rounded-lg border border-brand-border bg-surface shadow-card p-4">
       <p className="text-[14.5px] text-brand-grey">{label}</p>
-      <p className={`font-display text-[28px] font-light tabular-nums ${tone === 'red' && value ? 'text-brand-red' : ''}`}>{value}</p>
+      <p className={`font-display text-[34px] font-semibold tabular-nums ${tone === 'red' && value ? 'text-danger' : ''}`}>{value}</p>
     </div>
   );
 }

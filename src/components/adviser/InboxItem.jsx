@@ -16,10 +16,10 @@ export default function InboxItem({ workflow, clientName, providerName }) {
   const waitingOnOthers = !['adviser', 'system'].includes(workflow.currentOwner);
   return (
     <li>
-      <Link to={`/workflow/${workflow.id}`} className="group grid gap-2 p-4 hover:bg-brand-light-grey sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)_auto] sm:items-center sm:gap-6">
+      <Link to={`/workflow/${workflow.id}`} className="group grid gap-2 p-4 hover:bg-brand-red-tint sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1.4fr)_auto] sm:items-center sm:gap-6">
         <div className="min-w-0">
           <p className="font-semibold">{clientName || t('owner.client')}</p>
-          <p className="text-[15.5px] text-brand-grey">{tx(workflow.title)}</p>
+          <p className="text-[15.5px] text-text-secondary">{tx(workflow.title)}</p>
         </div>
         <dl className="grid grid-cols-[110px_1fr] gap-x-3 text-[15.5px]">
           <dt className="text-brand-grey">{t('workflow.currentOwner')}</dt>
@@ -27,7 +27,7 @@ export default function InboxItem({ workflow, clientName, providerName }) {
           <dt className="text-brand-grey">{t('workflow.nextAction')}</dt>
           <dd>{tx(workflow.nextAction)}</dd>
           <dt className="text-brand-grey">{waitingOnOthers ? t('workflow.waiting') : t('workflow.due')}</dt>
-          <dd className={overdue ? 'font-semibold text-brand-red' : ''}>
+          <dd className={overdue ? 'font-semibold text-danger' : ''}>
             {waitingOnOthers ? describeWaiting(getCurrentStepStartedAt(workflow)) : describeDue(workflow.dueDate)}
           </dd>
         </dl>

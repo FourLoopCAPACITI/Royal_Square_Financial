@@ -253,4 +253,4 @@ Guidelines to avoid merge conflicts:
 
 ## Brand
 
-Colours come from the Royal Square Financial logo (`public/royal-square-logo.jpg`), defined as CSS variables in `src/index.css` and in `tailwind.config.js`: red `#9A1C20`, black `#0A0A0A`, white, grey `#747474`, light grey `#F5F5F5`, border `#E5E5E5`. Green for success, amber for warnings. No gradients.
+Colours come from the Royal Square Financial brand palette (`public/royal-square-logo.png`), defined as CSS variables in `src/index.css` and in `tailwind.config.js`: Midnight Navy `#0F2747`, Royal Gold `#D4AF6B`, Ivory Cream `#F8F5EC`, Slate `#6B7280`, Sage `#2F6F66`. A muted burgundy is reserved for errors and overdue states. Display type is Cormorant Garamond; body is Source Sans 3. No gradients.

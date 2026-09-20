@@ -15,10 +15,10 @@ export default function MobileNav({ items, footer }) {
 
   return (
     <>
-      <div className="sticky top-14 z-30 flex items-center justify-between border-b border-brand-border bg-surface px-4 py-2.5 lg:hidden">
+      <div className="sticky top-14 z-30 flex items-center justify-between border-b-2 border-gold/60 bg-surface px-4 py-2.5 lg:hidden">
         <div className="flex items-center gap-2.5">
           <Logo variant="mark" />
-          <span className="font-display text-[14.5px] uppercase tracking-[0.28em]">
+          <span className="font-display text-[16px] font-semibold uppercase tracking-[0.24em]">
             Royal<span className="text-brand-grey">Square</span>
           </span>
         </div>
@@ -51,8 +51,8 @@ export default function MobileNav({ items, footer }) {
 
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label={t('nav.allPages')}>
-          <button type="button" className="absolute inset-0 bg-black/30" aria-label={t('nav.closeMenu')} onClick={() => setOpen(false)} />
-          <div className="absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-lg bg-surface p-4 pb-8">
+          <button type="button" className="absolute inset-0 bg-navy-deep/50" aria-label={t('nav.closeMenu')} onClick={() => setOpen(false)} />
+          <div className="absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-xl bg-surface p-4 pb-8">
             <div className="mb-2 flex items-center justify-between">
               <p className="font-display text-lg">{t('nav.allPages')}</p>
               <button type="button" onClick={() => setOpen(false)} className="rounded p-2 hover:bg-brand-light-grey" aria-label={t('nav.closeMenu')}>

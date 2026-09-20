@@ -40,9 +40,9 @@ export default function SmartUpload({ clientId, defaultType = 'drivers_licence',
   const busy = stage >= 0;
 
   return (
-    <div className="rounded-md border border-brand-border p-5">
+    <div className="rounded-lg border border-brand-border bg-surface shadow-card p-5">
       <h2 className="text-lg font-medium">{t('upload.title')}</h2>
-      <p className="mb-4 text-[15.5px] text-brand-grey">{t('upload.description')}</p>
+      <p className="mb-4 text-[15.5px] text-text-secondary">{t('upload.description')}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
@@ -56,7 +56,7 @@ export default function SmartUpload({ clientId, defaultType = 'drivers_licence',
         <div>
           <span className="field-label">{t('upload.file')}</span>
           <input ref={inputRef} type="file" accept="image/*,application/pdf" className="sr-only" id="doc-file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-          <label htmlFor="doc-file" className="field flex cursor-pointer items-center gap-2 truncate text-brand-grey hover:border-brand-black">
+          <label htmlFor="doc-file" className="field flex cursor-pointer items-center gap-2 truncate text-text-secondary hover:border-brand-red hover:bg-brand-red-tint">
             <Upload size={16} aria-hidden="true" />
             <span className="truncate">{file ? file.name : t('upload.choose')}</span>
           </label>
@@ -72,12 +72,12 @@ export default function SmartUpload({ clientId, defaultType = 'drivers_licence',
           t('upload.submit')
         )}
       </Button>
-      {error && <p className="mt-3 text-[15.5px] text-brand-red" role="alert">{error}</p>}
+      {error && <p className="mt-3 text-[15.5px] text-danger" role="alert">{error}</p>}
 
       {result && (
-        <div className="mt-5 rounded-md bg-brand-light-grey p-4" role="status">
+        <div className="mt-5 rounded-md border border-brand-border bg-brand-red-tint p-4" role="status">
           <p className="font-semibold">{tx(result.headline)}</p>
-          <p className="text-[15.5px] text-brand-grey">{t('upload.processed')}</p>
+          <p className="text-[15.5px] text-text-secondary">{t('upload.processed')}</p>
           {result.detected.map((d) => (
             <p key={d.label} className="mt-3 text-[15.5px]">
               {tx(d.label)}

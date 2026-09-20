@@ -24,14 +24,14 @@ export default function Notifications() {
       <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter notifications">
         {FILTERS.map(([key, label]) => (
           <button key={key} type="button" aria-pressed={filter === key} onClick={() => setParams(key === 'all' ? {} : { type: key })}
-            className={`min-h-10 rounded border px-3 py-2 text-sm font-semibold ${filter === key ? 'border-brand-red bg-action text-white' : 'border-brand-border hover:border-brand-black'}`}>
+            className={`min-h-10 rounded border px-3 py-2 text-sm font-semibold ${filter === key ? 'border-brand-red bg-action text-white' : 'border-brand-border bg-surface text-brand-black shadow-sm hover:border-brand-red hover:bg-brand-red-tint'}`}>
             {label}{key === 'unread' && unread > 0 ? ` (${unread})` : ''}
           </button>
         ))}
       </div>
       <QueryState query={query} loadingLabel="Loading notifications">
         {() => shown.length ? (
-          <div className="overflow-hidden rounded-md border border-brand-border"><NotificationList items={shown} allowComplete /></div>
+          <div className="overflow-hidden rounded-lg border border-brand-border bg-surface shadow-card"><NotificationList items={shown} allowComplete /></div>
         ) : <EmptyState icon={Bell} title={filter === 'unread' ? "You're all caught up" : 'No notifications'} message="New reminders, document updates and open tasks will appear here." />}
       </QueryState>
     </>

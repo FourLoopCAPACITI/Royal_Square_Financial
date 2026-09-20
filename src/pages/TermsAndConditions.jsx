@@ -5,7 +5,7 @@ import Button from '../components/common/Button.jsx';
 export default function TermsAndConditions() {
   return (
     <div className="min-h-screen bg-brand-light-grey px-4 py-10">
-      <div className="mx-auto w-full max-w-4xl rounded-md border border-brand-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="mx-auto w-full max-w-4xl rounded-lg border border-brand-border bg-surface p-6 shadow-sm sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-4">
           <Logo className="max-w-[180px]" />
           <Button as={Link} to="/signup" variant="secondary" size="sm">
@@ -13,7 +13,7 @@ export default function TermsAndConditions() {
           </Button>
         </div>
 
-        <h1 className="mb-4 text-3xl font-light">Terms and conditions</h1>
+        <h1 className="mb-4 text-4xl font-semibold">Terms and conditions</h1>
 
         <div className="space-y-5 text-[15px] leading-7 text-brand-black">
           <p>

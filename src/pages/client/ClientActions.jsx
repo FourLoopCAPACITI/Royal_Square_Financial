@@ -53,7 +53,7 @@ export default function ClientActions() {
         <QueryState query={reminders}>
           {(list) =>
             list.length ? (
-              <ul className="divide-y divide-brand-border rounded-md border border-brand-border">
+              <ul className="divide-y divide-brand-border rounded-lg border border-brand-border bg-surface shadow-card">
                 {list.map((r) => (
                   <li key={r.id} className="flex justify-between gap-4 p-4 text-[16.5px]">
                     <span>{tx(r.title)}</span>
