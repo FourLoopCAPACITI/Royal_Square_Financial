@@ -241,6 +241,27 @@ export default function Landing() {
               </button>
             </div>
           </section>
+
+          <section className="mt-14 rounded-lg border border-brand-border bg-surface p-6 shadow-card sm:p-10" aria-labelledby="ceo-title">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.24em] text-gold-deep">Leadership</p>
+            <h2 id="ceo-title" className="mt-3 text-4xl font-semibold sm:text-5xl">Meet the CEO</h2>
+
+            <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-6">
+              <img
+                src="/rsf_ceo_headshot.jpg"
+                alt="Qiniso Ntuli, CEO of Royal Square Financial."
+                className="h-48 w-48 shrink-0 rounded-lg border border-brand-border object-cover object-top shadow-sm"
+              />
+
+              <div>
+                <h3 className="font-display text-2xl font-semibold text-brand-black">Qiniso Ntuli</h3>
+                <p className="mt-1 font-display text-lg text-brand-grey">Chief Executive Officer, Royal Square Financial</p>
+                <p className="mt-5 text-[16.5px] leading-7 text-brand-black">
+                  With over 17 years of experience at Royal Square Financial, currently serving as Chief Executive Officer, I contribute to the organization's strategic planning and leadership initiatives. I collaborate with teams to drive sustainable growth, deliver tailored financial solutions, and foster innovation. Proficient in utilizing tools like Microsoft Office, I focus on operational efficiency to align with the company's vision of empowering clients to achieve financial success. Passionate about creating impactful strategies, my goal is to support teams in navigating challenges and unlocking opportunities that deliver value for our stakeholders.
+                </p>
+              </div>
+            </div>
+          </section>
         </main>
 
         <footer id="contact" className="mt-14 scroll-mt-32 sm:scroll-mt-24 rounded-t-lg border-t-4 border-gold bg-navy-deep px-6 py-10 text-white sm:px-10">
@@ -270,6 +291,12 @@ export default function Landing() {
                 <li className="flex items-center gap-2"><Clock3 size={16} className="text-gold" /> {t('landing.footer.weekend')}</li>
               </ul>
             </div>
+          </div>
+
+          <div className="mt-8 border-t border-white/15 pt-6 text-center">
+            <Link to="/roadmap" className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-gold">
+              Next patch updates <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </div>
         </footer>
       </div>
