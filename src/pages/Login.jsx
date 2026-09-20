@@ -8,6 +8,12 @@ import { IS_SUPABASE_CONFIGURED } from '../config/env.js';
 import LanguageSelect from '../components/common/LanguageSelect.jsx';
 import { useI18n, validationProps } from '../i18n/I18nContext.jsx';
 
+const DEMO_PASSWORD = '123456';
+const DEMO_LOGINS = [
+  { label: 'Advisor Demo', email: 'michelle.vdm@royalsquare.demo' },
+  { label: 'Client Demo', email: 'zanele.mthembu@example.demo' },
+];
+
 export default function Login() {
   const { t, tx } = useI18n();
   const { signIn, isAuthenticated, role, demoModeEnabled } = useSession();
@@ -53,6 +59,25 @@ export default function Login() {
             {error && <p className="text-[15.5px] text-danger" role="alert">{error}</p>}
             <Button type="submit" className="w-full" disabled={busy}>{busy ? t('login.submitting') : t('login.submit')}</Button>
           </form>
+        )}
+        {IS_SUPABASE_CONFIGURED && (
+          <div className="mt-6 rounded-md border border-brand-border bg-brand-light-grey p-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-grey">Demo Login Details</p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {DEMO_LOGINS.map((d) => (
+                <button
+                  key={d.label}
+                  type="button"
+                  onClick={() => { setEmail(d.email); setPassword(DEMO_PASSWORD); setError(''); }}
+                  className="rounded-md border border-brand-border bg-surface px-3 py-2 text-left hover:border-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                >
+                  <span className="block text-sm font-semibold">{d.label}</span>
+                  <span className="block break-all text-xs text-brand-grey">{d.email}</span>
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-brand-grey">Click a demo to prefill, then press Sign In.</p>
+          </div>
         )}
         <p className="mt-6 text-center text-[15.5px]">
           Need an account?{' '}
