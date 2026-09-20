@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import PageHeader from '../../components/common/PageHeader.jsx';
 import StatusBadge from '../../components/common/StatusBadge.jsx';
 import { QueryState, EmptyState } from '../../components/common/States.jsx';
+import ProviderRecommendation from '../../components/adviser/ProviderRecommendation.jsx';
 import WorkflowCard from '../../components/workflows/WorkflowCard.jsx';
 import { useAdviserWorkflows } from '../../hooks/useAdviserData.js';
 import { useServiceQuery } from '../../hooks/useServiceQuery.js';
@@ -55,6 +56,7 @@ export default function AdviserClients() {
                     {open && (
                       <div className="space-y-3 border-t border-brand-border bg-brand-light-grey p-4">
                         <p className="text-[15.5px] text-brand-grey">{c.email}. {c.phone}. {c.address}</p>
+                        <ProviderRecommendation client={c} adviserId={adviserId} />
                         {mine.length ? mine.map((w) => <WorkflowCard key={w.id} workflow={w} providerName={providerName(w.providerId)} viewerRole="adviser" showOwner={false} />) : <p className="text-[15.5px]">{t('clients.noOpen')}</p>}
                       </div>
                     )}
